@@ -6,8 +6,6 @@ services:
     restart: unless-stopped
     ports:
       - 9696:9696
-    env_file:
-      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
@@ -21,8 +19,6 @@ services:
     restart: unless-stopped
     ports:
       - 7878:7878
-    env_file:
-      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
@@ -37,8 +33,6 @@ services:
     restart: unless-stopped
     ports:
       - 8989:8989
-    env_file:
-      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
@@ -55,8 +49,6 @@ services:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
-    env_file:
-      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
@@ -72,8 +64,6 @@ services:
     ports:
       - 8080:8081  # avoid conflicts with other services running on port 8080
       - 9090:9090
-    env_file:
-      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
