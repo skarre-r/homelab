@@ -46,3 +46,21 @@ services:
     volumes:
       - ${POOL}/services/sonarr:/config
       - ${POOL}/media:/media
+  
+  transmission:
+    image: lscr.io/linuxserver/transmission
+    container_name: transmission
+    restart: unless-stopped
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    env_file:
+      - .env.pirate
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - ${POOL}/services/transmission:/config
+      - ${POOL}/media:/media
