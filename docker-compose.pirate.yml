@@ -64,3 +64,20 @@ services:
     volumes:
       - ${POOL}/services/transmission:/config
       - ${POOL}/media:/media
+  
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    restart: unless-stopped
+    ports:
+      - 8080:8081  # avoid conflicts with other services running on port 8080
+      - 9090:9090
+    env_file:
+      - .env.pirate
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - ${POOL}/services/sabnzbd:/config
+      - ${POOL}/media:/media
