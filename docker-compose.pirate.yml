@@ -3,13 +3,27 @@ services:
   prowlarr:
     image: ghcr.io/linuxserver/prowlarr:develop
     container_name: prowlarr
+    restart: unless-stopped
+    ports:
+      - 9696:9696
     environment:
       - PUID=1337
       - PGID=1337
       - TZ=Europe/Oslo
     volumes:
       - /mnt/pool1/services/prowlarr:/config
-    ports:
-      - 9696:9696
-    restart: unless-stopped
 
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - /mnt/pool1/services/radarr:/config
+      - /mnt/pool1/media/Movies:/movies
+      - /mnt/pool1/downloads:/downloads
