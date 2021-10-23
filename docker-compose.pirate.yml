@@ -62,7 +62,7 @@ services:
     container_name: sabnzbd
     restart: unless-stopped
     ports:
-      - 8080:8081  # avoid conflicts with other services running on port 8080
+      - 8080:8080  # avoid conflicts with other services running on port 8080?
       - 9090:9090
     environment:
       - PUID=1337
