@@ -1,0 +1,15 @@
+version: "2.1"
+services:
+  prowlarr:
+    image: ghcr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - /mnt/pool1/services/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
