@@ -25,5 +25,18 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - /mnt/pool1/services/radarr:/config
-      - /mnt/pool1/media/Movies:/movies
-      - /mnt/pool1/downloads:/downloads
+      - /mnt/pool1/media:/media
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr
+    container_name: sonarr
+    restart: unless-stopped
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - /mnt/pool1/services/sonarr:/config
+      - /mnt/pool1/media:/media
