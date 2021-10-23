@@ -6,12 +6,14 @@ services:
     restart: unless-stopped
     ports:
       - 9696:9696
+    env_file:
+      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
       - TZ=Europe/Oslo
     volumes:
-      - /mnt/pool1/services/prowlarr:/config
+      - ${POOL}/services/prowlarr:/config
 
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -19,13 +21,15 @@ services:
     restart: unless-stopped
     ports:
       - 7878:7878
+    env_file:
+      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
       - TZ=Europe/Oslo
     volumes:
-      - /mnt/pool1/services/radarr:/config
-      - /mnt/pool1/media:/media
+      - ${POOL}/services/radarr:/config
+      - ${POOL}/media:/media
 
   sonarr:
     image: lscr.io/linuxserver/sonarr
@@ -33,10 +37,12 @@ services:
     restart: unless-stopped
     ports:
       - 8989:8989
+    env_file:
+      - .env.pirate
     environment:
       - PUID=1337
       - PGID=1337
       - TZ=Europe/Oslo
     volumes:
-      - /mnt/pool1/services/sonarr:/config
-      - /mnt/pool1/media:/media
+      - ${POOL}/services/sonarr:/config
+      - ${POOL}/media:/media
