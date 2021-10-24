@@ -17,6 +17,12 @@
 - movienight (TODO)
 - invidious? (TODO)
 
+### misc
+
+- code-server (TODO)
+- firefox (TODO)
+- freshrss (TODO)
+
 ### monitor
 
 - uptime-kuma
@@ -41,6 +47,6 @@
 - radarr
 - bazarr
 - lidarr
-- readarr
+- readarr (TODO)
 - sabnzbd
 - transmission
