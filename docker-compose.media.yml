@@ -17,3 +17,16 @@ services:
       - ${POOL}/media/tv:/tv
       - ${POOL}/media/anime:/anime
       - ${POOL}/media/music:/music
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - 8096:8096
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Europe/Oslo
+    volumes:
+      - ${POOL}/services/jellyfin:/config
