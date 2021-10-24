@@ -1,0 +1,20 @@
+version: "2.1"
+services:
+  # https://hub.docker.com/r/linuxserver/code-server
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    restart: unless-stopped
+    ports:
+      - 8443:8443
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Oslo
+      - PASSWORD=${CODE_SERVER_PASSWORD}
+      - HASHED_PASSWORD=${CODE_SERVER_HASHED_PASSWORD}
+      - SUDO_PASSWORD=${CODE_SERVER_SUDO_PASSWORD}
+      - SUDO_PASSWORD_HASH=${CODE_SERVER_SUDO_PASSWORD_HASH}
+      - PROXY_DOMAIN=${CODE_SERVER_PROXY_DOMAIN}
+    volumes:
+      - ${POOL}/services/code-server:/config
