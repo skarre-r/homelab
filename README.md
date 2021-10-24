@@ -22,22 +22,23 @@ Docker-compose files for running several services on a TrueNAS Scale (beta) box.
 
 ### media
 
-- plex
-- tautulli
-- overseerr
-- jellyfin
+- [plex](https://hub.docker.com/r/linuxserver/plex)
+- [tautulli](https://hub.docker.com/r/linuxserver/tautulli)
+- [overseerr](https://hub.docker.com/r/linuxserver/overseerr)
+- [jellyfin](https://hub.docker.com/r/linuxserver/jellyfin)
 - movienight (TODO)
 - invidious? (TODO)
+- piped? (TODO)
 
 ### misc
 
-- code-server (TODO)
-- firefox (TODO)
-- freshrss (TODO)
+- [code-server](https://hub.docker.com/r/linuxserver/code-server) (TODO)
+- [firefox](https://hub.docker.com/r/linuxserver/firefox) (TODO)
+- [freshrss](https://hub.docker.com/r/linuxserver/freshrss) (TODO)
 
 ### monitor
 
-- uptime-kuma
+- [uptime-kuma](https://hub.docker.com/r/louislam/uptime-kuma)
 - grafana (TODO)
 - influxdb (TODO)
 - chronograf (TODO)
@@ -54,12 +55,12 @@ Docker-compose files for running several services on a TrueNAS Scale (beta) box.
 
 ### pirate
 
-- wireguard
-- prowlarr
-- sonarr
-- radarr
-- bazarr
-- lidarr
-- readarr
-- sabnzbd
-- transmission
+- [wireguard](https://hub.docker.com/r/linuxserver/wireguard)
+- [prowlarr](https://hub.docker.com/r/linuxserver/prowlarr)
+- [sonarr](https://hub.docker.com/r/linuxserver/sonarr)
+- [radarr](https://hub.docker.com/r/linuxserver/radarr)
+- [bazarr](https://hub.docker.com/r/linuxserver/bazarr)
+- [lidarr](https://hub.docker.com/r/linuxserver/lidarr)
+- [readarr](https://hub.docker.com/r/linuxserver/readarr)
+- [sabnzbd](https://hub.docker.com/r/linuxserver/sabnzbd)
+- [transmission](https://hub.docker.com/r/linuxserver/transmission)
