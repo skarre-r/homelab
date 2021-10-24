@@ -18,6 +18,8 @@ services:
       - 51413:51413/udp     # transmission
       - 8080:8080           # sabnzbd
       - 9090:9090           # sabnzbd
+      - 6767:6767           # bazarr
+      - 8686:8686           # lidarr
     environment:
       - PUID=1337
       - PGID=1337
@@ -70,6 +72,38 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ${POOL}/services/sonarr:/config
+      - ${POOL}/media:/media
+    depends_on:
+      - wireguard
+    network_mode: service:wireguard
+
+  # https://hub.docker.com/r/linuxserver/bazarr
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: unless-stopped
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - ${POOL}/services/bazarr:/config
+      - ${POOL}/media:/media
+    depends_on:
+      - wireguard
+    network_mode: service:wireguard
+
+  # https://hub.docker.com/r/linuxserver/lidarr
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    restart: unless-stopped
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - ${POOL}/services/lidarr:/config
       - ${POOL}/media:/media
     depends_on:
       - wireguard
