@@ -35,7 +35,7 @@ services:
       - ${POOL}/services/prowlarr:/config
     depends_on:
       - wireguard
-    network_mode: container:wireguard
+    network_mode: service:wireguard
 
   # https://hub.docker.com/r/linuxserver/radarr
   radarr:
@@ -53,7 +53,7 @@ services:
       - ${POOL}/media:/media
     depends_on:
       - wireguard
-    network_mode: container:wireguard
+    network_mode: service:wireguard
 
   # https://hub.docker.com/r/linuxserver/sonarr
   sonarr:
@@ -71,7 +71,7 @@ services:
       - ${POOL}/media:/media
     depends_on:
       - wireguard
-    network_mode: container:wireguard
+    network_mode: service:wireguard
 
   # https://hub.docker.com/r/linuxserver/transmission
   transmission:
@@ -91,7 +91,7 @@ services:
       - ${POOL}/media:/media
     depends_on:
       - wireguard
-    network_mode: container:wireguard
+    network_mode: service:wireguard
   
   # https://hub.docker.com/r/linuxserver/sabnzbd
   sabnzbd:
@@ -110,4 +110,4 @@ services:
       - ${POOL}/media:/media
     depends_on:
       - wireguard
-    network_mode: container:wireguard
+    network_mode: service:wireguard
