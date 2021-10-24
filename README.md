@@ -1,6 +1,6 @@
 # Homelab
 
-Docker-compose files for running several different services, configured to run on a TrueNAS Scale box.
+Docker-compose files for running several services on a TrueNAS Scale (beta) box.
 
 > Note: some services require additional configuration!
 
