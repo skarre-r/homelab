@@ -3,5 +3,5 @@
 # usage:
 # ./stop.py [pirate | media | monitor]
 
-docker-compose -f docker-compose.$1.yml --env-file .env.$1 down
+docker-compose -f docker-compose.$1.yml --env-file .env down
 exit 0
