@@ -5,6 +5,8 @@
 ## chat
 
 - teamspeak (TODO)
+- revolt? (TODO)
+- matrix? (TODO)
 
 ### media
 
@@ -12,6 +14,8 @@
 - tautulli
 - overseerr
 - jellyfin
+- movienight (TODO)
+- invidious? (TODO)
 
 ### monitor
 
@@ -20,6 +24,8 @@
 ### network
 
 - træfik (TODO)
+- unbound (TODO)
+- ddclient (TODO)
 
 ### pirate
 
