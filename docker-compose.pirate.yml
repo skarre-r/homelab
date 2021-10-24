@@ -5,6 +5,7 @@ services:
     image: lscr.io/linuxserver/wireguard
     container_name: wireguard
     restart: unless-stopped
+    privileged: true
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
