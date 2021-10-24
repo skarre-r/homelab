@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # usage:
-# bash stop [chat | media | monitor | network | pirate]
+# bash stop [chat | media | monitor | network | pirate | ...]
 
 docker-compose -f docker-compose.$1.yml --project-name $1 --env-file .env down
 exit 0
