@@ -33,7 +33,7 @@ Docker-compose files for running several services on a TrueNAS Scale (beta) box.
 ### misc
 
 - [code-server](https://hub.docker.com/r/linuxserver/code-server) (TODO)
-- [firefox](https://hub.docker.com/r/linuxserver/firefox) (TODO)
+- [firefox](https://hub.docker.com/r/linuxserver/firefox)
 - [freshrss](https://hub.docker.com/r/linuxserver/freshrss) (TODO)
 
 ### monitor
