@@ -1,5 +1,6 @@
 version: "2.1"
 services:
+  # https://hub.docker.com/r/linuxserver/plex
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
@@ -18,6 +19,7 @@ services:
       - ${POOL}/media/anime:/anime
       - ${POOL}/media/music:/music
 
+  # https://hub.docker.com/r/linuxserver/jellyfin
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
