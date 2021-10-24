@@ -20,6 +20,12 @@
 ### monitor
 
 - uptime-kuma
+- grafana (TODO)
+- influxdb (TODO)
+- chronograf (TODO)
+- prometheus (TODO)
+- exporters (TODO)
+- ...
 
 ### network
 
@@ -35,5 +41,6 @@
 - radarr
 - bazarr
 - lidarr
-- transmission
+- readarr
 - sabnzbd
+- transmission
