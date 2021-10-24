@@ -22,6 +22,20 @@ services:
       - ${POOL}/media/anime:/anime
       - ${POOL}/media/music:/music
 
+  # https://hub.docker.com/r/linuxserver/tautulli
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    restart: unless-stopped
+    ports:
+      - 8181:8181
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Europe/Oslo
+    volumes:
+      - ${POOL}/services/tautulli:/config
+
   # https://hub.docker.com/r/linuxserver/overseerr
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
