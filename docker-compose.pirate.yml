@@ -1,5 +1,25 @@
 version: "2.1"
 services:
+  # https://hub.docker.com/r/linuxserver/wireguard
+  wireguard:
+    image: lscr.io/linuxserver/wireguard
+    container_name: wireguard
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    ports:
+      - 51820:51820/udp
+    environment:
+      - PUID=1337
+      - PGID=1337
+      - TZ=Europe/Oslo
+    volumes:
+      - ${POOL}/services/wireguard:/config
+      - /lib/modules:/lib/modules
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+
   # https://hub.docker.com/r/linuxserver/prowlarr
   prowlarr:
     image: ghcr.io/linuxserver/prowlarr:develop
@@ -13,6 +33,7 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ${POOL}/services/prowlarr:/config
+    network_mode: container:wireguard
 
   # https://hub.docker.com/r/linuxserver/radarr
   radarr:
@@ -28,6 +49,7 @@ services:
     volumes:
       - ${POOL}/services/radarr:/config
       - ${POOL}/media:/media
+    network_mode: container:wireguard
 
   # https://hub.docker.com/r/linuxserver/sonarr
   sonarr:
@@ -43,6 +65,7 @@ services:
     volumes:
       - ${POOL}/services/sonarr:/config
       - ${POOL}/media:/media
+    network_mode: container:wireguard
 
   # https://hub.docker.com/r/linuxserver/transmission
   transmission:
@@ -60,6 +83,7 @@ services:
     volumes:
       - ${POOL}/services/transmission:/config
       - ${POOL}/media:/media
+    network_mode: container:wireguard
   
   # https://hub.docker.com/r/linuxserver/sabnzbd
   sabnzbd:
@@ -76,3 +100,4 @@ services:
     volumes:
       - ${POOL}/services/sabnzbd:/config
       - ${POOL}/media:/media
+    network_mode: container:wireguard
