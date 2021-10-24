@@ -1,0 +1,19 @@
+version: "2.1"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    restart: unless-stopped
+    ports:
+      - 32400:32400
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - VERSION=latest
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    volumes:
+      - ${POOL}/services/plex:/config
+      - ${POOL}/media/movies:/movies
+      - ${POOL}/media/tv:/tv
+      - ${POOL}/media/anime:/anime
+      - ${POOL}/media/music:/music
