@@ -1,3 +1,7 @@
+# todo:
+#  - movienight?
+#  - invidious?
+
 version: "2.1"
 services:
   # https://hub.docker.com/r/linuxserver/plex
