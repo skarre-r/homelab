@@ -33,6 +33,8 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ${POOL}/services/prowlarr:/config
+    depends_on:
+      - wireguard
     network_mode: container:wireguard
 
   # https://hub.docker.com/r/linuxserver/radarr
@@ -49,6 +51,8 @@ services:
     volumes:
       - ${POOL}/services/radarr:/config
       - ${POOL}/media:/media
+    depends_on:
+      - wireguard
     network_mode: container:wireguard
 
   # https://hub.docker.com/r/linuxserver/sonarr
@@ -65,6 +69,8 @@ services:
     volumes:
       - ${POOL}/services/sonarr:/config
       - ${POOL}/media:/media
+    depends_on:
+      - wireguard
     network_mode: container:wireguard
 
   # https://hub.docker.com/r/linuxserver/transmission
@@ -83,6 +89,8 @@ services:
     volumes:
       - ${POOL}/services/transmission:/config
       - ${POOL}/media:/media
+    depends_on:
+      - wireguard
     network_mode: container:wireguard
   
   # https://hub.docker.com/r/linuxserver/sabnzbd
@@ -100,4 +108,6 @@ services:
     volumes:
       - ${POOL}/services/sabnzbd:/config
       - ${POOL}/media:/media
+    depends_on:
+      - wireguard
     network_mode: container:wireguard
