@@ -2,6 +2,10 @@
 
 ## services
 
+## chat
+
+- teamspeak (TODO)
+
 ### media
 
 - plex
@@ -13,11 +17,17 @@
 
 - uptime-kuma
 
+### network
+
+- træfik (TODO)
+
 ### pirate
 
 - wireguard
+- prowlarr
 - sonarr
 - radarr
-- prowlarr
+- bazarr
+- lidarr
 - transmission
 - sabnzbd
