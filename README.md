@@ -60,6 +60,6 @@ Docker-compose files for running several services on a TrueNAS Scale (beta) box.
 - radarr
 - bazarr
 - lidarr
-- readarr (TODO)
+- readarr
 - sabnzbd
 - transmission
