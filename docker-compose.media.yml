@@ -15,7 +15,6 @@ services:
       - PUID=1001
       - PGID=1001
       - VERSION=latest
-      - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
       - ${POOL}/services/plex:/config
       - ${POOL}/media/movies:/movies
