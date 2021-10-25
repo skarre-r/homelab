@@ -1,37 +1,24 @@
-version: "2.1"
+version: "3.3"
 services:
-  # https://hub.docker.com/_/traefik
   traefik:
     image: traefik:latest
     container_name: traefik
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    networks:
-      - proxy
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
     ports:
-      - 8008:80
-      - 8080:8080
-      - 8443:443
+      - "80:80"
+      - "8080:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik.yml:/traefik.yml:ro
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  whoami:
+    image: "traefik/whoami"
+    container_name: "whoami"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.entrypoints=http"
-      # - "traefik.http.routers.traefik.rule=Host(`traefik.your-domain.com`)"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=username:hashed-password"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
-      - "traefik.http.routers.traefik-secure.entrypoints=https"
-      # - "traefik.http.routers.traefik-secure.rule=Host(`traefik.your-domain.com`)"
-      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
-      - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=http"
-      - "traefik.http.routers.traefik-secure.service=api@internal"
-      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-
-networks:
-  proxy:
-    external: false
-    name: proxy
+      - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
