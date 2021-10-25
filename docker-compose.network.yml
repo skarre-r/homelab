@@ -6,7 +6,7 @@ services:
     container_name: traefik
     restart: unless-stopped
     ports:
-      - 80:80
-      - 8765:8080
+      - 8123:80
+      - 8456:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
