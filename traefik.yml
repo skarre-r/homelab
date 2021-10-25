@@ -1,0 +1,32 @@
+api:
+  dashboard: true
+
+# Writing Logs to a File, in JSON
+log:
+  level: DEBUG
+  filePath: "log-file.log"
+  format: json
+
+# Configuring a buffer of 100 lines
+accessLog:
+  filePath: "log-access.log"
+  bufferingSize: 100
+
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+# certificatesResolvers:
+#   http:
+#     acme:
+#       email: your-email.com
+#       storage: acme.json
+#       httpChallenge:
+#         entryPoint: http
