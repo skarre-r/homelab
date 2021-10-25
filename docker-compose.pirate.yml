@@ -16,7 +16,7 @@ services:
       - 9091:9091           # transmission
       - 51413:51413         # transmission
       - 51413:51413/udp     # transmission
-      - 8080:8080           # sabnzbd
+      - 8081:8080           # sabnzbd
       - 9090:9090           # sabnzbd
       - 6767:6767           # bazarr
       - 8686:8686           # lidarr
