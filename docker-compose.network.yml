@@ -1,9 +1,9 @@
 version: "2.1"
 services:
   # https://hub.docker.com/_/traefik
-  træfik:
+  traefik:
     image: traefik:latest
-    container_name: træfik
+    container_name: traefik
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
