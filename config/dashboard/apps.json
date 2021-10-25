@@ -1,0 +1,94 @@
+{
+    "categories": [
+      {
+        "name": "Media",
+        "items": [
+          {
+            "name": "plex",
+            "displayURL": "localhost:32400",
+            "url": "localhost:32400",
+            "icon": "mdiPlex"
+          },
+          {
+            "name": "tautulli",
+            "displayURL": "localhost:8181",
+            "url": "localhost:8181",
+            "icon": "mdiPlex"
+          },
+          {
+            "name": "overseerr",
+            "displayURL": "localhost:5055",
+            "url": "localhost:5055",
+            "icon": "mdiEye"
+          },
+          {
+            "name": "jellyfin",
+            "displayURL": "localhost:8096",
+            "url": "localhost:8096",
+            "icon": "mdiJellyfishOutline"
+          }
+        ]
+      },
+      {
+          "name": "pirate",
+          "items": [
+            {
+                "name": "prowlarr",
+                "displayURL": "localhost:9696",
+                "url": "localhost:9696",
+                "icon": "mdiTransitConnectionVariant"
+              },
+              {
+                "name": "radarr",
+                "displayURL": "localhost:7878",
+                "url": "localhost:7878",
+                "icon": "mdiMovieOpen"
+              },
+              {
+                "name": "sonarr",
+                "displayURL": "localhost:8989",
+                "url": "localhost:8989",
+                "icon": "mdiFilmstrip"
+              },
+              {
+                "name": "bazarr",
+                "displayURL": "localhost:6767",
+                "url": "localhost:6767",
+                "icon": "mdiFormatTextVariant"
+              },
+              {
+                "name": "lidarr",
+                "displayURL": "localhost:8686",
+                "url": "localhost:8686",
+                "icon": "mdiMusic"
+              },
+              {
+                "name": "readarr",
+                "displayURL": "localhost:8787",
+                "url": "localhost:8787",
+                "icon": "mdiBookOpenVariant"
+              },
+              {
+                "name": "sabznbd",
+                "displayURL": "localhost:8081",
+                "url": "localhost:8081",
+                "icon": "mdiTrayArrowDown"
+              },
+              {
+                "name": "transmission",
+                "displayURL": "localhost:9091",
+                "url": "localhost:9091",
+                "icon": "mdiTrayArrowDown"
+              }
+          ]
+      }
+    ],
+    "apps": [
+      {
+        "name": "uptime-kuma",
+        "displayURL": "localhost:3001",
+        "url": "localhost:3001",
+        "icon": "mdiTeddyBear"
+      }
+    ]
+  }
