@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
+    network:
+      - proxy
+    ports:
+      - "8008:80"
+      - "8443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./config/proxy/traefik.yml:/traefik.yml
+      - ./config/proxy/acme.json:/acme.json
+
+  whoami:
+    image: "traefik/whoami"
+    container_name: "whoami"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
+      - "traefik.http.routers.whoami.entrypoints=http"
+
+networks:
+  proxy:
+    external: false
