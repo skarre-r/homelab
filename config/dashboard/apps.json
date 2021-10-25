@@ -7,25 +7,25 @@
             "name": "plex",
             "displayURL": "localhost:32400",
             "url": "localhost:32400",
-            "icon": "mdiPlex"
+            "icon": ""
           },
           {
             "name": "tautulli",
             "displayURL": "localhost:8181",
             "url": "localhost:8181",
-            "icon": "mdiPlex"
+            "icon": ""
           },
           {
             "name": "overseerr",
             "displayURL": "localhost:5055",
             "url": "localhost:5055",
-            "icon": "mdiEye"
+            "icon": ""
           },
           {
             "name": "jellyfin",
             "displayURL": "localhost:8096",
             "url": "localhost:8096",
-            "icon": "mdiJellyfishOutline"
+            "icon": ""
           }
         ]
       },
@@ -36,49 +36,49 @@
                 "name": "prowlarr",
                 "displayURL": "localhost:9696",
                 "url": "localhost:9696",
-                "icon": "mdiTransitConnectionVariant"
+                "icon": ""
               },
               {
                 "name": "radarr",
                 "displayURL": "localhost:7878",
                 "url": "localhost:7878",
-                "icon": "mdiMovieOpen"
+                "icon": ""
               },
               {
                 "name": "sonarr",
                 "displayURL": "localhost:8989",
                 "url": "localhost:8989",
-                "icon": "mdiFilmstrip"
+                "icon": ""
               },
               {
                 "name": "bazarr",
                 "displayURL": "localhost:6767",
                 "url": "localhost:6767",
-                "icon": "mdiFormatTextVariant"
+                "icon": ""
               },
               {
                 "name": "lidarr",
                 "displayURL": "localhost:8686",
                 "url": "localhost:8686",
-                "icon": "mdiMusic"
+                "icon": ""
               },
               {
                 "name": "readarr",
                 "displayURL": "localhost:8787",
                 "url": "localhost:8787",
-                "icon": "mdiBookOpenVariant"
+                "icon": ""
               },
               {
                 "name": "sabznbd",
                 "displayURL": "localhost:8081",
                 "url": "localhost:8081",
-                "icon": "mdiTrayArrowDown"
+                "icon": ""
               },
               {
                 "name": "transmission",
                 "displayURL": "localhost:9091",
                 "url": "localhost:9091",
-                "icon": "mdiTrayArrowDown"
+                "icon": ""
               }
           ]
       }
@@ -88,7 +88,7 @@
         "name": "uptime-kuma",
         "displayURL": "localhost:3001",
         "url": "localhost:3001",
-        "icon": "mdiTeddyBear"
+        "icon": ""
       }
     ]
   }
