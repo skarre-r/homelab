@@ -30,7 +30,7 @@ providers:
 certificatesResolvers:
   http:
     acme:
-      email: your-email.com
+      # email: your-email.com
       storage: acme.json
       httpChallenge:
         entryPoint: http
