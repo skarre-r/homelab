@@ -17,10 +17,7 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
       - ${POOL}/services/plex:/config
-      - ${POOL}/media/movies:/movies
-      - ${POOL}/media/tv:/tv
-      - ${POOL}/media/anime:/anime
-      - ${POOL}/media/music:/music
+      - ${POOL}/media:/media
 
   # https://hub.docker.com/r/linuxserver/tautulli
   tautulli:
@@ -63,3 +60,4 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ${POOL}/services/jellyfin:/config
+      - ${POOL}/media:/media
