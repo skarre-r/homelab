@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # usage:
-# bash start [chat | media | monitor | network | pirate | ...]
+# bash start [SERVICE...]
 
 docker-compose -f docker-compose.$1.yml --project-name $1 --env-file .env up -d
 exit 0
