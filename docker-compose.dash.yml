@@ -7,5 +7,7 @@ services:
     restart: unless-stopped
     ports:
       - 8182:8080
+    expose:
+      - "8080"
     volumes:
       - ./config/dashboard:/app/data

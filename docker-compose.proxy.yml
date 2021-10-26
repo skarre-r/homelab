@@ -10,6 +10,10 @@ services:
       - "8008:80"     # port 80 is taken by host
       - "8443:443"    # port 443 is taken by host
       - "8080:8080"
+    expose:
+      - "80"
+      - "443"
+      - "8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - ./config/proxy/traefik.yml:/traefik.yml

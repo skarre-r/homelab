@@ -7,6 +7,8 @@ services:
     restart: unless-stopped
     ports:
       - 8444:8443
+    expose:
+      - "8443"
     environment:
       - PUID=1000
       - PGID=1000

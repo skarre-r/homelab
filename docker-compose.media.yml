@@ -10,6 +10,17 @@ services:
     container_name: plex
     restart: unless-stopped
     network_mode: host
+    expose:
+      - "32400"
+      - "1900/udp"
+      - "3005"
+      - "5353/udp"
+      - "8324"
+      - "32410/udp"
+      - "32412/udp"
+      - "32413/udp"
+      - "32414/udp"
+      - "32469"
     environment:
       - PUID=1001
       - PGID=1001
@@ -26,6 +37,8 @@ services:
     restart: unless-stopped
     ports:
       - 8181:8181
+    expose:
+      - "8181"
     environment:
       - PUID=1001
       - PGID=1001
@@ -40,6 +53,8 @@ services:
     restart: unless-stopped
     ports:
       - 5055:5055
+    expose:
+      - "5055"
     environment:
       - PUID=1001
       - PGID=1001
@@ -54,6 +69,8 @@ services:
     restart: unless-stopped
     ports:
       - 8096:8096
+    expose:
+      - "8096"
     environment:
       - PUID=1001
       - PGID=1001

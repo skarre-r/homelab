@@ -7,5 +7,7 @@ services:
     restart: unless-stopped
     ports:
       - 3001:3001
+    expose:
+      - "3001"
     volumes:
       - ${POOL}/services/kuma:/app/data

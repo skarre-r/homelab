@@ -21,6 +21,8 @@ services:
       - 6767:6767           # bazarr
       - 8686:8686           # lidarr
       - 8787:8787           # readarr
+    expose:
+      - "51820/udp"
     environment:
       - PUID=1337
       - PGID=1337
@@ -36,6 +38,8 @@ services:
     image: ghcr.io/linuxserver/prowlarr:develop
     container_name: prowlarr
     restart: unless-stopped
+    expose:
+      - "9696"
     environment:
       - PUID=1337
       - PGID=1337
@@ -51,6 +55,8 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     restart: unless-stopped
+    expose:
+      - "7878"
     environment:
       - PUID=1337
       - PGID=1337
@@ -67,6 +73,8 @@ services:
     image: lscr.io/linuxserver/sonarr
     container_name: sonarr
     restart: unless-stopped
+    expose:
+      - "8989"
     environment:
       - PUID=1337
       - PGID=1337
@@ -83,6 +91,8 @@ services:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
     restart: unless-stopped
+    expose:
+      - "6767"
     environment:
       - PUID=1337
       - PGID=1337
@@ -99,6 +109,8 @@ services:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
     restart: unless-stopped
+    expose:
+      - "8686"
     environment:
       - PUID=1337
       - PGID=1337
@@ -115,6 +127,8 @@ services:
     image: ghcr.io/linuxserver/readarr:nightly
     container_name: readarr
     restart: unless-stopped
+    expose:
+      - "8787"
     environment:
       - PUID=1337
       - PGID=1337
@@ -131,6 +145,9 @@ services:
     image: lscr.io/linuxserver/transmission
     container_name: transmission
     restart: unless-stopped
+    expose:
+      - "9091"
+      - "51413/udp"
     environment:
       - PUID=1337
       - PGID=1337
@@ -147,6 +164,8 @@ services:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
     restart: unless-stopped
+    expose:
+      - "8080"
     environment:
       - PUID=1337
       - PGID=1337
