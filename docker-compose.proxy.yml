@@ -43,6 +43,7 @@ services:
       # cert resolver/ acme
       - "--certificatesresolvers.http.acme.email=${ACME_EMAIL}"
       - "--certificatesresolvers.http.acme.storage=acme.json"
+      - "--certificatesresolvers.http.acme.httpchallenge=true"
       - "--certificatesresolvers.http.acme.httpchallenge.entrypoint=http"
     labels:
       - traefik.http.routers.traefik-http.rule=Host(`${TRAEFIK_HOST}`)
