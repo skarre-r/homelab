@@ -3,10 +3,10 @@
 # usage:
 # bash restart [SERVICE...]
 
-echo "stopping ${1}..."
+echo "Stopping ${1} services..."
 bash ./stop $1
 
-echo "starting ${1}..."
+echo "Starting ${1} services..."
 bash ./start $1
 
 exit 0
