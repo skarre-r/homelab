@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# usage:
+# bash restart [SERVICE...]
+
+echo "stopping ${1}..."
+bash ./stop $1
+
+echo "starting ${1}..."
+bash ./start $1
+
+exit 0
