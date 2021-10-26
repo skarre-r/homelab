@@ -58,6 +58,8 @@ services:
   whoami:
     image: "traefik/whoami"
     container_name: "whoami"
+    networks:
+      - proxy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
