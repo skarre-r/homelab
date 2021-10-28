@@ -25,6 +25,10 @@ services:
     volumes:
       - ${POOL}/services/plex:/config
       - ${POOL}/media:/media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
+      - "traefik.http.routers.whoami.entrypoints=http"
 
   # https://hub.docker.com/r/linuxserver/tautulli
   tautulli:
