@@ -56,15 +56,15 @@ services:
       - traefik.http.routers.traefik-https.service=api@internal
       - traefik.http.middlewares.redirect.redirectscheme.scheme=https
 
-  whoami:
-    image: "traefik/whoami"
-    container_name: "whoami"
-    networks:
-      - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
-      - "traefik.http.routers.whoami.entrypoints=http"
+  # whoami:
+  #   image: "traefik/whoami"
+  #   container_name: "whoami"
+  #   networks:
+  #     - proxy
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
+  #     - "traefik.http.routers.whoami.entrypoints=http"
 
 networks:
   proxy:
