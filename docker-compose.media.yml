@@ -27,8 +27,10 @@ services:
       - ${POOL}/media:/media
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
-      - "traefik.http.routers.whoami.entrypoints=http"
+      - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN}`)"
+      - "traefik.http.routers.plex.entrypoints=websecure"
+      - "traefik.http.routers.plex.tls.certresolver=letsencrypt"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
 
   # https://hub.docker.com/r/linuxserver/tautulli
   tautulli:
