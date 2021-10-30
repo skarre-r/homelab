@@ -86,3 +86,8 @@ services:
     volumes:
       - ${POOL}/services/jellyfin:/config
       - ${POOL}/media:/media
+
+networks:
+  proxy:
+    name: proxy
+    external: True
