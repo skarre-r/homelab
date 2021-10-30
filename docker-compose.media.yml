@@ -5,7 +5,9 @@ services:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
     restart: unless-stopped
-    network_mode: host
+    # network_mode: host
+    network:
+      - proxy
     expose:
       - "32400"
       - "1900/udp"
@@ -27,6 +29,10 @@ services:
       - ${POOL}/media:/media
     labels:
       - "traefik.enable=true"
+      - "traefik.backend=plex"
+      - "traefik.docker.network=proxy"
+      - "traefik.port=32400"
+      - "traefik.protocol=https"
       - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN}`)"
       - "traefik.http.routers.plex.entrypoints=websecure"
       - "traefik.http.routers.plex.tls.certresolver=letsencrypt"
