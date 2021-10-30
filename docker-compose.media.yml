@@ -6,7 +6,7 @@ services:
     container_name: plex
     restart: unless-stopped
     # network_mode: host
-    network:
+    networks:
       - proxy
     expose:
       - "32400"
