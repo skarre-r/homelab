@@ -5,9 +5,9 @@ services:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
     restart: unless-stopped
-    # network_mode: host
-    networks:
-      - proxy
+    network_mode: host
+    # networks:
+    #   - proxy
     expose:
       - "32400"
       - "1900/udp"
@@ -87,7 +87,7 @@ services:
       - ${POOL}/services/jellyfin:/config
       - ${POOL}/media:/media
 
-networks:
-  proxy:
-    name: proxy
-    external: True
+# networks:
+#   proxy:
+#     name: proxy
+#     external: True
