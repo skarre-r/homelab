@@ -47,7 +47,7 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.storage=acme.json"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=websecure"
-      - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      # - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     labels:
       - traefik.http.routers.traefik-http.rule=Host(`${TRAEFIK_HOST}`)
       - traefik.http.routers.traefik-http.entrypoints=web
