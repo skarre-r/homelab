@@ -1,8 +1,8 @@
 # Homelab
 
-Docker-compose files for running several services on a TrueNAS Scale (RC) box.
+Docker-compose files for running several services on a TrueNAS Scale box + a couple of Raspberry Pis.
 
-> Note: some services require additional configuration!
+> Note: some services, like wireguard, require additional configuration!
 
 ## Get started
 
