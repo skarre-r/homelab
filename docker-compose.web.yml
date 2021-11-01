@@ -34,6 +34,8 @@ services:
       - flame.name=flame
       - flame.url=https://${DOMAIN}
       - flame.icon=fire
+
+  # https://hub.docker.com/r/traefik/whoami
   whoami:
     image: traefik/whoami
     container_name: whoami
@@ -54,6 +56,7 @@ services:
       - flame.url=https://debug.${DOMAIN}
       - flame.icon=test-tube
 
+  # https://hub.docker.com/_/nginx
   robots:
     image: nginx:alpine
     container_name: robots

@@ -6,6 +6,7 @@ networks:
     external: false
 
 services:
+  # https://hub.docker.com/_/traefik
   traefik:
     image: traefik:latest
     container_name: traefik
