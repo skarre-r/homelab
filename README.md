@@ -53,6 +53,7 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 ## Planned services
 
 - unbound
+- [portainer](https://hub.docker.com/r/portainer/portainer-ce)
 - [teamspeak](https://hub.docker.com/_/teamspeak)
 - [movienight](https://github.com/zorchenhimer/MovieNight#docker-compose)
 - [pihole](https://hub.docker.com/r/pihole/pihole)
