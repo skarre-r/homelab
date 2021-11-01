@@ -1,13 +1,30 @@
 version: "3.7"
+
+networks:
+  monitor:
+    name: monitor
+    external: false
+  proxy:
+    external: true
+
 services:
   # https://hub.docker.com/r/louislam/uptime-kuma
   uptime-kuma:
     image: louislam/uptime-kuma:latest
     container_name: kuma
     restart: unless-stopped
+    networks:
+      - proxy
+      - monitor
     ports:
       - 3001:3001
     expose:
       - "3001"
     volumes:
       - ${POOL}/services/kuma:/app/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kuma.entrypoints=websecure"
+      - "traefik.http.routers.kuma.rule=Host(`uptime.${DOMAIN}`) || Host(`kuma.${DOMAIN}`)"
+      - "traefik.http.routers.kuma.middlewares=auth-middleware"
+      - "traefik.http.services.kuma.loadbalancer.server.port=3001"
