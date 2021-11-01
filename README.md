@@ -60,7 +60,7 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 - [influxdb](https://hub.docker.com/_/influxdb)
 - [chronograf](https://hub.docker.com/_/chronograf)
 - [telegraf](https://hub.docker.com/_/telegraf)
-  - [prometheus](https://hub.docker.com/r/prom/prometheus/)
+- [prometheus](https://hub.docker.com/r/prom/prometheus/)
   - [graphite-exporter](https://hub.docker.com/r/prom/graphite-exporter)
   - [node-exporter](https://hub.docker.com/r/prom/node-exporter)
   - [influxdb-exporter](https://hub.docker.com/r/prom/influxdb-exporter)
