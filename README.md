@@ -2,7 +2,7 @@
 
 Docker-compose files for running several services on a TrueNAS Scale box + a couple of Raspberry Pis.
 
-> Note: some services, like wireguard, require additional configuration!
+> Note: some services, like wireguard and traefik, require additional configuration!
 
 ## Get started
 
@@ -14,12 +14,6 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 
 ## Services
 
-### chat
-
-- teamspeak (TODO)
-- revolt? (TODO)
-- matrix? (TODO)
-
 ### dev
 
 - [code-server](https://hub.docker.com/r/linuxserver/code-server)
@@ -30,33 +24,16 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 - [tautulli](https://hub.docker.com/r/linuxserver/tautulli)
 - [overseerr](https://hub.docker.com/r/linuxserver/overseerr)
 - [jellyfin](https://hub.docker.com/r/linuxserver/jellyfin)
-- movienight (TODO)
-- invidious? (TODO)
-- piped? (TODO)
-
-### misc
-
-- [firefox](https://hub.docker.com/r/linuxserver/firefox)
-- [freshrss](https://hub.docker.com/r/linuxserver/freshrss) (TODO)
 
 ### monitor
 
 - [uptime-kuma](https://hub.docker.com/r/louislam/uptime-kuma)
-- grafana (TODO)
-- influxdb (TODO)
-- chronograf (TODO)
-- prometheus (TODO)
-- exporters (TODO)
-- ...
 
-### network
+### proxy
 
-- træfik (TODO)
-- unbound (TODO)
-- ddclient (TODO)
-- pi-hole/ adguard (TODO)
+- [traefik](https://hub.docker.com/_/traefik)
 
-### pirate
+### vpn
 
 - [wireguard](https://hub.docker.com/r/linuxserver/wireguard)
 - [prowlarr](https://hub.docker.com/r/linuxserver/prowlarr)
@@ -67,3 +44,41 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 - [readarr](https://hub.docker.com/r/linuxserver/readarr)
 - [sabnzbd](https://hub.docker.com/r/linuxserver/sabnzbd)
 - [transmission](https://hub.docker.com/r/linuxserver/transmission)
+
+### web
+
+- [traefik/whoami](https://hub.docker.com/r/traefik/whoami)
+- [nginx](https://hub.docker.com/_/nginx)
+
+### todo
+
+- unbound
+- [teamspeak](https://hub.docker.com/_/teamspeak)
+- [movienight](https://github.com/zorchenhimer/MovieNight#docker-compose)
+- [pihole](https://hub.docker.com/r/pihole/pihole)
+- [grafana](https://hub.docker.com/r/grafana/grafana)
+- [influxdb](https://hub.docker.com/_/influxdb)
+- [chronograf](https://hub.docker.com/_/chronograf)
+- [telegraf](https://hub.docker.com/_/telegraf)
+- [prometheus](https://hub.docker.com/r/prom/prometheus/)
+- [freshrss](https://hub.docker.com/r/linuxserver/freshrss)
+
+- [piped](https://github.com/TeamPiped/Piped)?
+- [invidious](https://github.com/iv-org/invidious)?
+- [ddclient](https://hub.docker.com/r/linuxserver/ddclient)?
+- [adguard](https://hub.docker.com/r/adguard/adguardhome)?
+- [revolt](https://hub.docker.com/u/revoltchat)?
+- [matrix/synapse](https://hub.docker.com/r/matrixdotorg/synapse)?
+- [caddy](https://hub.docker.com/_/caddy)?
+
+#### exporters
+
+##### prometheus
+
+- [graphite-exporter](https://hub.docker.com/r/prom/graphite-exporter)
+- [node-exporter](https://hub.docker.com/r/prom/node-exporter)
+- [influxdb-exporter](https://hub.docker.com/r/prom/influxdb-exporter)
+- [collectd-exporter](https://hub.docker.com/r/prom/collectd-exporter)
+- [snmp-exporter](https://hub.docker.com/r/prom/snmp-exporter)
+  - [snmp-generator](https://hub.docker.com/r/prom/snmp-generator)?
+- [container-exporter](https://hub.docker.com/r/prom/container-exporter)
