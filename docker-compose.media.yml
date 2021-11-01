@@ -1,13 +1,23 @@
 version: "3.7"
+
+networks:
+  media:
+    name: media
+    external: false
+  proxy:
+    external: true
+
 services:
   # https://hub.docker.com/r/linuxserver/plex
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
     restart: unless-stopped
-    network_mode: host
-    # networks:
-    #   - proxy
+    networks:
+      - proxy
+      - media
+    ports:
+      - 32400:32400
     expose:
       - "32400"
       - "1900/udp"
@@ -29,13 +39,9 @@ services:
       - ${POOL}/media:/media
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=plex"
-      - "traefik.docker.network=proxy"
-      - "traefik.port=32400"
-      - "traefik.protocol=https"
       - "traefik.http.routers.plex.rule=Host(`plex.${DOMAIN}`)"
       - "traefik.http.routers.plex.entrypoints=websecure"
-      - "traefik.http.routers.plex.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.plex.middlewares=no-auth-middleware"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"
 
   # https://hub.docker.com/r/linuxserver/tautulli
@@ -43,6 +49,9 @@ services:
     image: lscr.io/linuxserver/tautulli:latest
     container_name: tautulli
     restart: unless-stopped
+    networks:
+      - proxy
+      - media
     ports:
       - 8181:8181
     expose:
@@ -53,12 +62,21 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ${POOL}/services/tautulli:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tautulli.rule=Host(`tautulli.${DOMAIN}`)"
+      - "traefik.http.routers.tautulli.entrypoints=websecure"
+      - "traefik.http.routers.tautulli.middlewares=auth-middleware"
+      - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
 
   # https://hub.docker.com/r/linuxserver/overseerr
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     container_name: overseerr
     restart: unless-stopped
+    networks:
+      - proxy
+      - media
     ports:
       - 5055:5055
     expose:
@@ -69,12 +87,20 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ${POOL}/services/overseerr:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.overseerr.rule=Host(`overseerr.${DOMAIN}`)"
+      - "traefik.http.routers.overseerr.entrypoints=websecure"
+      - "traefik.http.routers.overseerr.middlewares=auth-middleware"
+      - "traefik.http.services.overseerr.loadbalancer.server.port=5055"
 
   # https://hub.docker.com/r/linuxserver/jellyfin
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     restart: unless-stopped
+    networks:
+      - media
     ports:
       - 8096:8096
     expose:
@@ -86,8 +112,3 @@ services:
     volumes:
       - ${POOL}/services/jellyfin:/config
       - ${POOL}/media:/media
-
-# networks:
-#   proxy:
-#     name: proxy
-#     external: True
