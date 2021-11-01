@@ -1,0 +1,39 @@
+version: "3.7"
+
+networks:
+  proxy:
+    external: true
+
+services:
+  whoami:
+    image: traefik/whoami
+    container_name: whoami
+    restart: unless-stopped
+    networks:
+      - proxy
+    expose:
+      - "80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.whoami.middlewares=no-auth-middleware"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
+  robots:
+    image: nginx:alpine
+    container_name: robots
+    restart: unless-stopped
+    networks:
+      - proxy
+    expose:
+      - "80"
+    volumes:
+      - ./config/robots/robots.txt:/usr/share/nginx/html/robots.txt:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.robots.entrypoints=websecure"
+      - "traefik.http.routers.robots.rule=HostRegexp(`{host:.*}`) && Path(`/robots.txt`)"
+      - "traefik.http.routers.robots.priority=99"
+      - "traefik.http.routers.robots.middlewares=no-auth-middleware"
+      - "traefik.http.services.robots.loadbalancer.server.port=80"
