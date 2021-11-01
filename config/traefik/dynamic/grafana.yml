@@ -1,0 +1,20 @@
+http:
+  routers:
+    grafana:
+      entryPoints:
+      - websecure
+      middlewares:
+      - auth-middleware@docker
+      service: grafana-service
+      rule: Host(`grafana.example.com`)  # replace 'example.com' with your domain
+  services:
+    grafana-service:
+      loadBalancer:
+        servers:
+        - url: http://127.0.0.1:3000  # replace '127.0.0.1' with the ip address of your grafana host
+        passHostHeader: true
+        serversTransport: grafana-server-transport
+  serversTransports:
+    grafana-server-transport:
+      serverName: grafana
+      insecureSkipVerify: true
