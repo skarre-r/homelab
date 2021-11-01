@@ -1,4 +1,10 @@
 version: "3.7"
+
+networks:
+  proxy:
+    name: proxy
+    external: false
+
 services:
   traefik:
     image: traefik:latest
@@ -7,69 +13,67 @@ services:
     networks:
       - proxy
     ports:
-      - "800:80"     # port 80 is taken by host
-      - "4433:443"    # port 443 is taken by host
-      - "8080:8080"
+      - "80:80"
+      - "443:443"
     expose:
       - "80"
       - "443"
       - "8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - ./config/proxy/acme.json:/acme.json
+      - ./config/traefik/letsencrypt:/letsencrypt
+      - ./config/traefik/auth:/auth
+      - ./config/traefik/dynamic:/dynamic
+    environment:
+      NJALLA_TOKEN: ${NJALLA_TOKEN}
+      NJALLA_HTTP_TIMEOUT: 10
+      NJALLA_POLLING_INTERVAL: 30
+      NJALLA_PROPAGATION_TIMEOUT: 360
     command:
-      # https://doc.traefik.io/traefik/reference/static-configuration/cli/
-      # global settings
-      - "--global.checknewversion=true"
-      - "--global.sendanonymoususage=false"
-      # api settings
-      - "--api.dashboard=true"
-      - "--api.insecure=true"
-      # logging
-      - "--log.level=DEBUG"
-      - "--log.format=json"
-      - "--log.filepath=traefik.log"
+      # global
+      - --global.checknewversion=true
+      - --global.sendanonymoususage=false
+      # api/ dashboard
+      - --api.debug=false
+      - --api.dashboard=true
+      # logs
+      - --log.level=INFO
+      - --log.format=common
       # access logs
-      - "--accesslog.bufferingsize=100"
-      - "--accesslog.filepath=access.log"
-      - "--accesslog.format=json"
-      # entrypoints
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      - "--entrypoints.websecure.address=:443"
+      # - --accesslog.bufferingsize=100
+      # - --accesslog.format=common
       # providers/ docker
-      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=proxy"
-      # cert resolver/ acme
-      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}"
-      - "--certificatesresolvers.letsencrypt.acme.storage=acme.json"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=websecure"
-      # - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-    labels:
-      - traefik.http.routers.traefik-http.rule=Host(`${TRAEFIK_HOST}`)
-      - traefik.http.routers.traefik-http.entrypoints=web
-      - traefik.http.routers.traefik-http.middlewares=redirect
-      - traefik.http.routers.traefik-https.rule=Host(`${TRAEFIK_HOST}`)
-      - traefik.http.routers.traefik-https.entrypoints=websecure
-      - traefik.http.routers.traefik-https.tls=true
-      - traefik.http.routers.traefik-http.service=api@internal
-      - traefik.http.routers.traefik-https.service=api@internal
-      - traefik.http.middlewares.redirect.redirectscheme.scheme=https
-
-  whoami:
-    image: "traefik/whoami"
-    container_name: "whoami"
-    networks:
-      - proxy
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=proxy
+      # providers/ file
+      - --providers.file.directory=/dynamic
+      - --providers.file.watch=true
+      # entrypoints
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.http.tls.certresolver=letsencrypt
+      - --entrypoints.websecure.http.tls.domains[0].main=${DOMAIN}
+      - --entrypoints.websecure.http.tls.domains[0].sans=*.${DOMAIN}
+      # letsencrypt
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=njalla
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
+      - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)"
-      - "traefik.http.routers.whoami.entrypoints=http"
-
-networks:
-  proxy:
-    name: proxy
-    external: false
+      - "traefik.http.routers.traefik.rule=Host(`proxy.${DOMAIN}`) || Host(`traefik.${DOMAIN}`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=auth-middleware"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      # reusable middleware "chains"
+      - "traefik.http.middlewares.no-auth-middleware.chain.middlewares=robots"  # no-auth-middleware
+      - "traefik.http.middlewares.auth-middleware.chain.middlewares=robots,auth"  # auth-middleware
+      # middlewares
+      - "traefik.http.middlewares.auth.basicauth.usersfile=/auth/.htpasswd"  # echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
+      - "traefik.http.middlewares.auth.basicauth.removeheader=true"
+      - "traefik.http.middlewares.robots.headers.customrequestheaders.X-Robots-Tag=noindex, nofollow, nosnippet, noarchive, nocache, notranslate, noimageindex"
