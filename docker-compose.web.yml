@@ -1,10 +1,39 @@
 version: "3.7"
 
 networks:
+  web:
+    name: web
+    external: false
   proxy:
     external: true
 
 services:
+  # https://hub.docker.com/r/pawelmalak/flame
+  flame:
+    image: pawelmalak/flame:latest
+    container_name: flame
+    restart: unless-stopped
+    networks:
+      - proxy
+      - web
+    ports:
+      - 5005:5005
+    expose:
+      - "5005"
+    volumes:
+      - ./config/flame:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.flame.entrypoints=websecure"
+      - "traefik.http.routers.flame.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.flame.middlewares=auth-middleware"
+      - "traefik.http.services.flame.loadbalancer.server.port=5005"
+      # flame
+      - flame.type=app
+      - flame.name=flame
+      - flame.url=https://${DOMAIN}
+      - flame.icon=fire
   whoami:
     image: traefik/whoami
     container_name: whoami
@@ -16,9 +45,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.whoami.rule=Host(`debug.${DOMAIN}`)"
       - "traefik.http.routers.whoami.middlewares=no-auth-middleware"
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
+      # flame
+      - flame.type=app
+      - flame.name=whoami
+      - flame.url=https://debug.${DOMAIN}
+      - flame.icon=test-tube
 
   robots:
     image: nginx:alpine
