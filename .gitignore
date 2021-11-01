@@ -1,2 +1,5 @@
 .env
-config/traefik/letsencrypt/acme.json
+config/traefik/letsencrypt/
+!config/traefik/letsencrypt/readme.txt
+config/flame/
+!config/flame/readme.txt
