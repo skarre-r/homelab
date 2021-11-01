@@ -47,6 +47,7 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 
 ### web
 
+- [flame](https://hub.docker.com/r/pawelmalak/flame)
 - [traefik/whoami](https://hub.docker.com/r/traefik/whoami)
 - [nginx](https://hub.docker.com/_/nginx)
 
