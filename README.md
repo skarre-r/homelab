@@ -50,7 +50,7 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 - [traefik/whoami](https://hub.docker.com/r/traefik/whoami)
 - [nginx](https://hub.docker.com/_/nginx)
 
-### todo
+## Planned services
 
 - unbound
 - [teamspeak](https://hub.docker.com/_/teamspeak)
@@ -60,9 +60,15 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 - [influxdb](https://hub.docker.com/_/influxdb)
 - [chronograf](https://hub.docker.com/_/chronograf)
 - [telegraf](https://hub.docker.com/_/telegraf)
-- [prometheus](https://hub.docker.com/r/prom/prometheus/)
+  - [prometheus](https://hub.docker.com/r/prom/prometheus/)
+  - [graphite-exporter](https://hub.docker.com/r/prom/graphite-exporter)
+  - [node-exporter](https://hub.docker.com/r/prom/node-exporter)
+  - [influxdb-exporter](https://hub.docker.com/r/prom/influxdb-exporter)
+  - [collectd-exporter](https://hub.docker.com/r/prom/collectd-exporter)
+  - [snmp-exporter](https://hub.docker.com/r/prom/snmp-exporter)
+  - [snmp-generator](https://hub.docker.com/r/prom/snmp-generator)?
+  - [container-exporter](https://hub.docker.com/r/prom/container-exporter)
 - [freshrss](https://hub.docker.com/r/linuxserver/freshrss)
-
 - [piped](https://github.com/TeamPiped/Piped)?
 - [invidious](https://github.com/iv-org/invidious)?
 - [ddclient](https://hub.docker.com/r/linuxserver/ddclient)?
@@ -70,15 +76,3 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 - [revolt](https://hub.docker.com/u/revoltchat)?
 - [matrix/synapse](https://hub.docker.com/r/matrixdotorg/synapse)?
 - [caddy](https://hub.docker.com/_/caddy)?
-
-#### exporters
-
-##### prometheus
-
-- [graphite-exporter](https://hub.docker.com/r/prom/graphite-exporter)
-- [node-exporter](https://hub.docker.com/r/prom/node-exporter)
-- [influxdb-exporter](https://hub.docker.com/r/prom/influxdb-exporter)
-- [collectd-exporter](https://hub.docker.com/r/prom/collectd-exporter)
-- [snmp-exporter](https://hub.docker.com/r/prom/snmp-exporter)
-  - [snmp-generator](https://hub.docker.com/r/prom/snmp-generator)?
-- [container-exporter](https://hub.docker.com/r/prom/container-exporter)
