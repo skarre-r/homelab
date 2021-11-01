@@ -77,3 +77,8 @@ services:
       - "traefik.http.middlewares.auth.basicauth.usersfile=/auth/.htpasswd"  # echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
       - "traefik.http.middlewares.auth.basicauth.removeheader=true"
       - "traefik.http.middlewares.robots.headers.customrequestheaders.X-Robots-Tag=noindex, nofollow, nosnippet, noarchive, nocache, notranslate, noimageindex"
+      # flame
+      - flame.type=app
+      - flame.name=traefik
+      - flame.url=https://traefik.${DOMAIN}
+      - flame.icon=traffic-light

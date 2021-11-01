@@ -108,6 +108,13 @@ services:
     depends_on:
       - wireguard
     network_mode: service:wireguard
+    labels:
+      # flame
+      - flame.type=app
+      - flame.name=prowlarr
+      - flame.url=https://prowlarr.${DOMAIN}
+      - flame.icon=magnify
+
 
   # https://hub.docker.com/r/linuxserver/radarr
   # ports: 7878
@@ -125,6 +132,12 @@ services:
     depends_on:
       - wireguard
     network_mode: service:wireguard
+    labels:
+      # flame
+      - flame.type=app
+      - flame.name=radarr
+      - flame.url=https://radarr.${DOMAIN}
+      - flame.icon=movie
 
   # https://hub.docker.com/r/linuxserver/sonarr
   # ports: 8989
@@ -142,6 +155,12 @@ services:
     depends_on:
       - wireguard
     network_mode: service:wireguard
+    labels:
+      # flame
+      - flame.type=app
+      - flame.name=sonarr
+      - flame.url=https://sonarr.${DOMAIN}
+      - flame.icon=television-classic
 
   # https://hub.docker.com/r/linuxserver/bazarr
   # ports: 6767
@@ -159,6 +178,12 @@ services:
     depends_on:
       - wireguard
     network_mode: service:wireguard
+    labels:
+      # flame
+      - flame.type=app
+      - flame.name=bazarr
+      - flame.url=https://bazarr.${DOMAIN}
+      - flame.icon=clipboard-text-search
 
   # https://hub.docker.com/r/linuxserver/transmission
   # ports: 9091, 51413/udp
@@ -176,6 +201,12 @@ services:
     depends_on:
       - wireguard
     network_mode: service:wireguard
+    labels:
+      # flame
+      - flame.type=app
+      - flame.name=transmission
+      - flame.url=https://transmission.${DOMAIN}
+      - flame.icon=download
   
   # https://hub.docker.com/r/linuxserver/sabnzbd
   # ports: 8080, 9090
@@ -193,6 +224,12 @@ services:
     depends_on:
       - wireguard
     network_mode: service:wireguard
+    labels:
+      # flame
+      - flame.type=app
+      - flame.name=sabnzbd
+      - flame.url=https://sabnzbd.${DOMAIN}
+      - flame.icon=cloud-download
 
   # https://hub.docker.com/r/linuxserver/lidarr
   # ports: 8686
@@ -210,6 +247,12 @@ services:
   #   depends_on:
   #     - wireguard
   #   network_mode: service:wireguard
+  #   labels:
+  #     # flame
+  #     - flame.type=app
+  #     - flame.name=lidarr
+  #     - flame.url=https://lidarr.${DOMAIN}
+  #     - flame.icon=music-note
 
   # https://hub.docker.com/r/linuxserver/readarr
   # ports: 8787
@@ -227,3 +270,9 @@ services:
   #   depends_on:
   #     - wireguard
   #   network_mode: service:wireguard
+  #   labels:
+  #     # flame
+  #     - flame.type=app
+  #     - flame.name=readarr
+  #     - flame.url=https://readarr.${DOMAIN}
+  #     - flame.icon=book-open-blank-variant

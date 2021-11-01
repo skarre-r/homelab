@@ -43,6 +43,11 @@ services:
       - "traefik.http.routers.plex.entrypoints=websecure"
       - "traefik.http.routers.plex.middlewares=no-auth-middleware"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"
+      # flame
+      - flame.type=app
+      - flame.name=plex
+      - flame.url=https://plex.${DOMAIN}
+      - flame.icon=plex
 
   # https://hub.docker.com/r/linuxserver/tautulli
   tautulli:
@@ -68,6 +73,11 @@ services:
       - "traefik.http.routers.tautulli.entrypoints=websecure"
       - "traefik.http.routers.tautulli.middlewares=auth-middleware"
       - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
+      # flame
+      - flame.type=app
+      - flame.name=tautulli
+      - flame.url=https://tautulli.${DOMAIN}
+      - flame.icon=play-network
 
   # https://hub.docker.com/r/linuxserver/overseerr
   overseerr:
@@ -93,6 +103,11 @@ services:
       - "traefik.http.routers.overseerr.entrypoints=websecure"
       - "traefik.http.routers.overseerr.middlewares=auth-middleware"
       - "traefik.http.services.overseerr.loadbalancer.server.port=5055"
+      # flame
+      - flame.type=app
+      - flame.name=overseerr
+      - flame.url=https://overseerr.${DOMAIN}
+      - flame.icon=eye
 
   # https://hub.docker.com/r/linuxserver/jellyfin
   jellyfin:
