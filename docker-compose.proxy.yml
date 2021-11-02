@@ -4,6 +4,8 @@ networks:
   proxy:
     name: proxy
     external: false
+  docker-proxy:
+    external: true
 
 services:
   # https://hub.docker.com/_/traefik
@@ -13,6 +15,7 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+      - docker-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -21,7 +24,6 @@ services:
       - "443"
       - "8080"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - ./config/traefik/letsencrypt:/letsencrypt
       - ./config/traefik/auth:/auth
       - ./config/traefik/dynamic:/dynamic
@@ -40,13 +42,11 @@ services:
       # logs
       - --log.level=INFO
       - --log.format=common
-      # access logs
-      # - --accesslog.bufferingsize=100
-      # - --accesslog.format=common
       # providers/ docker
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       - --providers.docker.network=proxy
+      - --providers.docker.endpoint=tcp://docker-socket-proxy:2375  # default: unix:///var/run/docker.sock
       # providers/ file
       - --providers.file.directory=/dynamic
       - --providers.file.watch=true
