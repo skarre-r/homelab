@@ -14,26 +14,30 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 
 ## Services
 
-### dev
+### Dev
 
-- [code-server](https://hub.docker.com/r/linuxserver/code-server)
+- [code-server](https://hub.docker.com/r/linuxserver/code-server) (WIP)
 
-### media
+### Media
 
 - [plex](https://hub.docker.com/r/linuxserver/plex)
 - [tautulli](https://hub.docker.com/r/linuxserver/tautulli)
 - [overseerr](https://hub.docker.com/r/linuxserver/overseerr)
 - [jellyfin](https://hub.docker.com/r/linuxserver/jellyfin)
 
-### monitor
+### Monitor
 
 - [uptime-kuma](https://hub.docker.com/r/louislam/uptime-kuma)
 
-### proxy
+### Proxy
 
 - [traefik](https://hub.docker.com/_/traefik)
 
-### vpn
+### Security
+
+- [docker-socket-proxy](https://hub.docker.com/r/tecnativa/docker-socket-proxy)
+
+### VPN
 
 - [wireguard](https://hub.docker.com/r/linuxserver/wireguard)
 - [prowlarr](https://hub.docker.com/r/linuxserver/prowlarr)
@@ -45,7 +49,7 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 - [sabnzbd](https://hub.docker.com/r/linuxserver/sabnzbd)
 - [transmission](https://hub.docker.com/r/linuxserver/transmission)
 
-### web
+### Web
 
 - [flame](https://hub.docker.com/r/pawelmalak/flame)
 - [traefik/whoami](https://hub.docker.com/r/traefik/whoami)
