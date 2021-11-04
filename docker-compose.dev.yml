@@ -1,12 +1,21 @@
 version: "3.7"
+
+networks:
+  dev:
+    name: dev
+    external: false
+  proxy:
+    external: true
+
 services:
   # https://hub.docker.com/r/linuxserver/code-server
   code-server:
     image: lscr.io/linuxserver/code-server:latest
     container_name: code-server
     restart: unless-stopped
-    ports:
-      - 8444:8443
+    networks:
+      - proxy
+      - dev
     expose:
       - "8443"
     environment:
@@ -20,3 +29,14 @@ services:
       - PROXY_DOMAIN=${CODE_SERVER_PROXY_DOMAIN}
     volumes:
       - ${POOL}/services/code-server:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.code-server.entrypoints=websecure"
+      - "traefik.http.routers.code-server.rule=Host(`code.${DOMAIN}`) || Host(`dev.${DOMAIN}`)"
+      - "traefik.http.routers.code-server.middlewares=auth-middleware"
+      - "traefik.http.services.code-server.loadbalancer.server.port=8443"
+      # flame
+      - flame.type=app
+      - flame.name=code-server
+      - flame.url=https://code.${DOMAIN}
+      - flame.icon=code-tags
