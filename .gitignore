@@ -1,5 +1,13 @@
 .env
-config/traefik/letsencrypt/
-!config/traefik/letsencrypt/readme.txt
-config/flame/
+
+config/authelia/*
+!config/authelia/readme.txt
+
+config/flame/*
 !config/flame/readme.txt
+
+config/redis/*
+!config/redis/readme.txt
+
+config/traefik/letsencrypt/*
+!config/traefik/letsencrypt/readme.txt
