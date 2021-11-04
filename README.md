@@ -16,7 +16,7 @@ Docker-compose files for running several services on a TrueNAS SCALE box.
 Since having multiple docker-compose files in the same directory is kind of a headache to manage,
 I've made a few shell scripts to make the process easier.
 
-To start an application, simply run `bash [start](start) <application>`.
+To start an application, simply run `bash start <application>`.
 Example: `bash start web` will start all the services configured in the `docker-compose.web.yml` file.
 
 To stop an application, run `bash stop <application>`.
