@@ -1,0 +1,1 @@
+Data directory for 'authelia' (see docker-compose.auth.yml)
