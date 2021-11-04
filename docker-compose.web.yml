@@ -28,13 +28,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.flame.entrypoints=websecure"
-      - "traefik.http.routers.flame.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.flame.rule=Host(`flame.${DOMAIN}`)"
       - "traefik.http.routers.flame.middlewares=auth-middleware"
       - "traefik.http.services.flame.loadbalancer.server.port=5005"
       # flame
       - flame.type=app
       - flame.name=flame
-      - flame.url=https://${DOMAIN}
+      - flame.url=https://flame.${DOMAIN}
       - flame.icon=fire
 
   # https://hub.docker.com/r/traefik/whoami
@@ -50,7 +50,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.entrypoints=websecure"
       - "traefik.http.routers.whoami.rule=Host(`debug.${DOMAIN}`)"
-      - "traefik.http.routers.whoami.middlewares=no-auth-middleware"
+      - "traefik.http.routers.whoami.middlewares=auth-middleware"
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
       # flame
       - flame.type=app
