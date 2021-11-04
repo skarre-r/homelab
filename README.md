@@ -1,16 +1,33 @@
 # Homelab
 
-Docker-compose files for running several services on a TrueNAS Scale box + a couple of Raspberry Pis.
+Docker-compose files for running several services on a TrueNAS SCALE box.
 
 > Note: some services, like wireguard and traefik, require additional configuration!
 
 ## Get started
 
-1. clone repo: `git clone https://github.com/skarre-r/homelab.git; cd homelab`
-2. copy .env example file: `cp .env.example .env`
-3. edit .env file: `nano .env`
-4. start docker-compose service: `bash start <service>`
-5. stop docker-compose service `bash stop <service>`
+1. clone the repo: `git clone https://github.com/skarre-r/homelab.git; cd homelab`
+2. copy the .env example file: `cp .env.example .env`
+3. edit the .env file: `nano .env`
+4. start a docker-compose application: `bash start <application>`
+
+## Usage
+
+Since having multiple docker-compose files in the same directory is kind of a headache to manage,
+I've made a few shell scripts to make the process easier.
+
+To start an application, simply run `bash start <application>`.
+Example: `bash start web` will start all the services configured in the `docker-compose.web.yml` file.
+
+To stop an application, run `bash stop <application>`.
+
+To restart an application, run `bash restart <application>`.
+(`restart` just runs the `start` and `stop` scripts one after another.)
+
+To update the container images for all services in an application, run `bash update <application>`.
+
+Keep in mind that some applications rely on others to work correctly.
+Example: [traefik](docker-compose.proxy.yml) won't work if [docker-socket-proxy](docker-compose.docker.yml) isn't running.
 
 ## Services
 
