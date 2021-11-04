@@ -11,6 +11,7 @@ services:
     image: tecnativa/docker-socket-proxy:latest
     container_name: docker-socket-proxy
     restart: unless-stopped
+    privileged: true
     networks:
       - docker-proxy
     expose:
