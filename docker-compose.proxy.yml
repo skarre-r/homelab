@@ -25,7 +25,6 @@ services:
       - "8080"
     volumes:
       - ./config/traefik/letsencrypt:/letsencrypt
-      - ./config/traefik/auth:/auth
       - ./config/traefik/dynamic:/dynamic
     environment:
       NJALLA_TOKEN: ${NJALLA_TOKEN}
@@ -71,13 +70,14 @@ services:
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=auth-middleware"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-      # reusable middleware "chains"
-      - "traefik.http.middlewares.no-auth-middleware.chain.middlewares=robots"  # no-auth-middleware
-      - "traefik.http.middlewares.auth-middleware.chain.middlewares=robots,auth"  # auth-middleware
       # middlewares
-      - "traefik.http.middlewares.auth.basicauth.usersfile=/auth/.htpasswd"  # echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
-      - "traefik.http.middlewares.auth.basicauth.removeheader=true"
       - "traefik.http.middlewares.robots.headers.customrequestheaders.X-Robots-Tag=noindex, nofollow, nosnippet, noarchive, nocache, notranslate, noimageindex"
+      - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://login.${DOMAIN}"
+      - "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email"
+      # middleware "chains"
+      - "traefik.http.middlewares.no-auth-middleware.chain.middlewares=robots"
+      - "traefik.http.middlewares.auth-middleware.chain.middlewares=authelia,robots"
       # flame
       - flame.type=app
       - flame.name=traefik
