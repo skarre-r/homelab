@@ -14,9 +14,18 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 
 ## Services
 
+### Auth
+
+- [authelia](https://hub.docker.com/r/authelia/authelia)
+- [redis](https://hub.docker.com/_/redis)
+
 ### Dev
 
 - [code-server](https://hub.docker.com/r/linuxserver/code-server) (WIP)
+
+### Docker
+
+- [docker-socket-proxy](https://hub.docker.com/r/tecnativa/docker-socket-proxy)
 
 ### Media
 
@@ -32,10 +41,6 @@ Docker-compose files for running several services on a TrueNAS Scale box + a cou
 ### Proxy
 
 - [traefik](https://hub.docker.com/_/traefik)
-
-### Security
-
-- [docker-socket-proxy](https://hub.docker.com/r/tecnativa/docker-socket-proxy)
 
 ### VPN
 
