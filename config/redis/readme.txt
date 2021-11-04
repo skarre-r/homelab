@@ -1,0 +1,1 @@
+Data directory for 'redis' (see docker-compose.auth.yml)
