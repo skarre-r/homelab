@@ -1,0 +1,42 @@
+version: "3.7"
+
+networks:
+  auth:
+    name: auth
+    external: false
+  proxy:
+    external: true
+
+services:
+  # https://hub.docker.com/r/authelia/authelia
+  authelia:
+    image: authelia/authelia
+    container_name: authelia
+    restart: unless-stopped
+    networks:
+      - auth
+      - proxy
+    expose:
+      - 9091
+    environment:
+      - TZ=Europe/Oslo
+    volumes:
+      - ./config/authelia:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authelia.entrypoints=websecure"
+      - "traefik.http.routers.authelia.rule=Host(`login.${DOMAIN}`)"
+
+  # https://hub.docker.com/_/redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - auth
+    expose:
+      - 6379
+    environment:
+      - TZ=Europe/Oslo
+    volumes:
+      - ./config/redis:/data
