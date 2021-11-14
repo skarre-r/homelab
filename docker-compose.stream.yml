@@ -1,0 +1,35 @@
+version: "3.7"
+
+networks:
+  stream:
+    name: stream
+    external: false
+  proxy:
+    external: true
+
+services:
+  owncast:
+    image: gabekangas/owncast:latest
+    container_name: owncast
+    restart: unless-stopped
+    networks:
+      - stream
+      - proxy
+    expose:
+      - 1935
+      - 8080
+    ports:
+      - 1935:1935
+    volumes:
+      - ./config/owncast:/app/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.owncast.entrypoints=websecure"
+      - "traefik.http.routers.owncast.rule=Host(`stream.${DOMAIN}`)"
+      - "traefik.http.routers.owncast.middlewares=no-auth-middleware"
+      - "traefik.http.services.owncast.loadbalancer.server.port=8080"
+      # flame
+      - flame.type=app
+      - flame.name=owncast
+      - flame.url=https://stream.${DOMAIN}
+      - flame.icon=docker
