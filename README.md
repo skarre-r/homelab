@@ -59,6 +59,10 @@ Example: [traefik](docker-compose.proxy.yml) won't work if [docker-socket-proxy]
 
 - [traefik](https://hub.docker.com/_/traefik)
 
+### Stream
+
+- [owncast](https://hub.docker.com/r/gabekangas/owncast)
+
 ### VPN
 
 - [wireguard](https://hub.docker.com/r/linuxserver/wireguard)
@@ -82,8 +86,8 @@ Example: [traefik](docker-compose.proxy.yml) won't work if [docker-socket-proxy]
 - unbound
 - [portainer](https://hub.docker.com/r/portainer/portainer-ce)
 - [teamspeak](https://hub.docker.com/_/teamspeak)
-- [movienight](https://github.com/zorchenhimer/MovieNight#docker-compose)
 - [pihole](https://hub.docker.com/r/pihole/pihole)
+- [freshrss](https://hub.docker.com/r/linuxserver/freshrss)
 - [grafana](https://hub.docker.com/r/grafana/grafana)
 - [influxdb](https://hub.docker.com/_/influxdb)
 - [chronograf](https://hub.docker.com/_/chronograf)
@@ -93,10 +97,9 @@ Example: [traefik](docker-compose.proxy.yml) won't work if [docker-socket-proxy]
   - [node-exporter](https://hub.docker.com/r/prom/node-exporter)
   - [influxdb-exporter](https://hub.docker.com/r/prom/influxdb-exporter)
   - [collectd-exporter](https://hub.docker.com/r/prom/collectd-exporter)
+  - [container-exporter](https://hub.docker.com/r/prom/container-exporter)
   - [snmp-exporter](https://hub.docker.com/r/prom/snmp-exporter)
   - [snmp-generator](https://hub.docker.com/r/prom/snmp-generator)?
-  - [container-exporter](https://hub.docker.com/r/prom/container-exporter)
-- [freshrss](https://hub.docker.com/r/linuxserver/freshrss)
 - [piped](https://github.com/TeamPiped/Piped)?
 - [invidious](https://github.com/iv-org/invidious)?
 - [ddclient](https://hub.docker.com/r/linuxserver/ddclient)?

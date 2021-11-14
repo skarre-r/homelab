@@ -8,6 +8,7 @@ networks:
     external: true
 
 services:
+  # https://hub.docker.com/r/gabekangas/owncast
   owncast:
     image: gabekangas/owncast:latest
     container_name: owncast
