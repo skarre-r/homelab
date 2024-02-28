@@ -6,7 +6,11 @@ authors = ["skarre-r <skarre-r@protonmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+pyinfra = "^2.9.2"
 
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.2.2"
 
 [build-system]
 requires = ["poetry-core"]
