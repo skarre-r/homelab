@@ -7,7 +7,7 @@ authors = ["skarre-r <skarre-r@protonmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.12"
 pyinfra = "^2.9.2"
-
+python-dotenv = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.2.2"
