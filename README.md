@@ -22,7 +22,7 @@ cp .env.example .env
 
 ```shell
 # run pyinfra
-pyinfra inventory.py deploy.py
+pyinfra inventory.py operations.py
 ```
 
 ### opentofu
