@@ -4,28 +4,22 @@
 
 - python 3.12 (or newer)
 - poetry
-- opentofu
+- opentofu/ terraform
 - kubectl
 
-### python/ pyinfra
+### ansible
 
 ```bash
-# install python dependencies
+# install python dependencies, incl. ansible
 poetry shell
 poetry install
 ```
 
 ```shell
-# configure environment variables
-cp .env.example .env
+# todo
 ```
 
-```shell
-# run pyinfra
-pyinfra inventory.py operations.py
-```
-
-### opentofu
+### opentofu/ terraform
 
 ```shell
 # todo
@@ -36,3 +30,7 @@ pyinfra inventory.py operations.py
 ```shell
 # todo
 ```
+
+## step-by-step
+
+todo
