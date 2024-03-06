@@ -16,7 +16,8 @@ poetry install
 ```
 
 ```shell
-# todo
+# run ansible playbook(s)
+ansible-playbook -i inventory.yaml playbook.yaml
 ```
 
 ### opentofu/ terraform
