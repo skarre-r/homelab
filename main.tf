@@ -20,9 +20,15 @@ variable "proxmox_user" {
 }
 
 variable "proxmox_password" {
-  description = "Proxmox user password"
+  description = "Proxmox password"
   type        = string
   sensitive   = true
+}
+
+variable "proxmox_node_name" {
+  description = "Proxmox node (host)name"
+  type        = string
+  default     = "proxmox"
 }
 
 provider "proxmox" {
@@ -30,4 +36,26 @@ provider "proxmox" {
   pm_user       = var.proxmox_user
   pm_password   = var.proxmox_password
   pm_log_enable = true
+}
+
+resource "proxmox_vm_qemu" "proxmox_truenas_vm" {
+  target_node = var.proxmox_node_name
+  name        = "truenas"
+  desc        = "TrueNAS Core VM"
+  iso         = "truenas.iso"  # TODO
+  vmid        = 0
+  agent       = 1
+  cores       = 2
+  memory      = 32000
+}
+
+resource "proxmox_vm_qemu" "proxmox_debian_vm" {
+  target_node = var.proxmox_node_name
+  name        = "k8s"
+  desc        = "Debian K8S VM"
+  iso         = "debian.iso"  # TODO
+  vmid        = 1
+  agent       = 1
+  cores       = 2
+  memory      = 16000
 }
