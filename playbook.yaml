@@ -1,0 +1,5 @@
+- name: "Test"
+  hosts: rpi1
+  tasks:
+    - name: "ping"
+      ansible.builtin.ping:
