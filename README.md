@@ -15,7 +15,7 @@
 -   username: homelab
 -   ip address: 192.168.1.11/24
 
-### raspberry pi #1
+### raspberry pi #2
 
 -   model: raspberry pi 4
 -   os: raspberry pi os lite (64-bit)
