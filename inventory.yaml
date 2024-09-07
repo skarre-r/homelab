@@ -1,6 +1,0 @@
-bare_metal:
-  hosts:
-    proxmox:
-      ansible_connection: ssh
-virtual_machines:
-  hosts:

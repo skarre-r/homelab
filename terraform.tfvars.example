@@ -1,4 +1,0 @@
-proxmox_api_url   = ""
-proxmox_user      = ""
-proxmox_password  = ""
-proxmox_node_name = ""
