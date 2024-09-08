@@ -235,8 +235,3 @@
         enabled: true
         state: "started"
       when: which_pihole.rc == 0
-
-    - name: "Update pi-hole adlists"
-      ansible.builtin.command:
-        cmd: "pihole -g"
-      when: which_pihole.rc == 0
