@@ -1,15 +1,35 @@
 - name: "Setup Raspberry Pi #1"
   hosts: rpi1
   tasks:
+    - name: "Update apt packages"
+      become: true
+      ansible.builtin.apt:
+        force_apt_get: true
+        autoclean: true
+        autoremove: true
+        update_cache: true
+        upgrade: dist
+
+    - name: "Reboot required?"
+      ansible.builtin.stat:
+        path: "/var/run/reboot-required"
+      register: reboot_required
+
+    - name: "Reboot?"
+      ansible.builtin.reboot:
+      when: reboot_required.stat.exists
+
     - name: "Install unbound"
       become: true
       ansible.builtin.apt:
         name: "unbound"
         state: "present"
+
     - name: "Make sure unbound is installed"
       become: true
       ansible.builtin.shell: which unbound
       register: which_unbound
-    - name: "Debug: unbound path"
+
+    - name: "Debug unbound installation"
       ansible.builtin.debug:
         var: which_unbound.stdout
