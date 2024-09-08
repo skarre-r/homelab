@@ -2,8 +2,11 @@ rpis:
   hosts:
     rpi1:
       ansible_host: 192.168.1.11
+      ansible_user: homelab
+      ansible_password: '{{ lookup("env", "RPI1_PASSWORD") }}'
     rpi2:
       ansible_host: 192.168.1.12
+      ansible_user: homelab
+      ansible_password: '{{ lookup("env", "RPI2_PASSWORD") }}'
   vars:
     ansible_connection: ssh
-    ansible_user: homelab
