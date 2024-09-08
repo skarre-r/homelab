@@ -3,4 +3,4 @@ export
 
 .PHONY: play
 play:
-	@.venv/bin/ansible-playbook -i inventory.yaml playbook.yaml
+	@.venv/bin/ansible-playbook -vv -i inventory.yaml playbook.yaml
