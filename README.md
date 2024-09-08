@@ -30,6 +30,8 @@ make play
 
 ### raspberry pi #1
 
+unbound + pi-hole
+
 -   model: raspberry pi 4
 -   os: raspberry pi os lite (64-bit)
 -   hostname: rpi1.local
