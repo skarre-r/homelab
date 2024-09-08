@@ -163,6 +163,16 @@
           regexp: ^PIHOLE_INTERFACE
         - line: IPV4_ADDRESS=192.168.1.11/24
           regexp: ^IPV4_ADDRESS
+        - line: PIHOLE_DNS_1=127.0.0.1#5335
+          regexp: ^PIHOLE_DNS_1
+        - line: DNS_FQDN_REQUIRED=true
+          regexp: ^DNS_FQDN_REQUIRED
+        - line: DNS_BOGUS_PRIV=true
+          regexp: ^DNS_BOGUS_PRIV
+        - line: DNSSEC=true
+          regexp: ^DNSSEC
+        - line: CACHE_SIZE=10000
+          regexp: ^CACHE_SIZE
         - line: QUERY_LOGGING=true
           regexp: ^QUERY_LOGGING
         - line: INSTALL_WEB_INTERFACE=true
@@ -171,8 +181,22 @@
           regexp: ^LIGHTTPD_ENABLED
         - line: INSTALL_WEB_SERVER=true
           regexp: ^INSTALL_WEB_SERVER
-        - line: PIHOLE_DNS_1=127.0.0.1#5335
-          regexp: ^PIHOLE_DNS_1
+        - line: BLOCKING_ENABLED=true
+          regexp: ^BLOCKING_ENABLED
+        - line: DNSMASQ_LISTENING=local
+          regexp: ^DNSMASQ_LISTENING
+        - line: REV_SERVER=true
+          regexp: ^REV_SERVER=
+        - line: REV_SERVER_CIDR=192.168.1.0/24
+          regexp: ^REV_SERVER_CIDR
+        - line: REV_SERVER_TARGET=192.168.1.1
+          regexp: ^REV_SERVER_TARGET
+        - line: REV_SERVER_DOMAIN=lan
+          regexp: ^REV_SERVER_DOMAIN
+        - line: WEBUIBOXEDLAYOUT=traditional
+          regexp: ^WEBUIBOXEDLAYOUT
+        - line: WEBTHEME=high-contrast-dark
+          regexp: ^WEBTHEME
       register: pihole_setupvars
 
     - name: "Run pi-hole installation script"
@@ -203,3 +227,16 @@
       when:
         - which_pihole.rc == 0
         - pihole_setupvars.changed
+
+    - name: "Make sure pi-hole service is enabled"
+      become: true
+      ansible.builtin.service:
+        name: "pihole-FTL"
+        enabled: true
+        state: "started"
+      when: which_pihole.rc == 0
+
+    - name: "Update pi-hole adlists"
+      ansible.builtin.command:
+        cmd: "pihole -g"
+      when: which_pihole.rc == 0
