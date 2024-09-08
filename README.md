@@ -1,11 +1,32 @@
 # homelab
 
-# pre-reqs
+### pre-reqs
 
--   python
+-   python 3.12 (or newer)
 -   rye
 
-## overview
+### tl;dr
+
+1. install python dependencies
+
+```shell
+rye sync
+```
+
+2. configure environment variables
+
+```shell
+cp .env.example .env
+vim .env
+```
+
+3. run ansible
+
+```shell
+make play
+```
+
+## hosts
 
 ### raspberry pi #1
 
