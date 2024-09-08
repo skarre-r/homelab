@@ -23,6 +23,10 @@ vim .env
 3. run ansible
 
 ```shell
+make ansible
+# or
+make playbook
+# or
 make play
 ```
 

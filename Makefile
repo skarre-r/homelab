@@ -1,12 +1,15 @@
 include .env
 export
 
-.PHONY: play
-play:
+.PHONY: ansible
+ansible:
 	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbook.yaml
 
 .PHONY: playbook
-playbook: play
+playbook: ansible
+
+.PHONY: play
+play: ansible
 
 .PHONY: rpi1
 rpi1:
