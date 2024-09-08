@@ -27,16 +27,66 @@
         name: "unbound"
         state: "present"
 
-    - name: "Make sure unbound is installed"
+    - name: "Check if unbound is installed"
       become: true
       ansible.builtin.command:
         cmd: "which unbound"
       register: which_unbound
       changed_when: false
+      failed_when: which_unbound.rc >= 2
 
-    - name: "Debug unbound installation"
-      ansible.builtin.debug:
-        var: which_unbound.stdout
+    - name: "Make sure unbound service is enabled"
+      become: true
+      ansible.builtin.service:
+        name: "unbound"
+        enabled: true
+      when: which_unbound.rc == 0
+
+    - name: "Update unbound config file"
+      become: true
+      ansible.builtin.copy:
+        src: "unbound.conf"
+        dest: "/etc/unbound/unbound.conf.d/pi-hole.conf"
+        owner: "root"
+        group: "root"
+        mode: "644"
+      register: unbound_config_file
+
+    - name: "Disable unbound resolvconf service"
+      become: true
+      ansible.builtin.service:
+        name: "unbound-resolvconf"
+        enabled: false
+        state: "stopped"
+      when: which_unbound.rc == 0
+      register: disable_resolvconf
+
+    - name: "Check if resolvconf file exists"
+      become: true
+      ansible.builtin.stat:
+        path: "/etc/resolvconf.conf"
+      register: stat_resolvconf
+
+    - name: "Update resolvconf file"
+      become: true
+      ansible.builtin.command:
+        cmd: "sed -Ei 's/^unbound_conf=/#unbound_conf=/' /etc/resolvconf.conf"
+      when: stat_resolvconf.stat.exists
+      register: update_resolvconf
+
+    - name: "Remove unbound resolvconf file"
+      become: true
+      ansible.builtin.file:
+        path: "/etc/unbound/unbound.conf.d/resolvconf_resolvers.conf"
+        state: "absent"
+      register: remove_unbound_resolvconf
+
+    - name: "Restart unbound if config has changed"
+      become: true
+      ansible.builtin.service:
+        name: "unbound"
+        state: "restarted"
+      when: which_unbound.rc == 0 and (unbound_config_file.changed or disable_resolvconf.changed or update_resolvconf.changed or remove_unbound_resolvconf.changed)
 
     # pi-hole
     - name: "Create pihole group"
@@ -121,6 +171,9 @@
           regexp: ^LIGHTTPD_ENABLED
         - line: INSTALL_WEB_SERVER=true
           regexp: ^INSTALL_WEB_SERVER
+        - line: PIHOLE_DNS_1=127.0.0.1#5335
+          regexp: ^PIHOLE_DNS_1
+      register: pihole_setupvars
 
     - name: "Run pi-hole installation script"
       become: true
@@ -137,3 +190,16 @@
       when:
         - which_pihole.rc == 0
         - stat_pihole_install.stat.exists
+
+    - name: "Change pi-hole admin password"
+      ansible.builtin.command:
+        cmd: "pihole -a -p {{ lookup('env', 'PIHOLE_PASSWORD') }}"
+      when: which_pihole.rc == 0
+      changed_when: false
+
+    - name: "Restart pi-hole"
+      ansible.builtin.command:
+        cmd: "pihole restartdns"
+      when:
+        - which_pihole.rc == 0
+        - pihole_setupvars.changed
