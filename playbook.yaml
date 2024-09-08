@@ -1,6 +1,7 @@
 - name: "Setup Raspberry Pi #1"
   hosts: rpi1
   tasks:
+    # apt
     - name: "Update apt packages"
       become: true
       ansible.builtin.apt:
@@ -10,15 +11,16 @@
         update_cache: true
         upgrade: dist
 
-    - name: "Reboot required?"
+    - name: "Check reboot required"
       ansible.builtin.stat:
         path: "/var/run/reboot-required"
-      register: reboot_required
+      register: stat_reboot_required
 
     - name: "Reboot?"
       ansible.builtin.reboot:
-      when: reboot_required.stat.exists
+      when: stat_reboot_required.stat.exists
 
+    # unbound
     - name: "Install unbound"
       become: true
       ansible.builtin.apt:
@@ -27,9 +29,111 @@
 
     - name: "Make sure unbound is installed"
       become: true
-      ansible.builtin.shell: which unbound
+      ansible.builtin.command:
+        cmd: "which unbound"
       register: which_unbound
+      changed_when: false
 
     - name: "Debug unbound installation"
       ansible.builtin.debug:
         var: which_unbound.stdout
+
+    # pi-hole
+    - name: "Create pihole group"
+      become: true
+      ansible.builtin.group:
+        name: "pihole"
+        force: false
+        state: "present"
+
+    - name: "Create pihole user"
+      become: true
+      ansible.builtin.user:
+        name: "pihole"
+        group: "pihole"
+        shell: "/usr/sbin/nologin"
+        create_home: false
+        force: false
+        state: "present"
+
+    - name: "Check if pi-hole is installed"
+      ansible.builtin.command:
+        cmd: "which pihole"
+      register: which_pihole
+      changed_when: false
+      failed_when: which_pihole.rc >= 2
+
+    - name: "Debug pi-hole installation"
+      ansible.builtin.debug:
+        var: which_pihole.stdout
+
+    - name: "Download pi-hole installation script"
+      ansible.builtin.get_url:
+        url: "https://install.pi-hole.net"
+        dest: "/tmp/pihole-install.sh"
+        mode: "777"
+        force: false
+      when: which_pihole.rc == 1
+
+    - name: "Check if pi-hole installation script exists"
+      ansible.builtin.stat:
+        path: "/tmp/pihole-install.sh"
+      register: stat_pihole_install
+
+    - name: "Make sure pi-hole directory exists"
+      become: true
+      ansible.builtin.file:
+        path: "/etc/pihole"
+        state: "directory"
+        group: "pihole"
+        owner: "pihole"
+
+    - name: "Make sure pi-hole setup vars file exists"
+      become: true
+      ansible.builtin.copy:
+        dest: "/etc/pihole/setupVars.conf"
+        force: false
+        content: ""
+        group: "pihole"
+        owner: "pihole"
+        mode: "644"
+
+    - name: "Set pi-hole setup vars"
+      become: true
+      ansible.builtin.lineinfile:
+        path: "/etc/pihole/setupVars.conf"
+        state: "present"
+        line: "{{ item.line }}"
+        regexp: "{{ item.regexp }}"
+        group: "pihole"
+        owner: "pihole"
+        mode: "644"
+      loop:
+        - line: PIHOLE_INTERFACE=eth0
+          regexp: ^PIHOLE_INTERFACE
+        - line: IPV4_ADDRESS=192.168.1.11/24
+          regexp: ^IPV4_ADDRESS
+        - line: QUERY_LOGGING=true
+          regexp: ^QUERY_LOGGING
+        - line: INSTALL_WEB_INTERFACE=true
+          regexp: ^INSTALL_WEB_INTERFACE
+        - line: LIGHTTPD_ENABLED=true
+          regexp: ^LIGHTTPD_ENABLED
+        - line: INSTALL_WEB_SERVER=true
+          regexp: ^INSTALL_WEB_SERVER
+
+    - name: "Run pi-hole installation script"
+      become: true
+      ansible.builtin.shell:
+        cmd: "bash /tmp/pihole-install.sh --unattended"
+      when:
+        - which_pihole.rc == 1
+        - stat_pihole_install.stat.exists
+
+    - name: "Delete pi-hole installation script"
+      ansible.builtin.file:
+        path: "/tmp/pihole-install.sh"
+        state: "absent"
+      when:
+        - which_pihole.rc == 0
+        - stat_pihole_install.stat.exists
