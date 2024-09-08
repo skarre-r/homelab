@@ -1,5 +1,15 @@
-- name: "Test"
+- name: "Setup Raspberry Pi #1"
   hosts: rpi1
   tasks:
-    - name: "ping"
-      ansible.builtin.ping:
+    - name: "Install unbound"
+      become: true
+      ansible.builtin.apt:
+        name: "unbound"
+        state: "present"
+    - name: "Make sure unbound is installed"
+      become: true
+      ansible.builtin.shell: which unbound
+      register: which_unbound
+    - name: "Debug: unbound path"
+      ansible.builtin.debug:
+        var: which_unbound.stdout
