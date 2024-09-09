@@ -1,11 +1,13 @@
 # homelab
 
+## tl;dr
+
 ### pre-reqs
 
 -   python 3.12 (or newer)
 -   rye
 
-### tl;dr
+### quick start
 
 1. install python dependencies
 
