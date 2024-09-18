@@ -2,12 +2,10 @@
 
 ## tl;dr
 
-### pre-reqs
+pre-reqs:
 
 -   python 3.12 (or newer)
 -   rye
-
-### quick start
 
 1. install python dependencies
 
@@ -22,27 +20,24 @@ cp .env.example .env
 vim .env
 ```
 
-3. run ansible
+3. bootstrap host
 
 ```shell
-make ansible
-# or
-make playbook
-# or
-make play
+make bootstrap-rpi1
+```
+
+4. run ansible playbook(s)
+
+```shell
+make rpi1
 ```
 
 ## hosts
 
-### raspberry pi #1
-
-unbound + pi-hole
-
--   model: raspberry pi 4
--   os: raspberry pi os lite (64-bit)
--   hostname: rpi1
--   username: homelab
--   ip address: 192.168.1.11/24
+| hostname | ip address      | description                                     | role              |
+| -------- | --------------- | ----------------------------------------------- | ----------------- |
+| rpi1     | 192.168.1.11/24 | raspberry pi 4 w/ raspberry pi os lite (64-bit) | pi-hole + unbound |
+| proxmox  | 192.168.1.21/24 |                                                 |                   |
 
 ## resources
 
