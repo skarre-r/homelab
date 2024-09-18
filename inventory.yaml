@@ -1,8 +1,8 @@
-rpis:
+bare_metal:
   hosts:
     rpi1:
       ansible_host: 192.168.1.11
-      ansible_user: homelab
-      ansible_password: '{{ lookup("env", "RPI1_PASSWORD") }}'
-  vars:
-    ansible_connection: ssh
+      ansible_password: '{{ lookup("env", "RPI1_ANSIBLE_PASSWORD") }}'
+    proxmox:
+      ansible_host: 192.168.1.21
+      ansible_password: '{{ lookup("env", "PROXMOX_ANSIBLE_PASSWORD") }}'
