@@ -1,0 +1,3 @@
+- name: "Bootstrap proxmox host"
+  hosts: proxmox
+  tasks: []

@@ -1,0 +1,3 @@
+- name: "Configure proxmox"
+  hosts: proxmox
+  tasks: []
