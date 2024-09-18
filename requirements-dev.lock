@@ -54,6 +54,7 @@ packaging==24.1
     # via ansible-core
     # via ansible-lint
     # via black
+passlib==1.7.4
 pathspec==0.12.1
     # via ansible-lint
     # via black
