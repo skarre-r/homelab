@@ -1,6 +1,8 @@
 include .env
 export
 
+## rpi1 host
+
 .PHONY: bootstrap-rpi1
 bootstrap-rpi1:
 	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/rpi1-bootstrap.yaml \
@@ -9,6 +11,19 @@ bootstrap-rpi1:
 .PHONY: rpi1
 rpi1:
 	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/rpi1.yaml
+
+## proxmox host
+
+.PHONY: bootstrap-proxmox
+bootstrap-rpi1:
+	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/proxmox-bootstrap.yaml \
+	--user root --ask-pass --ask-become-pass
+
+.PHONY: proxmox
+rpi1:
+	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/proxmox.yaml
+
+## tools
 
 .PHONY: lint
 lint:
