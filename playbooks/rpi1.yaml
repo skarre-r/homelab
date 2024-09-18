@@ -89,18 +89,10 @@
       when: which_unbound.rc == 0 and (unbound_config_file.changed or disable_resolvconf.changed or update_resolvconf.changed or remove_unbound_resolvconf.changed)
 
     # pi-hole
-    - name: "Create pihole group"
-      become: true
-      ansible.builtin.group:
-        name: "pihole"
-        force: false
-        state: "present"
-
-    - name: "Create pihole user"
+    - name: "Make sure pihole user exists"
       become: true
       ansible.builtin.user:
         name: "pihole"
-        group: "pihole"
         shell: "/usr/sbin/nologin"
         create_home: false
         force: false
@@ -217,7 +209,7 @@
 
     - name: "Change pi-hole admin password"
       ansible.builtin.command:
-        cmd: "pihole -a -p {{ lookup('env', 'PIHOLE_PASSWORD') }}"
+        cmd: "pihole -a -p {{ lookup('env', 'RPI1_PIHOLE_PASSWORD') }}"
       when: which_pihole.rc == 0
       changed_when: false
 
