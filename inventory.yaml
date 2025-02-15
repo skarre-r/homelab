@@ -3,6 +3,6 @@ bare_metal:
     rpi1:
       ansible_host: 192.168.1.11
       ansible_password: '{{ lookup("env", "RPI1_ANSIBLE_PASSWORD") }}'
-    proxmox:
+    homelab:
       ansible_host: 192.168.1.21
-      ansible_password: '{{ lookup("env", "PROXMOX_ANSIBLE_PASSWORD") }}'
+      ansible_password: '{{ lookup("env", "HOMELAB_ANSIBLE_PASSWORD") }}'
