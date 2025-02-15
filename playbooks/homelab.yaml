@@ -1,0 +1,3 @@
+- name: "Setup homelab host"
+  hosts: homelab
+  tasks: []
