@@ -1,24 +1,5 @@
 [project]
 name = "homelab"
 version = "0.1.0"
-authors = [
-    { name = "skarre-r", email = "59067313+skarre-r@users.noreply.github.com" },
-]
-dependencies = [
-    "ansible>=10.3.0",
-    "ansible-lint>=24.7.0",
-    "passlib>=1.7.4",
-]
-requires-python = ">= 3.8"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.rye]
-managed = true
-virtual = true
-dev-dependencies = []
-
-[tool.hatch.metadata]
-allow-direct-references = true
+requires-python = ">=3.12"
+dependencies = ["ansible>=11.2.0", "ansible-lint>=25.1.2", "passlib>=1.7.4"]
