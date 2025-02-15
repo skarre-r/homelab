@@ -2,7 +2,7 @@ bare_metal:
   hosts:
     rpi1:
       ansible_host: 192.168.1.11
-      ansible_password: '{{ lookup("env", "RPI1_ANSIBLE_PASSWORD") }}'
+      # NOTE TO SELF: this takes precedence over --ask-pass, making the bootstrap playbook/ makefile command fail!
+      # ansible_password: '{{ lookup("env", "RPI1_ANSIBLE_PASSWORD") }}'
     homelab:
       ansible_host: 192.168.1.21
-      ansible_password: '{{ lookup("env", "HOMELAB_ANSIBLE_PASSWORD") }}'
