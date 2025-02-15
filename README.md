@@ -7,26 +7,34 @@ pre-reqs:
 - python 3.12 (or newer)
 - uv
 
-1. install python dependencies
+1. install python dependencies (ansible)
 
 ```shell
 uv sync
 ```
 
-2. configure environment variables
+2. activate virtual environment
+
+```shell
+source .venv/bin/activate
+# or, for example
+source .venv/bin/activate.fish
+```
+
+3. configure environment variables
 
 ```shell
 cp .env.example .env
 vim .env
 ```
 
-3. bootstrap host
+4. bootstrap host
 
 ```shell
 make bootstrap-rpi1
 ```
 
-4. run ansible playbook(s)
+5. run ansible playbook(s)
 
 ```shell
 make rpi1
