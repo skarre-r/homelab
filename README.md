@@ -4,13 +4,13 @@
 
 pre-reqs:
 
--   python 3.12 (or newer)
--   rye
+- python 3.12 (or newer)
+- uv
 
 1. install python dependencies
 
 ```shell
-rye sync
+uv sync
 ```
 
 2. configure environment variables
@@ -34,11 +34,7 @@ make rpi1
 
 ## hosts
 
-| hostname | ip address      | description                                     | role              |
-| -------- | --------------- | ----------------------------------------------- | ----------------- |
-| rpi1     | 192.168.1.11/24 | raspberry pi 4 w/ raspberry pi os lite (64-bit) | pi-hole + unbound |
-| proxmox  | 192.168.1.21/24 |                                                 |                   |
-
-## resources
-
--   [https://www.makeuseof.com/how-to-boot-raspberry-pi-ssd-permanent-storage/](https://www.makeuseof.com/how-to-boot-raspberry-pi-ssd-permanent-storage/)
+| hostname | ip address      | description    | role              |
+| -------- | --------------- | -------------- | ----------------- |
+| rpi1     | 192.168.1.11/24 | raspberry pi 5 | pi-hole + unbound |
+| homelab  | 192.168.1.21/24 |                | k8s               |
