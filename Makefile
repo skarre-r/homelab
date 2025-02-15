@@ -1,7 +1,7 @@
 include .env
 export
 
-## rpi1 host
+## host: rpi1
 
 .PHONY: bootstrap-rpi1
 bootstrap-rpi1:
@@ -11,6 +11,17 @@ bootstrap-rpi1:
 .PHONY: rpi1
 rpi1:
 	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/rpi1.yaml
+
+## host: homelab
+
+.PHONY: bootstrap-homelab
+bootstrap-homelab:
+	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/homelab-bootstrap.yaml \
+	--user homelab --ask-pass --ask-become-pass
+
+.PHONY: homelab
+homelab:
+	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/homelab.yaml
 
 ## tools
 
