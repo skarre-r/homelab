@@ -4,7 +4,7 @@
     - name: "Make sure ansible user exists"
       ansible.builtin.user:
         name: ansible
-        password: "{{ lookup('env', 'RPI1_PASSWORD') | password_hash('sha512', lookup('env', 'RPI1_PASSWORD_SALT')) }}"
+        password: "{{ lookup('env', 'RPI1_ANSIBLE_PASSWORD') | password_hash('sha512', lookup('env', 'RPI1_ANSIBLE_PASSWORD_SALT')) }}"
         home: "/home/ansible"
 
     - name: "Make sure ansible user has access to sudo"
