@@ -6,3 +6,4 @@ bare_metal:
       # ansible_password: '{{ lookup("env", "RPI1_ANSIBLE_PASSWORD") }}'
     homelab:
       ansible_host: 192.168.1.21
+      ansible_python_interpreter: "auto_silent"
