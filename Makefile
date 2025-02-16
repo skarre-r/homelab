@@ -6,7 +6,7 @@ export
 .PHONY: bootstrap-rpi1
 bootstrap-rpi1:
 	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/rpi1-bootstrap.yaml \
-	--user pi --ask-pass
+	--user pi --ask-pass --ask-become-pass
 
 .PHONY: rpi1
 rpi1:
@@ -22,7 +22,8 @@ bootstrap-homelab:
 
 .PHONY: homelab
 homelab:
-	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/homelab.yaml
+	.venv/bin/ansible-playbook -vv --inventory inventory.yaml playbooks/homelab.yaml \
+	--user ansible --extra-vars 'ansible_password={{ lookup("env", "HOMELAB_ANSIBLE_PASSWORD") }}'
 
 ## tools
 
