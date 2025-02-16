@@ -1,3 +1,21 @@
-- name: "Setup homelab host"
+- name: "Setup homelab server"
   hosts: homelab
-  tasks: []
+  tasks:
+    # apt
+    - name: "Update apt packages"
+      become: true
+      ansible.builtin.apt:
+        force_apt_get: true
+        autoclean: true
+        autoremove: true
+        update_cache: true
+        upgrade: dist
+
+    - name: "Check reboot required"
+      ansible.builtin.stat:
+        path: "/run/reboot-required"
+      register: stat_reboot_required
+
+    - name: "Reboot?"
+      ansible.builtin.reboot:
+      when: stat_reboot_required.stat.exists
