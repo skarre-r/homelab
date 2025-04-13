@@ -227,3 +227,8 @@
         enabled: true
         state: "started"
       when: which_pihole.rc == 0
+
+    - name: "Update pi-hole"
+      ansible.builtin.command:
+        cmd: "pihole -up"
+      when: which_pihole.rc == 0
