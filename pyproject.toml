@@ -2,4 +2,8 @@
 name = "homelab"
 version = "0.1.0"
 requires-python = ">=3.12"
-dependencies = ["ansible>=11.2.0", "ansible-lint>=25.1.2", "passlib>=1.7.4"]
+dependencies = [
+    "ansible>=11.4.0",
+    "ansible-lint>=25.2.1",
+    "passlib>=1.7.4"
+]
