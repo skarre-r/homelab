@@ -1,3 +1,4 @@
+---
 - name: "Bootstrap Raspberry Pi #1"
   hosts: rpi1
   tasks:

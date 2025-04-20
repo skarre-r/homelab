@@ -1,3 +1,4 @@
+---
 - name: "Bootstrap homelab server"
   hosts: homelab
   tasks:
