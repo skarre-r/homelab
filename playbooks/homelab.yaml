@@ -1,21 +1,137 @@
+---
 - name: "Setup homelab server"
-  hosts: homelab
+  hosts: "homelab"
   tasks:
-    # apt
-    - name: "Update apt packages"
-      become: true
+    # zfs:
+    # - https://wiki.debian.org/ZFS
+    # - https://openzfs.github.io/openzfs-docs/Getting%20Started/Debian/index.html
+    - name: "Check if backports repository file exists"
+      ansible.builtin.file:
+        path: "/etc/apt/sources.list.d/bookworm-backports.list"
+        state: "file"
+      register: "bookworm_backports_file"
+      ignore_errors: true
+
+    - name: "Create backports repository file"
+      ansible.builtin.file:
+        path: "/etc/apt/sources.list.d/bookworm-backports.list"
+        state: "touch"
+        owner: "root"
+        group: "root"
+        mode: "0664"
+      when: bookworm_backports_file.state == "absent"
+
+    - name: "Make sure backports repository file is up-to-date"
+      ansible.builtin.lineinfile:
+        path: "/etc/apt/sources.list.d/bookworm-backports.list"
+        state: "present"
+        line: "{{ item.line }}"
+      loop:
+        - line: "deb http://deb.debian.org/debian bookworm-backports main contrib"
+        - line: "deb-src http://deb.debian.org/debian bookworm-backports main contrib"
+
+    - name: "Check if apt zfs preferences file exists"
+      ansible.builtin.file:
+        path: "/etc/apt/preferences.d/90_zfs"
+        state: "file"
+      register: "zfs_prefs_file"
+      ignore_errors: true
+
+    - name: "Create apt zfs preferences file"
+      ansible.builtin.file:
+        path: "/etc/apt/preferences.d/90_zfs"
+        state: "touch"
+        owner: "root"
+        group: "root"
+        mode: "0664"
+      when: zfs_prefs_file.state == "absent"
+
+    - name: "Make sure apt zfs preferences file is up-to-date"
+      ansible.builtin.lineinfile:
+        path: "/etc/apt/preferences.d/90_zfs"
+        state: "present"
+        line: "{{ item.line }}"
+      loop:
+        - line: "Package: src:zfs-linux"
+        - line: "Pin: release n=bookworm-backports"
+        - line: "Pin-Priority: 990"
+
+    - name: "Check if zpool is installed"
+      ansible.builtin.command:
+        cmd: "which zpool"
+      register: "which_zpool"
+      changed_when: false
+      failed_when: which_zpool.rc >= 2
+
+    - name: "Install zfs packages"
       ansible.builtin.apt:
-        force_apt_get: true
-        autoclean: true
-        autoremove: true
+        name:
+          - "dpkg-dev"
+          - "linux-headers-generic"
+          - "linux-image-generic"
+          - "zfs-dkms"
+          - "zfsutils-linux"
+        state: "present"
         update_cache: true
-        upgrade: dist
+      when: which_zpool.rc == 1
+      notify:
+        - "modprobe"
 
-    - name: "Check reboot required"
-      ansible.builtin.stat:
-        path: "/run/reboot-required"
-      register: stat_reboot_required
+    - name: "Check zpool status"
+      ansible.builtin.command:
+        cmd: "zpool status"
+      register: "zpool_status"
+      changed_when: false
 
-    - name: "Reboot?"
-      ansible.builtin.reboot:
-      when: stat_reboot_required.stat.exists
+    - name: "Import zpool"
+      ansible.builtin.command:
+        cmd: "zpool import -f pool"
+      become: true
+      when: zpool_status.stderr == "no pools available"
+      register: "zpool_import"
+      changed_when: false
+
+    - name: "Make sure zfs scrub cron job exists"
+      ansible.builtin.file:
+        path: "/etc/cron.d/zfsutils-linux"
+        state: "file"
+
+    # smb
+    - name: "Check if smb is installed"
+      ansible.builtin.command:
+        cmd: "which smbpasswd"
+      register: "which_smb"
+      changed_when: false
+      failed_when: which_smb.rc >= 2
+
+    - name: "Install smb packages"
+      ansible.builtin.apt:
+        name:
+          - "samba"
+          - "samba-client"
+        state: "present"
+      when: which_smb.rc == 1
+
+    - name: "List smb users"
+      ansible.builtin.command:
+        cmd: "pdbedit -w -L"
+      become: true
+      register: "smb_users"
+      changed_when: false
+
+    - name: "Add smb user" # noqa: command-instead-of-shell
+      ansible.builtin.shell:
+        stdin: "{{ lookup('env', 'HOMELAB_PASSWORD') }}\n{{ lookup('env', 'HOMELAB_PASSWORD') }}\n"
+        stdin_add_newline: false
+        cmd: "smbpasswd -s -a homelab"
+      become: true
+      when: smb_users.stdout == ""
+      changed_when: false
+
+  handlers:
+    - name: "Modprobe zfs"
+      ansible.builtin.command:
+        cmd: "modprobe zfs"
+      listen: "modprobe"
+      become: true
+      changed_when: false
