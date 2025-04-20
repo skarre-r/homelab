@@ -11,6 +11,6 @@
       ansible.builtin.lineinfile:
         path: /etc/sudoers.d/ansible
         line: "ansible ALL=(ALL) NOPASSWD: ALL"
-        mode: 0440
-        create: yes
+        mode: "440"
+        create: true
         validate: /usr/sbin/visudo -cf %s

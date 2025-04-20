@@ -3,13 +3,13 @@
   tasks:
     # apt
     - name: "Update apt packages"
-      become: true
       ansible.builtin.apt:
         force_apt_get: true
         autoclean: true
         autoremove: true
         update_cache: true
         upgrade: dist
+      become: true
 
     - name: "Check reboot required"
       ansible.builtin.stat:
@@ -22,81 +22,82 @@
 
     # unbound
     - name: "Install unbound"
-      become: true
       ansible.builtin.apt:
         name: "unbound"
         state: "present"
+      become: true
 
     - name: "Check if unbound is installed"
-      become: true
       ansible.builtin.command:
         cmd: "which unbound"
+      become: true
       register: which_unbound
       changed_when: false
       failed_when: which_unbound.rc >= 2
 
     - name: "Make sure unbound service is enabled"
-      become: true
       ansible.builtin.service:
         name: "unbound"
         enabled: true
+      become: true
       when: which_unbound.rc == 0
 
     - name: "Update unbound config file"
-      become: true
       ansible.builtin.copy:
         src: "unbound.conf"
         dest: "/etc/unbound/unbound.conf.d/pi-hole.conf"
         owner: "root"
         group: "root"
         mode: "644"
+      become: true
       register: unbound_config_file
 
     - name: "Disable unbound resolvconf service"
-      become: true
       ansible.builtin.service:
         name: "unbound-resolvconf"
         enabled: false
         state: "stopped"
+      become: true
       when: which_unbound.rc == 0
       register: disable_resolvconf
 
     - name: "Check if resolvconf file exists"
-      become: true
       ansible.builtin.stat:
         path: "/etc/resolvconf.conf"
+      become: true
       register: stat_resolvconf
 
-    - name: "Update resolvconf file"
+    - name: "Update resolvconf file" # noqa: command-instead-of-module
       become: true
       ansible.builtin.command:
         cmd: "sed -Ei 's/^unbound_conf=/#unbound_conf=/' /etc/resolvconf.conf"
       when: stat_resolvconf.stat.exists
       register: update_resolvconf
+      changed_when: false
 
     - name: "Remove unbound resolvconf file"
-      become: true
       ansible.builtin.file:
         path: "/etc/unbound/unbound.conf.d/resolvconf_resolvers.conf"
         state: "absent"
+      become: true
       register: remove_unbound_resolvconf
 
     - name: "Restart unbound if config has changed"
-      become: true
       ansible.builtin.service:
         name: "unbound"
         state: "restarted"
-      when: which_unbound.rc == 0 and (unbound_config_file.changed or disable_resolvconf.changed or update_resolvconf.changed or remove_unbound_resolvconf.changed)
+      become: true
+      when: which_unbound.rc == 0 and (unbound_config_file.changed or disable_resolvconf.changed or update_resolvconf.changed or remove_unbound_resolvconf.changed) # noqa: yaml[line-length]
 
     # pi-hole
     - name: "Make sure pihole user exists"
-      become: true
       ansible.builtin.user:
         name: "pihole"
         shell: "/usr/sbin/nologin"
         create_home: false
         force: false
         state: "present"
+      become: true
 
     - name: "Check if pi-hole is installed"
       ansible.builtin.command:
@@ -123,12 +124,13 @@
       register: stat_pihole_install
 
     - name: "Make sure pi-hole directory exists"
-      become: true
       ansible.builtin.file:
         path: "/etc/pihole"
         state: "directory"
         group: "pihole"
         owner: "pihole"
+        mode: "0644"
+      become: true
 
     - name: "Make sure pi-hole setup vars file exists"
       become: true
@@ -138,10 +140,10 @@
         content: ""
         group: "pihole"
         owner: "pihole"
-        mode: "644"
+        mode: "0644"
 
+    # TODO: pi-hole v6 changes???
     - name: "Set pi-hole setup vars"
-      become: true
       ansible.builtin.lineinfile:
         path: "/etc/pihole/setupVars.conf"
         state: "present"
@@ -189,12 +191,14 @@
           regexp: ^WEBUIBOXEDLAYOUT
         - line: WEBTHEME=high-contrast-dark
           regexp: ^WEBTHEME
+      become: true
       register: pihole_setupvars
 
-    - name: "Run pi-hole installation script"
-      become: true
+    - name: "Run pi-hole installation script" # noqa: command-instead-of-shell
       ansible.builtin.shell:
         cmd: "bash /tmp/pihole-install.sh --unattended"
+      become: true
+      changed_when: false
       when:
         - which_pihole.rc == 1
         - stat_pihole_install.stat.exists
@@ -219,16 +223,18 @@
       when:
         - which_pihole.rc == 0
         - pihole_setupvars.changed
+      changed_when: false
 
     - name: "Make sure pi-hole service is enabled"
-      become: true
       ansible.builtin.service:
         name: "pihole-FTL"
         enabled: true
         state: "started"
+      become: true
       when: which_pihole.rc == 0
 
     - name: "Update pi-hole"
       ansible.builtin.command:
         cmd: "pihole -up"
       when: which_pihole.rc == 0
+      changed_when: false
