@@ -4,6 +4,8 @@ version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
     "ansible>=11.4.0",
+    "ansible-dev-tools>=25.4.0",
     "ansible-lint>=25.2.1",
-    "passlib>=1.7.4"
+    "passlib>=1.7.4",
+    "yamllint>=1.37.0",
 ]
