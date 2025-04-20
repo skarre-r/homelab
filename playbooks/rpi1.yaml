@@ -49,7 +49,7 @@
         dest: "/etc/unbound/unbound.conf.d/pi-hole.conf"
         owner: "root"
         group: "root"
-        mode: "644"
+        mode: "0644"
       become: true
       register: unbound_config_file
 
@@ -115,7 +115,7 @@
       ansible.builtin.get_url:
         url: "https://install.pi-hole.net"
         dest: "/tmp/pihole-install.sh"
-        mode: "777"
+        mode: "0777"
         force: false
       when: which_pihole.rc == 1
 
@@ -152,7 +152,7 @@
         regexp: "{{ item.regexp }}"
         group: "pihole"
         owner: "pihole"
-        mode: "644"
+        mode: "0644"
       loop:
         - line: PIHOLE_INTERFACE=eth0
           regexp: ^PIHOLE_INTERFACE
