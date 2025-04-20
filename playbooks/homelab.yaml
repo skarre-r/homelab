@@ -18,7 +18,7 @@
         state: "touch"
         owner: "root"
         group: "root"
-        mode: "0664"
+        mode: "0644"
       when: bookworm_backports_file.state == "absent"
 
     - name: "Make sure backports repository file is up-to-date"
@@ -43,7 +43,7 @@
         state: "touch"
         owner: "root"
         group: "root"
-        mode: "0664"
+        mode: "0644"
       when: zfs_prefs_file.state == "absent"
 
     - name: "Make sure apt zfs preferences file is up-to-date"
@@ -112,6 +112,16 @@
         state: "present"
       when: which_smb.rc == 1
 
+    - name: "Update smb config file"
+      ansible.builtin.copy:
+        src: "smb.conf"
+        dest: "/etc/samba/smb.conf"
+        owner: "root"
+        group: "root"
+        mode: "0644"
+      become: true
+      notify: "smb_service"
+
     - name: "List smb users"
       ansible.builtin.command:
         cmd: "pdbedit -w -L"
@@ -132,6 +142,14 @@
     - name: "Modprobe zfs"
       ansible.builtin.command:
         cmd: "modprobe zfs"
-      listen: "modprobe"
       become: true
+      listen: "modprobe"
       changed_when: false
+
+    - name: "Restart smb service"
+      ansible.builtin.systemd_service:
+        name: "smbd"
+        enabled: true
+        state: "restarted"
+      become: true
+      listen: "smb_service"
