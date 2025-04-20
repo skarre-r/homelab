@@ -27,6 +27,17 @@ homelab:
 
 ## tools
 
-.PHONY: lint
-lint:
+.PHONY: prettier
+prettier:
+	pnpm prettier --write .
+
+.PHONY: yaml-lint
+yaml-lint:
+	uv run yamllint .
+
+.PHONY: ansible-lint
+ansible-lint:
 	uv run ansible-lint
+
+.PHONY: lint
+lint: prettier yaml-lint ansible-lint
