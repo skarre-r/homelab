@@ -39,5 +39,9 @@ yaml-lint:
 ansible-lint:
 	uv run ansible-lint
 
+.PHONY: kube-linter
+kube-linter:
+	kube-linter lint --config .kube-linter.yaml manifests
+
 .PHONY: lint
-lint: prettier yaml-lint ansible-lint
+lint: prettier yaml-lint ansible-lint kube-linter
