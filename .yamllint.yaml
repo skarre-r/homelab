@@ -1,0 +1,20 @@
+---
+extends: "default"
+ignore:
+  - ".ansible/"
+  - ".idea/"
+  - ".ignore/"
+  - ".venv/"
+  - ".vscode/"
+  - "node_modules/"
+  - "pnpm-lock.yaml"
+rules:
+  line-length: "disable"
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: false
+  braces:
+    max-spaces-inside: 1
+  octal-values:
+    forbid-explicit-octal: true
+    forbid-implicit-octal: true
