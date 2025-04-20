@@ -549,4 +549,7 @@ cython_debug/
 .idea/
 
 # Custom
+.ansible/
 .ignore/
+.vscode/
+node_modules/
