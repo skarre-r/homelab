@@ -33,7 +33,7 @@ k8s:
 
 .PHONY: cilium
 cilium:
-	cilium upgrade -f manifests/cluster/cilium/values.yaml
+	cilium upgrade -f manifests/cilium/values.yaml
 
 ## tools
 
