@@ -1,0 +1,10 @@
+---
+debug: false
+disable:
+  - "traefik"
+  - "servicelb"
+flannel-backend: "none"
+disable-network-policy: true
+disable-kube-proxy: true
+disable-cloud-controller: false
+disable-helm-controller: false
