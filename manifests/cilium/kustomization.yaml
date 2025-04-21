@@ -12,7 +12,9 @@ helmCharts:
     includeCRDs: true
     namespace: "kube-system"
     valuesFile: "values.yaml"
+labels:
+  - pairs:
+      app.kubernetes.io/managed-by: "Helm"
 commonAnnotations:
-  app.kubernetes.io/managed-by: "Helm"
   meta.helm.sh/release-name: "cilium"
   meta.helm.sh/release-namespace: "kube-system"
