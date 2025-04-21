@@ -552,4 +552,5 @@ cython_debug/
 .ansible/
 .ignore/
 .vscode/
+manifests/**/charts/
 node_modules/
