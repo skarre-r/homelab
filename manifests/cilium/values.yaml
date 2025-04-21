@@ -27,3 +27,9 @@ ingressController:
   service:
     annotations:
       io.cilium/lb-ipam-ips: 192.168.1.80
+
+hubble:
+  relay:
+    enabled: true
+  ui:
+    enabled: true
