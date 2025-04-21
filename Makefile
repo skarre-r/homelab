@@ -1,7 +1,7 @@
 include .env
 export
 
-## host: rpi1
+## ansible host: rpi1
 
 .PHONY: bootstrap-rpi1
 bootstrap-rpi1:
@@ -13,7 +13,7 @@ rpi1:
 	uv run ansible-playbook -vv --inventory inventory.yaml playbooks/rpi1.yaml \
 	--user ansible --extra-vars 'ansible_password={{ lookup("env", "RPI1_ANSIBLE_PASSWORD") }}'
 
-## host: homelab
+## ansible host: homelab
 
 .PHONY: bootstrap-homelab
 bootstrap-homelab:
@@ -24,6 +24,16 @@ bootstrap-homelab:
 homelab:
 	uv run ansible-playbook -vv --inventory inventory.yaml playbooks/homelab.yaml \
 	--user ansible --extra-vars 'ansible_password={{ lookup("env", "HOMELAB_ANSIBLE_PASSWORD") }}'
+
+## k8s
+
+.PHONY: k8s
+k8s:
+	kubectl kustomize --enable-helm manifests/ | kubectl apply -f -
+
+.PHONY: cilium
+cilium:
+	cilium upgrade -f manifests/cluster/cilium/values.yaml
 
 ## tools
 
