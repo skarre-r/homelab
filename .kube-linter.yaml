@@ -1,3 +1,5 @@
 ---
 checks:
   addAllBuiltIn: true
+  ignorePaths:
+    - "manifests/**/charts/**/*"

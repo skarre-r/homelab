@@ -1,2 +1,4 @@
 ---
 offline: true
+exclude_paths:
+  - "charts/"

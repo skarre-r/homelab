@@ -6,6 +6,7 @@ ignore:
   - ".ignore/"
   - ".venv/"
   - ".vscode/"
+  - "charts/"
   - "node_modules/"
   - "pnpm-lock.yaml"
 rules:
