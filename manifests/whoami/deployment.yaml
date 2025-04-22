@@ -1,0 +1,49 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "whoami"
+  namespace: "whoami"
+  labels:
+    app.kubernetes.io/name: "whoami"
+    app.kubernetes.io/component: "web-server"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "whoami"
+      app.kubernetes.io/component: "web-server"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "whoami"
+        app.kubernetes.io/component: "web-server"
+    spec:
+      containers:
+        - name: "whoami"
+          image: "docker.io/traefik/whoami:v1.11"
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: "WHOAMI_PORT_NUMBER"
+              value: "80"
+            - name: "WHOAMI_NAME"
+              value: "Who am I?"
+          ports:
+            - containerPort: 80
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 80
+          readinessProbe:
+            tcpSocket:
+              port: 80
+          livenessProbe:
+            tcpSocket:
+              port: 80
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "2Mi"
+            limits:
+              cpu: "20m"
+              memory: "8Mi"
