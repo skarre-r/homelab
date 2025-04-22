@@ -29,11 +29,7 @@ homelab:
 
 .PHONY: k8s
 k8s:
-	kubectl kustomize --enable-helm manifests/ | kubectl apply -f -
-
-.PHONY: cilium
-cilium:
-	cilium upgrade -f manifests/cilium/values.yaml
+	kubectl kustomize --enable-helm manifests | kubectl apply -f -
 
 ## tools
 
