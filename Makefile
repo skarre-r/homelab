@@ -31,6 +31,10 @@ homelab:
 k8s:
 	kubectl kustomize --enable-helm manifests | kubectl apply -f -
 
+.PHONY: token
+token:
+	@kubectl get secret kubernetes-dashboard-admin -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
+
 ## tools
 
 .PHONY: prettier
