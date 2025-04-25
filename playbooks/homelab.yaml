@@ -8,6 +8,30 @@
         name: "curl"
         state: "present"
 
+    - name: "Make sure non-free apt repository exists"
+      ansible.builtin.apt_repository:
+        repo: "deb http://deb.debian.org/debian/ bookworm main non-free-firmware non-free"
+        filename: "non-free"
+        state: "present"
+
+    - name: "Make sure intel driver(s) is installed"
+      ansible.builtin.apt:
+        name:
+          - "intel-media-va-driver-non-free"
+          - "vainfo"
+          - "intel-gpu-tools"
+          - "software-properties-common"
+          - "firmware-misc-nonfree"
+        state: "present"
+
+    - name: "Configure LIBVA_DRIVER_NAME environment variable"
+      ansible.builtin.lineinfile:
+        path: "/etc/environment"
+        state: "present"
+        line: "LIBVA_DRIVER_NAME=iHD"
+        search_string: "LIBVA_DRIVER_NAME="
+      become: true
+
     # zfs:
     # - https://wiki.debian.org/ZFS
     # - https://openzfs.github.io/openzfs-docs/Getting%20Started/Debian/index.html
