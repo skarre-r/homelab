@@ -3,8 +3,10 @@ debug: false
 disable:
   - "traefik"
   - "servicelb"
+  - "local-storage"
+  - "metrics-server"
 flannel-backend: "none"
 disable-network-policy: true
 disable-kube-proxy: true
 disable-cloud-controller: false
-disable-helm-controller: false
+disable-helm-controller: true
