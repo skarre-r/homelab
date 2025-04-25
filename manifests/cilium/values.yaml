@@ -25,10 +25,9 @@ cni:
 
 ingressController:
   enabled: false
-  default: true
 
 gatewayAPI:
-  enabled: true
+  enabled: false
 
 k8sNetworkPolicy:
   enabled: true
