@@ -1,5 +1,0 @@
----
-app:
-  mode: "dashboard"
-kong:
-  enabled: true  # TODO

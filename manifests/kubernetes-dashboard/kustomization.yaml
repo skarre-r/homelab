@@ -12,4 +12,8 @@ helmCharts:
     releaseName: "kubernetes-dashboard"
     version: "7.12.0"
     namespace: "kubernetes-dashboard"
-    valuesFile: "values.yaml"
+    valuesInline:
+      app:
+        mode: "dashboard"
+      kong:
+        enabled: false

@@ -12,4 +12,44 @@ helmCharts:
     version: "1.17.3"
     releaseName: "cilium"
     includeCRDs: true
-    valuesFile: "values.yaml"
+    valuesInline:
+      # https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
+      debug:
+        enabled: false
+      k8sServiceHost: "192.168.1.21"
+      k8sServicePort: "6443"
+      k8sClientRateLimit:
+        qps: 50
+        burst: 200
+      rollOutCiliumPods: true
+      l2announcements:
+        enabled: true
+      l2podAnnouncements:
+        enabled: false
+      cni:
+        enabled: true
+        uninstall: false
+        exclusive: true
+      ingressController:
+        enabled: false
+      gatewayAPI:
+        enabled: false
+      k8sNetworkPolicy:
+        enabled: true
+      externalIPs:
+        enabled: true
+      hubble:
+        enabled: true
+        relay:
+          enabled: true
+        ui:
+          enabled: true
+      kubeProxyReplacement: true
+      egressGateway:
+        enabled: false
+      nodePort:
+        enabled: false
+      operator:
+        enabled: true
+        rollOutPods: true
+        replicas: 1
