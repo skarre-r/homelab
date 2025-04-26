@@ -1,0 +1,56 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "calibre-web"
+  namespace: "calibre"
+  labels:
+    app.kubernetes.io/name: "calibre-web"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "calibre-web"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "calibre-web"
+    spec:
+      containers:
+        - name: "calibre-web"
+          image: "lscr.io/linuxserver/calibre-web:latest"
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+            - name: "DOCKER_MODS"
+              value: ""
+          ports:
+            - containerPort: 8083
+              protocol: "TCP"
+          readinessProbe:
+            tcpSocket:
+              port: 8083
+          startupProbe:
+            tcpSocket:
+              port: 8083
+          livenessProbe:
+            tcpSocket:
+              port: 8083
+          resources: { }
+          volumeMounts:
+            - mountPath: "/config"
+              name: "config"
+            - mountPath: "/books"
+              name: "library"
+      volumes:
+        - name: "config"
+          persistentVolumeClaim:
+            claimName: "calibre-web-config"
+        - name: "library"
+          persistentVolumeClaim:
+            claimName: "calibre-web-library"
