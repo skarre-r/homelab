@@ -1,4 +1,3 @@
-# TODO: mount transcode dir from host
 ---
 apiVersion: "apps/v1"
 kind: "Deployment"
@@ -69,17 +68,22 @@ spec:
           volumeMounts:
             - mountPath: "/config"
               name: "config"
-            - mountPath: "/media"
+            - mountPath: "/mnt/media"
               name: "media"
+            - mountPath: "/transcode"
+              name: "tmp"
             - mountPath: "/dev/dri"
               name: "dri"
       volumes:
         - name: "config"
-          hostPath:
-            path: "/pool/services/plex2"
+          persistentVolumeClaim:
+            claimName: "plex-config"
         - name: "media"
-          hostPath:
-            path: "/pool/media"
+          persistentVolumeClaim:
+            claimName: "plex-media"
+        - name: "tmp"
+          persistentVolumeClaim:
+            claimName: "plex-tmp"
         - name: "dri"
           hostPath:
             path: "/dev/dri"
