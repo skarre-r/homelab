@@ -5,7 +5,7 @@
 - [x] cert-manager
 - [x] ansible: bootstrap cilium (again)
 - [x] flux helm controller
-    - [ ] **flux manifests**
+    - [x] **flux manifests**
     - [ ] flux gitops?
         - [ ] git server: gitea/ onedev/ soft-serve
 - [ ] k3s: disable cloud controller?
@@ -25,3 +25,5 @@
 - [ ] change cilium namespace?
 - [ ] network policies
 - [ ] headlamp plugins (cert-manager, flux)
+- [ ] cloudflared: credentials.json PV(C) !!!
+- [ ] migrate to flux HelmRelease(s)
