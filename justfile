@@ -35,6 +35,8 @@ teardown-homelab:
 k8s action="apply" dir="manifests":
     kubectl kustomize --enable-helm {{ dir }} | kubectl {{ action }} -f -
 
+alias kube := k8s
+
 # k8s: get kubernetes-dashboard admin user bearer token
 k8s-dashboard:
     @kubectl get secret kubernetes-dashboard-admin -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
