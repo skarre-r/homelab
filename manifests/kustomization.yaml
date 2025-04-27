@@ -8,6 +8,7 @@ resources:
   - "cilium"
   - "cloudflared"
   - "crds"
+  - "headlamp"
   - "kubernetes-dashboard"
   - "local-path-provisioner"
   - "metrics-server"

@@ -1,0 +1,34 @@
+---
+apiVersion: "source.toolkit.fluxcd.io/v1"
+kind: "HelmRepository"
+metadata:
+  name: "headlamp"
+  namespace: "headlamp"
+spec:
+  url: "https://kubernetes-sigs.github.io/headlamp/"
+---
+apiVersion: "helm.toolkit.fluxcd.io/v2"
+kind: "HelmRelease"
+metadata:
+  name: "headlamp"
+  namespace: "headlamp"
+spec:
+  interval: "24h"
+  chart:
+    spec:
+      chart: "headlamp"
+      version: "0.30.1"
+      sourceRef:
+        kind: "HelmRepository"
+        name: "headlamp"
+        namespace: "headlamp"
+  releaseName: "headlamp"
+  targetNamespace: "headlamp"
+  values:
+    replicaCount: 1
+    config:
+      inCluster: true
+      baseUrl: ""
+      pluginsDir: "/headlamp/plugins"
+    ingress:
+      enabled: false
