@@ -31,7 +31,7 @@ k8s action="apply" dir="manifests":
     kubectl kustomize --enable-helm {{ dir }} | kubectl {{ action }} -f -
 
 # k8s: get kubernetes-dashboard bearer token
-token:
+k8s-dashboard:
     @kubectl get secret kubernetes-dashboard-admin -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
 
 # run prettier
