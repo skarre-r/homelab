@@ -39,6 +39,10 @@ k8s action="apply" dir="manifests":
 k8s-dashboard:
     @kubectl get secret kubernetes-dashboard-admin -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
 
+# k8s: get headlamp admin user bearer token
+k8s-headlamp:
+    @kubectl get secret headlamp-admin -n headlamp -o jsonpath="{.data.token}" | base64 -d
+
 # run prettier
 prettier:
     pnpm prettier --write .
