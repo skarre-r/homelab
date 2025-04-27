@@ -417,7 +417,7 @@
 
     - name: "Check flux install prerequisites"
       ansible.builtin.command:
-        cmd: "flux check --pre"
+        cmd: "flux check --pre --kubeconfig /etc/rancher/k3s/k3s.yaml"
       become: true
       changed_when: false
       when: flux_check.rc == 1
