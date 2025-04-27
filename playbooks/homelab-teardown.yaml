@@ -1,0 +1,8 @@
+# TODO:
+# - remove k3s
+# - remove cilium
+# - remove local kubeconfig file?
+---
+- name: "Tear down homelab server"
+  hosts: "homelab"
+  tasks: []
