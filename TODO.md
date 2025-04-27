@@ -3,15 +3,17 @@
 - [x] make local-path-provisioner use zfs pool
 - [x] gateway api (cilium)
 - [x] cert-manager
+- [x] ansible: bootstrap cilium (again)
+- [x] flux helm controller
+    - [ ] **flux manifests**
+    - [ ] flux gitops?
+        - [ ] git server: gitea/ onedev/ soft-serve
 - [ ] k3s: disable cloud controller?
-- [ ] flux helm controller
-- [ ] ansible: bootstrap cilium (again)
 - [ ] replace k3s with k8s (kubeadm)
     - cri-o (vs containerd)
     - etcd
     - coredns
     - csi (local-path-provisioner)
-- [ ] flux gitops? (flux + gitea/ onedev/ soft-serve)
 - [ ] pod-gateway!
     - https://github.com/angelnu/k8s-gitops
     - https://github.com/angelnu/helm-charts/tree/main/charts/apps/pod-gateway
@@ -22,3 +24,4 @@
 - [ ] remove cert-manager trust-manager?
 - [ ] change cilium namespace?
 - [ ] network policies
+- [ ] headlamp plugins (cert-manager, flux)
