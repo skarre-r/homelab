@@ -26,11 +26,16 @@ homelab:
     uv run ansible-playbook -vv --inventory inventory.yaml playbooks/homelab.yaml \
     --user ansible --extra-vars "ansible_password=${HOMELAB_ANSIBLE_PASSWORD}"
 
+# ansible: run the "homelab-teardown" playbook
+teardown-homelab:
+    uv run ansible-playbook -vv --inventory inventory.yaml playbooks/homelab-teardown.yaml \
+      --user ansible --extra-vars "ansible_password=${HOMELAB_ANSIBLE_PASSWORD}"
+
 # k8s: apply manifests
 k8s action="apply" dir="manifests":
     kubectl kustomize --enable-helm {{ dir }} | kubectl {{ action }} -f -
 
-# k8s: get kubernetes-dashboard bearer token
+# k8s: get kubernetes-dashboard admin user bearer token
 k8s-dashboard:
     @kubectl get secret kubernetes-dashboard-admin -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
 
