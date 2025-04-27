@@ -1,7 +1,5 @@
 # homelab
 
-## tl;dr
-
 pre-reqs:
 
 - python 3.12 (or newer)
@@ -32,6 +30,6 @@ just lint
 ## hosts
 
 | hostname | ip address      | description    | role              |
-|----------|-----------------|----------------|-------------------|
+| -------- | --------------- | -------------- | ----------------- |
 | rpi1     | 192.168.1.11/24 | raspberry pi 5 | pi-hole + unbound |
-| homelab  | 192.168.1.21/24 |                | k8s               |
+| homelab  | 192.168.1.21/24 |                | nas, k8s          |
