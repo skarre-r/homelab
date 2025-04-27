@@ -1,3 +1,5 @@
+# https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
+# TODO: change namespace to 'cilium'?
 ---
 apiVersion: "kustomize.config.k8s.io/v1beta1"
 kind: "Kustomization"
@@ -13,7 +15,6 @@ helmCharts:
     releaseName: "cilium"
     includeCRDs: true
     valuesInline:
-      # https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
       debug:
         enabled: false
       k8sServiceHost: "192.168.1.21"
@@ -33,7 +34,9 @@ helmCharts:
       ingressController:
         enabled: false
       gatewayAPI:
-        enabled: false
+        enabled: true
+        gatewayClass:
+          create: "true"
       k8sNetworkPolicy:
         enabled: true
       externalIPs:
