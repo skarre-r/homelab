@@ -1,0 +1,107 @@
+---
+apiVersion: "gateway.networking.k8s.io/v1"
+kind: "Gateway"
+metadata:
+  name: "kubernetes-dashboard"
+  namespace: "kubernetes-dashboard"
+spec:
+  gatewayClassName: "cilium"
+  listeners:
+    - name: "http"
+      port: 80
+      protocol: "HTTP"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
+    - name: "https"
+      port: 443
+      protocol: "HTTPS"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
+      tls:
+        mode: "Terminate"
+        certificateRefs:
+          - name: "kubernetes-dashboard-tls"
+  addresses:
+    - type: "IPAddress"
+      value: "192.168.1.52"
+---
+apiVersion: "gateway.networking.k8s.io/v1"
+kind: "HTTPRoute"
+metadata:
+  name: "kubernetes-dashboard-redirect"
+  namespace: "kubernetes-dashboard"
+spec:
+  parentRefs:
+    - name: "kubernetes-dashboard"
+      sectionName: "http"
+  rules:
+    - filters:
+        - type: "RequestRedirect"
+          requestRedirect:
+            scheme: "https"
+            statusCode: 301
+---
+apiVersion: "gateway.networking.k8s.io/v1"
+kind: "HTTPRoute"
+metadata:
+  name: "kubernetes-dashboard-auth"
+  namespace: "kubernetes-dashboard"
+spec:
+  parentRefs:
+    - name: "kubernetes-dashboard"
+      sectionName: "https"
+  rules:
+    - backendRefs:
+        - name: "kubernetes-dashboard-auth"
+          port: 8000
+      matches:
+        - path:
+            type: "Exact"
+            value: "/api/v1/login"
+        - path:
+            type: "Exact"
+            value: "/api/v1/csrftoken/login"
+        - path:
+            type: "Exact"
+            value: "/api/v1/me"
+---
+apiVersion: "gateway.networking.k8s.io/v1"
+kind: "HTTPRoute"
+metadata:
+  name: "kubernetes-dashboard-api"
+  namespace: "kubernetes-dashboard"
+spec:
+  parentRefs:
+    - name: "kubernetes-dashboard"
+      sectionName: "https"
+  rules:
+    - backendRefs:
+        - name: "kubernetes-dashboard-api"
+          port: 8000
+      matches:
+        - path:
+            type: "PathPrefix"
+            value: "/api"
+        - path:
+            type: "PathPrefix"
+            value: "/metrics"
+---
+apiVersion: "gateway.networking.k8s.io/v1"
+kind: "HTTPRoute"
+metadata:
+  name: "kubernetes-dashboard-web"
+  namespace: "kubernetes-dashboard"
+spec:
+  parentRefs:
+    - name: "kubernetes-dashboard"
+      sectionName: "https"
+  rules:
+    - backendRefs:
+        - name: "kubernetes-dashboard-web"
+          port: 8000
+      matches:
+        - path:
+            type: "PathPrefix"
+            value: "/"
