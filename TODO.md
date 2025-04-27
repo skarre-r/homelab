@@ -1,9 +1,24 @@
 - [x] k3s: disable helm controller?
 - [x] k3s: disable other addons?
-- [x] k3s: make local-path-provisioner use zfs pool
+- [x] make local-path-provisioner use zfs pool
+- [x] gateway api (cilium)
+- [x] cert-manager
 - [ ] k3s: disable cloud controller?
-- [ ] k3s: cert-manager
-
----
-
-- ~~k3s: gateway api (cilium)~~
+- [ ] flux helm controller
+- [ ] ansible: bootstrap cilium (again)
+- [ ] replace k3s with k8s (kubeadm)
+    - cri-o (vs containerd)
+    - etcd
+    - coredns
+    - csi (local-path-provisioner)
+- [ ] flux gitops? (flux + gitea/ onedev/ soft-serve)
+- [ ] pod-gateway!
+    - https://github.com/angelnu/k8s-gitops
+    - https://github.com/angelnu/helm-charts/tree/main/charts/apps/pod-gateway
+    - https://github.com/angelnu/gateway-admision-controller
+    - https://github.com/angelnu/pod-gateway
+    - gluetun: https://hub.docker.com/r/qmcgaw/gluetun
+- [ ] prometheus + grafana
+- [ ] remove cert-manager trust-manager?
+- [ ] change cilium namespace?
+- [ ] network policies
