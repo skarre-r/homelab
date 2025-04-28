@@ -6,7 +6,6 @@ resources:
   - "cert-manager"
   - "cilium"
   - "cloudflared"
-  - "crds"
   - "flux"
   - "headlamp"
   - "local-path-provisioner"

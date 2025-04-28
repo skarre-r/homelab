@@ -4,55 +4,8 @@
 apiVersion: "kustomize.config.k8s.io/v1beta1"
 kind: "Kustomization"
 resources:
-  - "policy.yaml"
-  - "pool.yaml"
+  - "gateway-api.yaml"
+  - "helm-release.yaml"
+  - "ip-pool.yaml"
+  - "l2-policy.yaml"
   - "service.yaml"
-helmCharts:
-  - name: "cilium"
-    namespace: "kube-system"
-    repo: "https://helm.cilium.io"
-    version: "1.17.3"
-    releaseName: "cilium"
-    includeCRDs: true
-    valuesInline:
-      debug:
-        enabled: false
-      k8sServiceHost: "192.168.1.21"
-      k8sServicePort: "6443"
-      k8sClientRateLimit:
-        qps: 50
-        burst: 200
-      rollOutCiliumPods: true
-      l2announcements:
-        enabled: true
-      l2podAnnouncements:
-        enabled: false
-      cni:
-        enabled: true
-        uninstall: false
-        exclusive: true
-      ingressController:
-        enabled: false
-      gatewayAPI:
-        enabled: true
-        gatewayClass:
-          create: "true"
-      k8sNetworkPolicy:
-        enabled: true
-      externalIPs:
-        enabled: true
-      hubble:
-        enabled: true
-        relay:
-          enabled: true
-        ui:
-          enabled: true
-      kubeProxyReplacement: true
-      egressGateway:
-        enabled: false
-      nodePort:
-        enabled: false
-      operator:
-        enabled: true
-        rollOutPods: true
-        replicas: 1
