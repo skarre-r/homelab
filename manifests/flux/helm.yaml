@@ -1,0 +1,53 @@
+---
+#  1. Install chart
+apiVersion: "source.toolkit.fluxcd.io/v1"
+kind: "HelmRepository"
+metadata:
+  name: "flux-operator"
+  namespace: "flux-system"
+spec:
+  url: "oci://ghcr.io/controlplaneio-fluxcd/charts"
+  type: "oci"
+---
+apiVersion: "helm.toolkit.fluxcd.io/v2"
+kind: "HelmRelease"
+metadata:
+  name: "flux-operator"
+  namespace: "flux-system"
+spec:
+  interval: "24h"
+  releaseName: "flux-operator"
+  chart:
+    spec:
+      chart: "flux-operator"
+      version: "0.19.0"
+      sourceRef:
+        kind: "HelmRepository"
+        name: "flux-operator"
+  targetNamespace: "flux-system"
+  values:
+    installCRDs: true
+---
+# 2. Upgrade chart automatically
+apiVersion: "source.toolkit.fluxcd.io/v1beta2"
+kind: "OCIRepository"
+metadata:
+  name: "flux-operator"
+  namespace: "flux-system"
+spec:
+  url: "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator"
+  interval: "24h"
+  ref:
+    semver: "*"
+---
+apiVersion: "helm.toolkit.fluxcd.io/v2"
+kind: "HelmRelease"
+metadata:
+  name: "flux-operator-upgrade"
+  namespace: "flux-system"
+spec:
+  interval: "24h"
+  releaseName: "flux-operator"
+  chartRef:
+    kind: "OCIRepository"
+    name: "flux-operator"

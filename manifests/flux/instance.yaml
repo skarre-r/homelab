@@ -1,0 +1,21 @@
+---
+apiVersion: "fluxcd.controlplane.io/v1"
+kind: "FluxInstance"
+metadata:
+  name: "flux"
+  namespace: "flux-system"
+spec:
+  distribution:
+    registry: "ghcr.io/fluxcd"
+    version: "2.5.x"
+    artifact: "oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests"
+  migrateResources: true
+  components:
+    - "source-controller"
+    - "kustomize-controller"
+    - "helm-controller"
+    - "notification-controller"
+  cluster:
+    type: "kubernetes"
+    domain: "cluster.local"
+    networkPolicy: true
