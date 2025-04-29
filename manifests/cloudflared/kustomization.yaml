@@ -6,11 +6,4 @@ resources:
   - "config-map.yaml"
   - "deployment.yaml"
   - "namespace.yaml"
-# secret must be updated manually: https://developers.cloudflare.com/cloudflare-one/tutorials/many-cfd-one-tunnel/
-secretGenerator:
-  - name: "cloudflared"
-    namespace: "cloudflare"
-    type: "Opaque"
-    options:
-      disableNameSuffixHash: true
-    behavior: "create"
+  - "pvc.yaml"

@@ -53,5 +53,5 @@ spec:
               - key: "config.yaml"
                 path: "config.yaml"
         - name: "creds"
-          secret:
-            secretName: "cloudflared"
+          persistentVolumeClaim:
+            claimName: "cloudflared-creds"
