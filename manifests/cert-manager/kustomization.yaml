@@ -1,45 +1,7 @@
 ---
 apiVersion: "kustomize.config.k8s.io/v1beta1"
 kind: "Kustomization"
-namespace: "cert-manager"
 resources:
   - "cluster-issuer.yaml"
+  - "helm-chart.yaml"
   - "namespace.yaml"
-helmCharts:
-  - repo: "https://charts.jetstack.io"
-    name: "cert-manager"
-    namespace: "cert-manager"
-    releaseName: "cert-manager"
-    version: "1.17.2"
-    includeCRDs: true
-    valuesInline:
-      global:
-        leaderElection:
-          namespace: "cert-manager"
-      crds:
-        enabled: true
-        keep: true
-      config:
-        apiVersion: "controller.config.cert-manager.io/v1alpha1"
-        kind: "ControllerConfiguration"
-        leaderElectionConfig:
-          namespace: "cert-manager"
-        enableGatewayAPI: true
-      clusterResourceNamespace: "cert-manager"
-      namespace: "cert-manager"
-      prometheus:
-        enabled: false
-  - repo: "https://charts.jetstack.io"
-    name: "trust-manager"
-    namespace: "cert-manager"
-    releaseName: "trust-manager"
-    includeCRDs: true
-    valuesInline:
-      crds:
-        enabled: true
-        keep: true
-      secretTargets:
-        enabled: false
-      app:
-        trust:
-          namespace: "cert-manager"

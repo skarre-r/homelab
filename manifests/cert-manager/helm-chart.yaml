@@ -1,0 +1,73 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: "cert-manager"
+  namespace: "flux-system"
+spec:
+  url: "https://charts.jetstack.io"
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: "cert-manager"
+  namespace: "flux-system"
+spec:
+  interval: "24h"
+  install:
+    crds: Create
+  releaseName: "cert-manager"
+  targetNamespace: "cert-manager"
+  chart:
+    spec:
+      chart: "cert-manager"
+      sourceRef:
+        kind: HelmRepository
+        name: "cert-manager"
+        namespace: "flux-system"
+      version: "1.17.2"
+  values:
+    global:
+      leaderElection:
+        namespace: "cert-manager"
+    crds:
+      enabled: true
+      keep: true
+    config:
+      apiVersion: "controller.config.cert-manager.io/v1alpha1"
+      kind: "ControllerConfiguration"
+      leaderElectionConfig:
+        namespace: "cert-manager"
+      enableGatewayAPI: true
+    clusterResourceNamespace: "cert-manager"
+    namespace: "cert-manager"
+    prometheus:
+      enabled: false
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: "trust-manager"
+  namespace: "flux-system"
+spec:
+  interval: "24h"
+  chart:
+    spec:
+      chart: "trust-manager"
+      sourceRef:
+        kind: HelmRepository
+        name: "cert-manager"
+        namespace: "flux-system"
+  targetNamespace: "cert-manager"
+  releaseName: "trust-manager"
+  install:
+    crds: Create
+  values:
+    crds:
+      enabled: true
+      keep: true
+    secretTargets:
+      enabled: false
+    app:
+      trust:
+        namespace: "cert-manager"
