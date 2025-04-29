@@ -1,0 +1,48 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: "metrics-server"
+  namespace: "flux-system"
+spec:
+  url: "https://kubernetes-sigs.github.io/metrics-server/"
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: "metrics-server"
+  namespace: "flux-system"
+spec:
+  interval: "24h"
+  targetNamespace: "metrics-server"
+  install:
+    crds: Create
+  releaseName: "metrics-server"
+  chart:
+    spec:
+      chart: "metrics-server"
+      sourceRef:
+        kind: HelmRepository
+        name: "metrics-server"
+        namespace: "flux-system"
+      version: "3.12.2"
+  values:
+    serviceAccount:
+      create: true
+    rbac:
+      create: true
+    apiService:
+      create: true
+      insecureSkipTLSVerify: true
+    replicas: 1
+    service:
+      type: "ClusterIP"
+      port: 443
+    addonResizer:
+      enabled: false
+    metrics:
+      enabled: true
+    serviceMonitor:
+      enabled: false
+    tls:
+      type: "metrics-server"
