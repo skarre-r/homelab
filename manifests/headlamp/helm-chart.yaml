@@ -3,7 +3,7 @@ apiVersion: "source.toolkit.fluxcd.io/v1"
 kind: "HelmRepository"
 metadata:
   name: "headlamp"
-  namespace: "headlamp"
+  namespace: "flux-system"
 spec:
   url: "https://kubernetes-sigs.github.io/headlamp/"
 ---
@@ -11,7 +11,7 @@ apiVersion: "helm.toolkit.fluxcd.io/v2"
 kind: "HelmRelease"
 metadata:
   name: "headlamp"
-  namespace: "headlamp"
+  namespace: "flux-system"
 spec:
   interval: "24h"
   chart:
@@ -21,9 +21,11 @@ spec:
       sourceRef:
         kind: "HelmRepository"
         name: "headlamp"
-        namespace: "headlamp"
+        namespace: "flux-system"
   releaseName: "headlamp"
   targetNamespace: "headlamp"
+  install:
+    crds: Create
   values:
     replicaCount: 1
     config:
