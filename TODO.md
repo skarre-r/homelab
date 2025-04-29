@@ -8,6 +8,8 @@
     - [x] **flux manifests**
     - [ ] flux gitops?
         - [ ] git server: gitea/ onedev/ soft-serve
+- [x] cloudflared: credentials.json PV(C) !!!
+- [x] migrate to flux HelmRelease(s)
 - [ ] k3s: disable cloud controller?
 - [ ] replace k3s with k8s (kubeadm)
     - cri-o (vs containerd)
@@ -25,5 +27,3 @@
 - [ ] change cilium namespace?
 - [ ] network policies
 - [ ] headlamp plugins (cert-manager, flux)
-- [ ] cloudflared: credentials.json PV(C) !!!
-- [ ] migrate to flux HelmRelease(s)
