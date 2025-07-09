@@ -8,6 +8,7 @@ resources:
   - "cloudflared"
   - "flux"
   - "headlamp"
+  - "jellyfin"
   - "local-path-provisioner"
   - "metrics-server"
   - "plex"

@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "jellyfin-cache"
+  namespace: "jellyfin"
+spec:
+  hostPath:
+    path: "/tmp"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: ""
+  persistentVolumeReclaimPolicy: "Retain"
+  claimRef:
+    apiVersion: "v1"
+    kind: "PersistentVolumeClaim"
+    name: "jellyfin-cache"
+    namespace: "jellyfin"
+  capacity:
+    storage: "200Gi"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "jellyfin-config"
+  namespace: "jellyfin"
+spec:
+  hostPath:
+    path: "/pool/services/jellyfin"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: ""
+  persistentVolumeReclaimPolicy: "Retain"
+  claimRef:
+    apiVersion: "v1"
+    kind: "PersistentVolumeClaim"
+    name: "jellyfin-config"
+    namespace: "jellyfin"
+  capacity:
+    storage: "15Ti"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "jellyfin-media"
+  namespace: "jellyfin"
+spec:
+  hostPath:
+    path: "/pool/media"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: ""
+  persistentVolumeReclaimPolicy: "Retain"
+  claimRef:
+    apiVersion: "v1"
+    kind: "PersistentVolumeClaim"
+    name: "jellyfin-media"
+    namespace: "jellyfin"
+  capacity:
+    storage: "15Ti"
