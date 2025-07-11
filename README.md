@@ -34,3 +34,21 @@ just lint
 |----------|-----------------|----------------|-------------------|
 | rpi1     | 192.168.1.11/24 | raspberry pi 5 | pi-hole + unbound |
 | homelab  | 192.168.1.21/24 |                | nas, k8s          |
+
+## k8s
+
+### loadbalancer ip addresses
+
+| service      | ip address   |
+|--------------|--------------|
+| whoami       | 192.168.1.50 |
+| cilium       | 192.168.1.51 |
+|              | 192.168.1.52 |
+| plex         | 192.168.1.53 |
+| calibre-web  | 192.168.1.54 |
+| headlamp     | 192.168.1.55 |
+| jellyfin     | 192.168.1.56 |
+| transmission | 192.168.1.57 |
+| sonarr       | 192.168.1.58 |
+| radarr       | 192.168.1.59 |
+| prowlarr     | 192.168.1.60 |
