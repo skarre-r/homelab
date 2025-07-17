@@ -2,8 +2,29 @@
 apiVersion: v1
 kind: "PersistentVolume"
 metadata:
+  name: "gluetun"
+  namespace: "gluetun"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: "local-path"
+  claimRef:
+    apiVersion: "v1"
+    kind: "PersistentVolumeClaim"
+    name: "gluetun"
+    namespace: "gluetun"
+  volumeMode: "Filesystem"
+  capacity:
+    storage: "15Ti"
+  persistentVolumeReclaimPolicy: "Retain"
+  hostPath:
+    path: "/pool/services/gluetun"
+---
+apiVersion: v1
+kind: "PersistentVolume"
+metadata:
   name: "prowlarr-config"
-  namespace: "wireguard"
+  namespace: "gluetun"
 spec:
   accessModes:
     - "ReadWriteOnce"
@@ -12,7 +33,7 @@ spec:
     apiVersion: "v1"
     kind: "PersistentVolumeClaim"
     name: "prowlarr-config"
-    namespace: "wireguard"
+    namespace: "gluetun"
   volumeMode: "Filesystem"
   capacity:
     storage: "15Ti"
@@ -24,7 +45,7 @@ apiVersion: v1
 kind: "PersistentVolume"
 metadata:
   name: "transmission-config"
-  namespace: "wireguard"
+  namespace: "gluetun"
 spec:
   accessModes:
     - "ReadWriteOnce"
@@ -33,7 +54,7 @@ spec:
     apiVersion: "v1"
     kind: "PersistentVolumeClaim"
     name: "transmission-config"
-    namespace: "wireguard"
+    namespace: "gluetun"
   volumeMode: "Filesystem"
   capacity:
     storage: "15Ti"
@@ -45,7 +66,7 @@ apiVersion: v1
 kind: "PersistentVolume"
 metadata:
   name: "transmission-downloads"
-  namespace: "wireguard"
+  namespace: "gluetun"
 spec:
   accessModes:
     - "ReadWriteOnce"
@@ -54,7 +75,7 @@ spec:
     apiVersion: "v1"
     kind: "PersistentVolumeClaim"
     name: "transmission-downloads"
-    namespace: "wireguard"
+    namespace: "gluetun"
   volumeMode: "Filesystem"
   capacity:
     storage: "15Ti"
