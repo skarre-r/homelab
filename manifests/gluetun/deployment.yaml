@@ -1,0 +1,117 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "wireguard"
+  namespace: "wireguard"
+  labels:
+    app.kubernetes.io/name: "wireguard"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "wireguard"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "wireguard"
+    spec:
+      initContainers:
+        - name: "gluetun"
+          restartPolicy: "Always" # sidecar
+          image: "ghcr.io/qdm12/gluetun:latest"
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "VPN_TYPE"
+              value: "wireguard"
+            - name: "VPN_SERVICE_PROVIDER"
+              value: "custom"
+            - name: "VPN_INTERFACE"
+              value: "wg0"
+            - name: "DNS_KEEP_NAMESERVER"
+              value: "on"
+            - name: "FIREWALL_INPUT_PORTS"
+              value: "9091,9696"
+          envFrom:
+            - secretRef:
+                name: "wireguard"
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - if [ $(wget -q -O- https://ipinfo.io/country) == 'NO' ]; then exit $?; else exit 0; fi
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 3
+
+      containers:
+        - name: "prowlarr"
+          image: "lscr.io/linuxserver/prowlarr:latest"
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          ports:
+            - containerPort: 9696
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 9696
+          readinessProbe:
+            tcpSocket:
+              port: 9696
+          livenessProbe:
+            tcpSocket:
+              port: 9696
+          volumeMounts:
+            - mountPath: "/config"
+              name: "prowlarr-config"
+
+        - name: "transmission"
+          image: "lscr.io/linuxserver/transmission:latest"
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          ports:
+            - containerPort: 9091
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 9091
+          readinessProbe:
+            tcpSocket:
+              port: 9091
+          livenessProbe:
+            tcpSocket:
+              port: 9091
+          volumeMounts:
+            - mountPath: "/config"
+              name: "transmission-config"
+            - mountPath: "/downloads"
+              name: "transmission-downloads"
+
+      volumes:
+        - name: "prowlarr-config"
+          persistentVolumeClaim:
+            claimName: "prowlarr-config"
+        - name: "transmission-config"
+          persistentVolumeClaim:
+            claimName: "transmission-config"
+        - name: "transmission-downloads"
+          persistentVolumeClaim:
+            claimName: "transmission-downloads"
