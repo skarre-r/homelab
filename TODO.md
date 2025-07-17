@@ -27,3 +27,4 @@
 - [ ] change cilium namespace?
 - [ ] network policies
 - [ ] headlamp plugins (cert-manager, flux)
+- [ ] update linter config files
