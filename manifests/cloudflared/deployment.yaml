@@ -44,7 +44,7 @@ spec:
             - mountPath: "/etc/cloudflared/creds"
               name: "creds"
               readOnly: true
-          resources: { }
+          resources: {}
       volumes:
         - name: "config"
           configMap:

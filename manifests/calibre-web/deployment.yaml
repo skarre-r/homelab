@@ -41,7 +41,7 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8083
-          resources: { }
+          resources: {}
           volumeMounts:
             - mountPath: "/config"
               name: "config"

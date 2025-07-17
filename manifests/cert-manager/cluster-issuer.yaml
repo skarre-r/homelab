@@ -4,7 +4,7 @@ kind: "ClusterIssuer"
 metadata:
   name: "selfsigned-issuer"
 spec:
-  selfSigned: { }
+  selfSigned: {}
 ---
 apiVersion: "cert-manager.io/v1"
 kind: "Certificate"
@@ -19,7 +19,7 @@ spec:
   secretName: "ca-cert"
   isCA: true
   commonName: "selfsigned-ca"
-  subject: { }
+  subject: {}
   privateKey:
     algorithm: "ECDSA"
     size: 256

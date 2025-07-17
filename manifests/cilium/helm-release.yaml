@@ -28,7 +28,7 @@ spec:
   releaseName: "cilium"
   install:
     crds: "Create"
-  dependsOn: [ ]  # TODO: gateway-api
+  dependsOn: [] # TODO: gateway-api
   values:
     debug:
       enabled: false

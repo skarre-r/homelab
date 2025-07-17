@@ -23,8 +23,8 @@ spec:
         - name: "busybox"
           image: "docker.io/busybox:latest"
           imagePullPolicy: "IfNotPresent"
-          command: [ "/bin/sh", "-c", "while true; do sleep 3600; done" ]
-          resources: { }
+          command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
+          resources: {}
           volumeMounts:
             - mountPath: "/pvc-1"
               name: "pvc-1"
