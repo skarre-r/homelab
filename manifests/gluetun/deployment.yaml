@@ -41,7 +41,7 @@ spec:
             - name: "FIREWALL_OUTBOUND_SUBNETS"
               value: "10.43.0.0/16,10.0.0.0/8"
             - name: "FIREWALL_DEBUG"
-              value: "on"
+              value: "off"
             - name: "DOT"
               value: "on"
             - name: "DOT_PROVIDERS"
