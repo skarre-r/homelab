@@ -6,6 +6,7 @@ resources:
   - "cert-manager"
   - "cilium"
   - "cloudflared"
+  - "flaresolverr"
   - "flux"
   - "gluetun"
   - "headlamp"
