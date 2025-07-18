@@ -6,6 +6,7 @@ resources:
   - "configmap.yaml"
   - "deployment.yaml"
   - "namespace.yaml"
+  - "networkpolicies.yaml"
   - "pv.yaml"
   - "pvc.yaml"
   - "services.yaml"

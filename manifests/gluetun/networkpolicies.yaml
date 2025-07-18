@@ -1,0 +1,14 @@
+---
+# TODO:
+# - block egress traffic (except through WG)
+# - allow k8s DNS traffic
+# - allow traffic to other k8s services
+apiVersion: "cilium.io/v2"
+kind: "CiliumNetworkPolicy"
+metadata:
+  name: "todo"
+  namespace: "gluetun"
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: "gluetun"
