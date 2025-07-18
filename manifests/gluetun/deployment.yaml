@@ -129,8 +129,8 @@ spec:
           volumeMounts:
             - mountPath: "/config"
               name: "transmission-config"
-            - mountPath: "/downloads"
-              name: "transmission-downloads"
+            - mountPath: "/media"
+              name: "transmission-media"
 
       volumes:
         - name: "gluetun"
@@ -146,6 +146,6 @@ spec:
         - name: "transmission-config"
           persistentVolumeClaim:
             claimName: "transmission-config"
-        - name: "transmission-downloads"
+        - name: "transmission-media"
           persistentVolumeClaim:
-            claimName: "transmission-downloads"
+            claimName: "transmission-media"

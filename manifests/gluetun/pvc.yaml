@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "transmission-downloads"
+  name: "transmission-media"
   namespace: "gluetun"
 spec:
   storageClassName: "local-path"
@@ -56,5 +56,5 @@ spec:
   resources:
     requests:
       storage: "1Gi"
-  volumeName: "transmission-downloads"
+  volumeName: "transmission-media"
   volumeMode: "Filesystem"

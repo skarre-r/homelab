@@ -65,7 +65,7 @@ spec:
 apiVersion: v1
 kind: "PersistentVolume"
 metadata:
-  name: "transmission-downloads"
+  name: "transmission-media"
   namespace: "gluetun"
 spec:
   accessModes:
@@ -74,11 +74,11 @@ spec:
   claimRef:
     apiVersion: "v1"
     kind: "PersistentVolumeClaim"
-    name: "transmission-downloads"
+    name: "transmission-media"
     namespace: "gluetun"
   volumeMode: "Filesystem"
   capacity:
     storage: "15Ti"
   persistentVolumeReclaimPolicy: "Retain"
   hostPath:
-    path: "/pool/media/downloads"
+    path: "/pool/media"
