@@ -2,7 +2,7 @@
 apiVersion: "cilium.io/v2"
 kind: "CiliumNetworkPolicy"
 metadata:
-  name: "gluetun"
+  name: "egress"
   namespace: "gluetun"
 spec:
   endpointSelector:
@@ -16,18 +16,16 @@ spec:
         - ports:
             - port: "3125"  # wireguard endpoint port
               protocol: "UDP"
-    # Allow traffic to k8s DNS
+    # Allow traffic to other cluster services
     - toEntities:
         - cluster
       toPorts:
         - ports:
-            - port: "53"
+            - port: "53" # dns
               protocol: "UDP"
-    # Allow traffic to other services in the cluster
-    - toServices:
-        - k8sService:
-            serviceName: "radarr"
-            namespace: "radarr"
-        - k8sService:
-            serviceName: "sonarr"
-            namespace: "sonarr"
+            - port: "7878"  # radarr
+              protocol: "TCP"
+            - port: "8191"  # flaresolverr
+              protocol: "TCP"
+            - port: "8989" # sonarr
+              protocol: "TCP"
