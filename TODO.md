@@ -22,6 +22,14 @@
 - [ ] change cilium namespace?
 - [ ] (cilium) network policies
 - [ ] headlamp plugins (cert-manager, flux)?
+- [ ] k8s applyset
+    - https://kubernetes.io/blog/2023/05/09/introducing-kubectl-applyset-pruning/
+    - https://kubernetes.io/docs/reference/labels-annotations-taints/
+
+---
+
+- https://www.cncf.io/projects/
+- https://landscape.cncf.io
 
 ---
 
