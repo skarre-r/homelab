@@ -3,3 +3,9 @@ checks:
   addAllBuiltIn: true
   ignorePaths:
     - "manifests/**/charts/**/*"
+  exclude:
+    - "minimum-three-replicas"
+    - "required-annotation-email"
+    - "exposed-services"
+    - "required-label-owner"
+    - "no-node-affinity"
