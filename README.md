@@ -40,7 +40,7 @@ just lint
 #### loadbalancer ip addresses
 
 | service         | ip address   |
-| --------------- | ------------ |
+|-----------------|--------------|
 | whoami          | 192.168.1.50 |
 | cilium (hubble) | 192.168.1.51 |
 |                 | 192.168.1.52 |
@@ -52,3 +52,4 @@ just lint
 | sonarr          | 192.168.1.58 |
 | radarr          | 192.168.1.59 |
 | prowlarr        | 192.168.1.60 |
+| gluetun         | 192.168.1.61 |
