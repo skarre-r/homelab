@@ -32,6 +32,22 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: "gluetun-lb"
+  namespace: "gluetun"
+  annotations:
+    lbipam.cilium.io/ips: "192.168.1.61"
+spec:
+  type: "LoadBalancer"
+  selector:
+    app.kubernetes.io/name: "gluetun"
+  ports:
+    - port: 80
+      targetPort: 8000
+      protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: "prowlarr-lb"
   namespace: "gluetun"
   annotations:

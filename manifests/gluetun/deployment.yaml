@@ -37,7 +37,7 @@ spec:
             - name: "DNS_KEEP_NAMESERVER"
               value: "false"
             - name: "FIREWALL_INPUT_PORTS"
-              value: "9091,9696"
+              value: "8000,9091,9696"
             - name: "FIREWALL_OUTBOUND_SUBNETS"
               value: "10.43.0.0/16,10.0.0.0/8"
             - name: "FIREWALL_DEBUG"
@@ -46,15 +46,29 @@ spec:
               value: "on"
             - name: "DOT_PROVIDERS"
               value: "quad9"
-          livenessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - if [ $(wget -q -O- https://ipinfo.io/country) == 'NO' ]; then exit $?; else exit 0; fi
-            initialDelaySeconds: 30
-            periodSeconds: 60
-            failureThreshold: 3
+            - name: "VERSION_INFORMATION"
+              value: "off"
+            - name: "PUBLICIP_ENABLED"
+              value: "true"
+            - name: "PUBLICIP_API"
+              value: "ipinfo"
+            - name: "HTTP_CONTROL_SERVER_ADDRESS"
+              value: ":8000"
+            - name: "STORAGE_FILEPATH"
+              value: ""
+          ports:
+            - containerPort: 8000
+              protocol: "TCP"
+          ## TODO: re-enable
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - sh
+          #       - -c
+          #       - if [ $(wget -q -O- https://ipinfo.io/country) != 'NO' ]; then exit 0; else exit $?; fi
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 300
+          #   failureThreshold: 1
           volumeMounts:
             - mountPath: "/gluetun/wireguard/wg0.conf"
               name: "gluetun"
@@ -125,7 +139,7 @@ spec:
         - name: "unbound"
           configMap:
             name: "unbound"
-            defaultMode: 644
+            defaultMode: 0644
         - name: "prowlarr-config"
           persistentVolumeClaim:
             claimName: "prowlarr-config"
