@@ -1,21 +1,58 @@
 ---
 extends: "default"
-ignore:
-  - ".ansible/"
-  - ".idea/"
-  - ".ignore/"
-  - ".venv/"
-  - ".vscode/"
-  - "charts/"
-  - "node_modules/"
-  - "pnpm-lock.yaml"
+ignore: |
+  .ansible/
+  .idea/
+  .ignore/
+  .venv/
+  .vscode/
+  charts/
+  node_modules/
+  pnpm-lock.yaml
 rules:
   line-length: "disable"
   comments:
     min-spaces-from-content: 1
-  comments-indentation: false
+    require-starting-space: true
+    ignore-shebangs: true
+  comments-indentation: {}
   braces:
     max-spaces-inside: 1
   octal-values:
     forbid-explicit-octal: true
-    forbid-implicit-octal: true
+    forbid-implicit-octal: false
+  anchors:
+    forbid-undeclared-aliases: true
+    forbid-duplicated-anchors: true
+    forbid-unused-anchors: false
+  brackets:
+    max-spaces-inside: 1
+  colons:
+    max-spaces-before: 0
+    max-spaces-after: 1
+  commas:
+    max-spaces-before: 0
+    max-spaces-after: 1
+  document-start:
+    present: true
+  document-end:
+    present: false
+    level: "warning"
+  empty-lines:
+    max: 1
+  hyphens:
+    max-spaces-after: 1
+  indentation:
+    spaces: 2
+    indent-sequences: true
+  new-line-at-end-of-file: {}
+  new-lines:
+    type: "unix"
+  quoted-strings:
+    quote-type: "double"
+    required: false
+  trailing-spaces: false
+  truthy:
+    allowed-values:
+      - "true"
+      - "false"
