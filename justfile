@@ -6,6 +6,11 @@ set dotenv-required := true
 default:
     just --list
 
+# install dependencies
+install:
+    uv sync
+    pnpm install
+
 # run the "rpi1-bootstrap" playbook
 [group("ansible")]
 bootstrap-rpi1:
@@ -57,6 +62,8 @@ k8s-headlamp:
 [group("lint")]
 prettier:
     pnpm prettier --write .
+
+alias format := prettier
 
 # run yamllint
 [group("lint")]
