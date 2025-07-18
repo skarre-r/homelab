@@ -47,3 +47,6 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8191
+          resources:
+            limits:
+              memory: "1024Mi"
