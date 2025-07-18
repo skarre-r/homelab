@@ -60,4 +60,3 @@ spec:
               name: "media"
             - mountPath: "/dev/dri"
               name: "dri"
-

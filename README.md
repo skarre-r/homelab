@@ -31,7 +31,7 @@ just lint
 ## hosts
 
 | hostname | ip address      | description    | role              |
-|----------|-----------------|----------------|-------------------|
+| -------- | --------------- | -------------- | ----------------- |
 | rpi1     | 192.168.1.11/24 | raspberry pi 5 | pi-hole + unbound |
 | homelab  | 192.168.1.21/24 |                | nas, k8s          |
 
@@ -40,7 +40,7 @@ just lint
 ### loadbalancer ip addresses
 
 | service      | ip address   |
-|--------------|--------------|
+| ------------ | ------------ |
 | whoami       | 192.168.1.50 |
 | cilium       | 192.168.1.51 |
 |              | 192.168.1.52 |

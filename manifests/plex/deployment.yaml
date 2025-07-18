@@ -62,7 +62,7 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 32400
-          resources: { }
+          resources: {}
           securityContext:
             privileged: true
           volumeMounts:

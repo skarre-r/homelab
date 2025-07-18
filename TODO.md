@@ -5,26 +5,29 @@
 - [x] cert-manager
 - [x] ansible: bootstrap cilium (again)
 - [x] flux helm controller
-    - [x] **flux manifests**
-    - [ ] flux gitops?
-        - [ ] git server: gitea/ onedev/ soft-serve
+  - [x] **flux manifests**
+  - [ ] flux gitops?
+    - [ ] git server: gitea/ onedev/ soft-serve
 - [x] cloudflared: credentials.json PV(C) !!!
 - [x] migrate to flux HelmRelease(s)
 - [ ] k3s: disable cloud controller?
 - [ ] replace k3s with k8s (kubeadm)
-    - cri-o (vs containerd)
-    - etcd
-    - coredns
-    - csi (local-path-provisioner)
-- [ ] pod-gateway!
-    - https://github.com/angelnu/k8s-gitops
-    - https://github.com/angelnu/helm-charts/tree/main/charts/apps/pod-gateway
-    - https://github.com/angelnu/gateway-admision-controller
-    - https://github.com/angelnu/pod-gateway
-    - gluetun: https://hub.docker.com/r/qmcgaw/gluetun
+  - cri-o (vs containerd)
+  - etcd
+  - coredns
+  - csi (local-path-provisioner)
 - [ ] prometheus + grafana
 - [ ] remove cert-manager trust-manager?
 - [ ] change cilium namespace?
 - [ ] network policies
 - [ ] headlamp plugins (cert-manager, flux)
 - [ ] update linter config files
+
+---
+
+- ~~pod-gateway!~~
+  - ~~https://github.com/angelnu/k8s-gitops~~
+  - ~~https://github.com/angelnu/helm-charts/tree/main/charts/apps/pod-gateway~~
+  - ~~https://github.com/angelnu/gateway-admision-controller~~
+  - ~~https://github.com/angelnu/pod-gateway~~
+  - ~~gluetun: https://hub.docker.com/r/qmcgaw/gluetun~~

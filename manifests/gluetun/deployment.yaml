@@ -121,11 +121,11 @@ spec:
       volumes:
         - name: "gluetun"
           persistentVolumeClaim:
-              claimName: "gluetun"
+            claimName: "gluetun"
         - name: "unbound"
           configMap:
             name: "unbound"
-            defaultMode: 0644
+            defaultMode: 644
         - name: "prowlarr-config"
           persistentVolumeClaim:
             claimName: "prowlarr-config"
