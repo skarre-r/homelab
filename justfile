@@ -67,7 +67,7 @@ alias format := prettier
 
 # run yamllint
 [group("lint")]
-yaml-lint:
+yamllint:
     uv run yamllint .
 
 # run ansible-lint
@@ -82,4 +82,4 @@ kube-linter:
 
 # run all linters
 [group("lint")]
-lint: prettier yaml-lint ansible-lint kube-linter
+lint: prettier yamllint ansible-lint kube-linter
