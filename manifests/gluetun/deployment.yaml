@@ -59,16 +59,15 @@ spec:
           ports:
             - containerPort: 8000
               protocol: "TCP"
-          ## TODO: re-enable
-          # livenessProbe:
-          #   exec:
-          #     command:
-          #       - sh
-          #       - -c
-          #       - if [ $(wget -q -O- https://ipinfo.io/country) != 'NO' ]; then exit 0; else exit $?; fi
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 300
-          #   failureThreshold: 1
+          livenessProbe:
+           exec:
+             command:
+               - sh
+               - -c
+               - if [ $(wget -q -O- https://ipinfo.io/country) != 'NO' ]; then exit 0; else exit $?; fi
+           initialDelaySeconds: 30
+           periodSeconds: 300
+           failureThreshold: 1
           volumeMounts:
             - mountPath: "/gluetun/wireguard/wg0.conf"
               name: "gluetun"
