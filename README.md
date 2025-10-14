@@ -53,3 +53,4 @@ just lint
 | radarr          | 192.168.1.59 |
 | prowlarr        | 192.168.1.60 |
 | gluetun         | 192.168.1.61 |
+| qbittorrent     | 192.168.1.62 |

@@ -37,7 +37,7 @@ spec:
             - name: "DNS_KEEP_NAMESERVER"
               value: "false"
             - name: "FIREWALL_INPUT_PORTS"
-              value: "8000,9091,9696"
+              value: "8000,8080,9091,9696"
             - name: "FIREWALL_OUTBOUND_SUBNETS"
               value: "10.43.0.0/16,10.0.0.0/8"
             - name: "FIREWALL_DEBUG"
@@ -131,6 +131,36 @@ spec:
             - mountPath: "/media"
               name: "transmission-media"
 
+        - name: "qbittorrent"
+          image: "lscr.io/linuxserver/qbittorrent:latest"
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+            - name: "WEBUI_PORT"
+              value: "8080"
+          ports:
+            - containerPort: 8080
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 8080
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+          volumeMounts:
+            - mountPath: "/config"
+              name: "qbittorrent-config"
+            - mountPath: "/media"
+              name: "qbittorrent-media"
+
       volumes:
         - name: "gluetun"
           persistentVolumeClaim:
@@ -148,3 +178,9 @@ spec:
         - name: "transmission-media"
           persistentVolumeClaim:
             claimName: "transmission-media"
+        - name: "qbittorrent-config"
+          persistentVolumeClaim:
+            claimName: "qbittorrent-config"
+        - name: "qbittorrent-media"
+          persistentVolumeClaim:
+            claimName: "qbittorrent-media"

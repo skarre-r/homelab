@@ -58,3 +58,33 @@ spec:
       storage: "1Gi"
   volumeName: "transmission-media"
   volumeMode: "Filesystem"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "qbittorrent-config"
+  namespace: "gluetun"
+spec:
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+  volumeName: "qbittorrent-config"
+  volumeMode: "Filesystem"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "qbittorrent-media"
+  namespace: "gluetun"
+spec:
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+  volumeName: "qbittorrent-media"
+  volumeMode: "Filesystem"

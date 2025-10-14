@@ -32,6 +32,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: "qbittorrent"
+  namespace: "gluetun"
+spec:
+  type: "ClusterIP"
+  selector:
+    app.kubernetes.io/name: "gluetun"
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: "TCP"
+      name: "qbittorrent"
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: "gluetun-lb"
   namespace: "gluetun"
   annotations:
@@ -75,4 +90,20 @@ spec:
   ports:
     - port: 80
       targetPort: 9091
+      protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "qbittorrent-lb"
+  namespace: "gluetun"
+  annotations:
+    lbipam.cilium.io/ips: "192.168.1.62"
+spec:
+  type: "LoadBalancer"
+  selector:
+    app.kubernetes.io/name: "gluetun"
+  ports:
+    - port: 80
+      targetPort: 8080
       protocol: "TCP"
