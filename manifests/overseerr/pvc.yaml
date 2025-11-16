@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "overseerr-config"
+  namespace: "overseerr"
+spec:
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+  volumeName: "overseerr-config"
+  volumeMode: "Filesystem"

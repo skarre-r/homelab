@@ -13,6 +13,7 @@ resources:
   - "jellyfin"
   - "local-path-provisioner"
   - "metrics-server"
+  - "overseerr"
   - "plex"
   - "radarr"
   - "sonarr"
