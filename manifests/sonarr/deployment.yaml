@@ -26,7 +26,7 @@ spec:
       containers:
         - name: "sonarr"
           image: "lscr.io/linuxserver/sonarr:latest"
-          imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
           env:
             - name: "TZ"
               value: "Europe/Oslo"
