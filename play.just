@@ -29,3 +29,8 @@ homelab-bootstrap:
 [group("ansible playbooks")]
 homelab-teardown:
     uv run ansible-playbook -vv --inventory inventory.yaml playbooks/homelab-teardown.yaml --user ansible --extra-vars "ansible_password=${HOMELAB_ANSIBLE_PASSWORD}"
+
+# run the "kubeconfig" playbook
+[group("ansible playbooks")]
+kubeconfig:
+    uv run ansible-playbook -vv --inventory inventory.yaml playbooks/kubeconfig.yaml --user ansible --extra-vars "ansible_password=${HOMELAB_ANSIBLE_PASSWORD}"
