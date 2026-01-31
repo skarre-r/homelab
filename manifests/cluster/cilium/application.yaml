@@ -1,0 +1,65 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "cilium"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "cilium"
+  project: "default"
+#  syncPolicy:
+#    automated:
+#      enabled: true
+#    managedNamespaceMetadata:
+#      labels:
+#        argocd.argoproj.io/managed-by: "argocd"
+#    syncOptions:
+#      - "CreateNamespace=true"
+  source:
+    repoURL: "https://helm.cilium.io"
+    chart: "cilium"
+    targetRevision: "1.18.6"
+    helm:
+      releaseName: "cilium"
+      skipCrds: false
+      valuesObject:
+        namespaceOverride: "cilium"
+        debug:
+          enabled: false
+        k8sServiceHost: "192.168.1.21"
+        k8sServicePort: "6443"
+        k8sClientRateLimit:
+          qps: 10
+          burst: 20
+        rollOutCiliumPods: true
+        l2announcements:
+          enabled: true
+        l2podAnnouncements:
+          enabled: false
+        cni:
+          enabled: true
+          uninstall: false
+          exclusive: true
+        ingressController:
+          enabled: false
+        gatewayAPI:
+          enabled: true
+          gatewayClass:
+            create: "true"
+        k8sNetworkPolicy:
+          enabled: true
+        externalIPs:
+          enabled: true
+        hubble:
+          enabled: false
+        kubeProxyReplacement: true
+        egressGateway:
+          enabled: false
+        nodePort:
+          enabled: false
+        operator:
+          enabled: true
+          rollOutPods: true
+          replicas: 1
