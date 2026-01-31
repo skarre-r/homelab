@@ -2,6 +2,10 @@ set dotenv-filename := ".env"
 set dotenv-load := true
 set dotenv-required := true
 
+mod apply
+mod check
+mod install
+mod get
 mod play
 
 # list available recipes
@@ -10,27 +14,12 @@ default:
 
 alias help := default
 
-# install dependencies
-install:
-    uv sync
-    pnpm install
-
 # apply manifests
 [group("k8s")]
 k8s action="apply" dir="manifests":
     kubectl kustomize --enable-helm {{ dir }} | kubectl {{ action }} -f -
 
 alias kube := k8s
-
-# get kubernetes-dashboard admin user bearer token
-[group("k8s")]
-k8s-dashboard:
-    @kubectl get secret kubernetes-dashboard-admin -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
-
-# get headlamp admin user bearer token
-[group("k8s")]
-k8s-headlamp:
-    @kubectl get secret headlamp-admin -n headlamp -o jsonpath="{.data.token}" | base64 -d
 
 # run prettier
 [group("lint")]
