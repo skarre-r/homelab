@@ -2,6 +2,7 @@
 - name: "Tear down homelab server"
   hosts: "homelab"
   tasks:
+    # k3s
     - name: "Check if k3s is installed"
       ansible.builtin.command:
         cmd: "which k3s"
@@ -23,3 +24,23 @@
       when:
         - which_k3s.rc == 0
         - k3s_uninstall_script.stat.exists
+
+    - name: "Remove cilium"
+      ansible.builtin.file:
+        path: "/usr/local/bin/cilium"
+        state: "absent"
+
+    - name: "Remove flux"
+      ansible.builtin.file:
+        path: "/usr/local/bin/flux"
+        state: "absent"
+
+    - name: "Remove operator-sdk"
+      ansible.builtin.file:
+        path: "/usr/local/bin/operator-sdk"
+        state: "absent"
+
+    - name: "Remove helm"
+      ansible.builtin.file:
+        path: "/usr/local/bin/helm"
+        state: "absent"
