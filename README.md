@@ -6,6 +6,7 @@ pre-reqs:
 - uv
 - just
 - kubectl
+- pnpm*
 
 ```shell
 # configure environment variables
@@ -16,13 +17,13 @@ vim .env
 just install
 
 # bootstrap host (example: homelab)
-just bootstrap-homelab
+just play homelab-bootstrap
 
 # run ansible playbook(s) (example: homelab)
-just homelab
+just play homelab
 
 # apply kubernetes manifests
-just k8s
+just apply ...
 
 # run linters
 just lint
@@ -41,14 +42,10 @@ just lint
 
 | service         | ip address   |
 |-----------------|--------------|
-| whoami          | 192.168.1.50 |
-| cilium (hubble) | 192.168.1.51 |
-|                 | 192.168.1.52 |
+| argo            | 192.168.1.50 |
 | plex            | 192.168.1.53 |
 | calibre-web     | 192.168.1.54 |
-| headlamp        | 192.168.1.55 |
 | jellyfin        | 192.168.1.56 |
-| transmission    | 192.168.1.57 |
 | sonarr          | 192.168.1.58 |
 | radarr          | 192.168.1.59 |
 | prowlarr        | 192.168.1.60 |
