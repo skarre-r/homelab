@@ -1,0 +1,38 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "metrics-server"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "metrics-server"
+  project: "default"
+  source:
+    repoURL: "https://kubernetes-sigs.github.io/metrics-server/"
+    chart: "metrics-server"
+    targetRevision: "3.13.0"
+    helm:
+      namespace: "metrics-server"
+      skipCrds: false
+      valuesObject:
+        serviceAccount:
+          create: true
+        rbac:
+          create: true
+        apiService:
+          create: true
+          insecureSkipTLSVerify: true
+        replicas: 1
+        service:
+          type: "ClusterIP"
+          port: 443
+        addonResizer:
+          enabled: false
+        metrics:
+          enabled: true
+        serviceMonitor:
+          enabled: false
+        tls:
+          type: "metrics-server"
