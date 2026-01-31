@@ -1,0 +1,17 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "calibre-web-lb"
+  namespace: "calibre"
+  annotations:
+    lbipam.cilium.io/ips: "192.168.1.54"
+spec:
+  type: "LoadBalancer"
+  loadBalancerClass: "io.cilium/l2-announcer"
+  selector:
+    app.kubernetes.io/name: "calibre-web"
+  ports:
+    - port: 80
+      targetPort: 8083
+      protocol: "TCP"

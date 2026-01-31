@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "overseerr"
+  namespace: "overseerr"
+spec:
+  type: "ClusterIP"
+  selector:
+    app.kubernetes.io/name: "overseerr"
+  ports:
+    - port: 5055
+      targetPort: 5055
+      protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "overseerr-lb"
+  namespace: "overseerr"
+  annotations:
+    lbipam.cilium.io/ips: "192.168.1.63"
+spec:
+  type: "LoadBalancer"
+  loadBalancerClass: "io.cilium/l2-announcer"
+  selector:
+    app.kubernetes.io/name: "overseerr"
+  ports:
+    - port: 80
+      targetPort: 5055
+      protocol: "TCP"

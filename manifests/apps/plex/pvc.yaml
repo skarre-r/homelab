@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "plex-tmp"
+  namespace: "plex"
+spec:
+  volumeName: "plex-tmp"
+  storageClassName: ""
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "plex-config"
+  namespace: "plex"
+spec:
+  volumeName: "plex-config"
+  storageClassName: ""
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "plex-media"
+  namespace: "plex"
+spec:
+  volumeName: "plex-media"
+  storageClassName: ""
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"

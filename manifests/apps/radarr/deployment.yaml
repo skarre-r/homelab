@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "radarr"
+  namespace: "radarr"
+  labels:
+    app.kubernetes.io/name: "radarr"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "radarr"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "radarr"
+    spec:
+      volumes:
+        - name: "config"
+          persistentVolumeClaim:
+            claimName: "radarr-config"
+        - name: "media"
+          persistentVolumeClaim:
+            claimName: "radarr-media"
+      containers:
+        - name: "radarr"
+          image: "lscr.io/linuxserver/radarr:latest"
+          imagePullPolicy: "Always"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          ports:
+            - containerPort: 7878
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 7878
+          readinessProbe:
+            tcpSocket:
+              port: 7878
+          livenessProbe:
+            tcpSocket:
+              port: 7878
+          volumeMounts:
+            - mountPath: "/config"
+              name: "config"
+            - mountPath: "/media"
+              name: "media"

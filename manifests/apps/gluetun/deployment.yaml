@@ -1,0 +1,143 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "gluetun"
+  namespace: "gluetun"
+  labels:
+    app.kubernetes.io/name: "gluetun"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "gluetun"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "gluetun"
+    spec:
+      initContainers:
+        - name: "gluetun"
+          restartPolicy: "Always"
+          image: "ghcr.io/qdm12/gluetun:v3.41.0"
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            capabilities:
+              add:
+                - "NET_ADMIN"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "VPN_TYPE"
+              value: "wireguard"
+            - name: "VPN_SERVICE_PROVIDER"
+              value: "custom"
+            - name: "VPN_INTERFACE"
+              value: "wg0"
+            - name: "DNS_KEEP_NAMESERVER"
+              value: "false"
+            - name: "FIREWALL_INPUT_PORTS"
+              value: "8000,8080,9696"
+            - name: "FIREWALL_OUTBOUND_SUBNETS"
+              value: "10.43.0.0/16,10.0.0.0/8"
+            - name: "FIREWALL_DEBUG"
+              value: "off"
+            - name: "DOT"
+              value: "on"
+            - name: "DOT_PROVIDERS"
+              value: "quad9"
+            - name: "VERSION_INFORMATION"
+              value: "off"
+            - name: "PUBLICIP_ENABLED"
+              value: "true"
+            - name: "PUBLICIP_API"
+              value: "ipinfo"
+            - name: "HTTP_CONTROL_SERVER_ADDRESS"
+              value: ":8000"
+            - name: "STORAGE_FILEPATH"
+              value: ""
+          ports:
+            - containerPort: 8000
+              protocol: "TCP"
+          volumeMounts:
+            - mountPath: "/gluetun/wireguard/wg0.conf"
+              name: "gluetun"
+              subPath: "wg0.conf"
+            - mountPath: "/etc/unbound/include.conf"
+              name: "unbound"
+              subPath: "include.conf"
+
+      containers:
+        - name: "prowlarr"
+          image: "lscr.io/linuxserver/prowlarr:latest"
+          imagePullPolicy: "Always"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          ports:
+            - containerPort: 9696
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 9696
+          readinessProbe:
+            tcpSocket:
+              port: 9696
+          livenessProbe:
+            tcpSocket:
+              port: 9696
+          volumeMounts:
+            - mountPath: "/config"
+              name: "prowlarr-config"
+
+        - name: "qbittorrent"
+          image: "lscr.io/linuxserver/qbittorrent:latest"
+          imagePullPolicy: "Always"
+          env:
+            - name: "TZ"
+              value: "Europe/Oslo"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+            - name: "WEBUI_PORT"
+              value: "8080"
+          ports:
+            - containerPort: 8080
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 8080
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+          volumeMounts:
+            - mountPath: "/config"
+              name: "qbittorrent-config"
+            - mountPath: "/media"
+              name: "qbittorrent-media"
+
+      volumes:
+        - name: "gluetun"
+          persistentVolumeClaim:
+            claimName: "gluetun"
+        - name: "unbound"
+          configMap:
+            name: "unbound"
+            defaultMode: 0644
+        - name: "prowlarr-config"
+          persistentVolumeClaim:
+            claimName: "prowlarr-config"
+        - name: "qbittorrent-config"
+          persistentVolumeClaim:
+            claimName: "qbittorrent-config"
+        - name: "qbittorrent-media"
+          persistentVolumeClaim:
+            claimName: "qbittorrent-media"
