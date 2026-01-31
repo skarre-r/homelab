@@ -1,8 +1,25 @@
-# TODO:
-# - remove k3s
-# - remove cilium
-# - remove local kubeconfig file?
 ---
 - name: "Tear down homelab server"
   hosts: "homelab"
-  tasks: []
+  tasks:
+    - name: "Check if k3s is installed"
+      ansible.builtin.command:
+        cmd: "which k3s"
+      register: "which_k3s"
+      changed_when: false
+      failed_when: which_k3s.rc >= 2
+
+    - name: "Check if k3s uninstall script exists"
+      ansible.builtin.stat:
+        path: "/usr/local/bin/k3s-uninstall.sh"
+      register: "k3s_uninstall_script"
+      when: which_k3s.rc == 0
+
+    - name: "Uninstall k3s"
+      ansible.builtin.shell:
+        cmd: "bash /usr/local/bin/k3s-uninstall.sh"
+      become: true
+      changed_when: false
+      when:
+        - which_k3s.rc == 0
+        - k3s_uninstall_script.stat.exists
