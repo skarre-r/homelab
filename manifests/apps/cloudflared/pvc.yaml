@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "cloudflared-creds"
+  namespace: "cloudflared"
+spec:
+  hostPath:
+    path: "/pool/services/cloudflared"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: "local-path"
+  persistentVolumeReclaimPolicy: "Retain"
+  claimRef:
+    apiVersion: "v1"
+    kind: "PersistentVolumeClaim"
+    name: "cloudflared-creds"
+    namespace: "cloudflared"
+  capacity:
+    storage: "15Ti"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "cloudflared-creds"
+  namespace: "cloudflared"
+spec:
+  volumeName: "cloudflared-creds"
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+  volumeMode: "Filesystem"

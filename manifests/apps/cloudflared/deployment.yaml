@@ -1,0 +1,54 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "cloudflared"
+  namespace: "cloudflared"
+  labels:
+    app.kubernetes.io/name: "cloudflared"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "cloudflared"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "cloudflared"
+    spec:
+      containers:
+        - name: "cloudflared"
+          image: "docker.io/cloudflare/cloudflared:latest"
+          imagePullPolicy: "IfNotPresent"
+          args:
+            - "tunnel"
+            - "--config"
+            - "/etc/cloudflared/config/config.yaml"
+            - "run"
+          ports:
+            - containerPort: 2000
+          livenessProbe:
+            httpGet:
+              port: 2000
+              path: "/ready"
+            failureThreshold: 1
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: "/etc/cloudflared/config"
+              name: "config"
+              readOnly: true
+            - mountPath: "/etc/cloudflared/creds"
+              name: "creds"
+              readOnly: true
+          resources: {}
+      volumes:
+        - name: "config"
+          configMap:
+            name: "cloudflared"
+            items:
+              - key: "config.yaml"
+                path: "config.yaml"
+        - name: "creds"
+          persistentVolumeClaim:
+            claimName: "cloudflared-creds"
