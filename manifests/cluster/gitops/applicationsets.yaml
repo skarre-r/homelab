@@ -1,0 +1,72 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "ApplicationSet"
+metadata:
+  name: "cluster-services"
+  namespace: "argocd"
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+    applicationsSync: "create-update"
+  generators:
+    - git:
+        repoURL: "https://github.com/skarre-r/homelab.git"
+        revision: "HEAD"
+        directories:
+          - path: "manifests/cluster/*"
+  template:
+    metadata:
+      name: "cluster-{{path.basename}}"
+    spec:
+      destination:
+        name: "in-cluster"
+        namespace: "argocd"
+      project: "default"
+      source:
+        repoURL: "https://github.com/skarre-r/homelab.git"
+        path: '{{path}}'
+        targetRevision: "HEAD"
+      syncPolicy:
+        syncOptions:
+          - "RespectIgnoreDifferences=true"
+      ignoreDifferences:
+        - kind: "Secret"
+          jsonPointers:
+            - "/data"
+            - "/stringData"
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "ApplicationSet"
+metadata:
+  name: "cluster-apps"
+  namespace: "argocd"
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+    applicationsSync: "create-update"
+  generators:
+    - git:
+        repoURL: "https://github.com/skarre-r/homelab.git"
+        revision: "HEAD"
+        directories:
+          - path: "manifests/apps/*"
+  template:
+    metadata:
+      name: "app-{{path.basename}}"
+    spec:
+      destination:
+        name: "in-cluster"
+        namespace: "argocd"
+      project: "default"
+      source:
+        repoURL: "https://github.com/skarre-r/homelab.git"
+        path: '{{path}}'
+        targetRevision: "HEAD"
+      syncPolicy:
+        syncOptions:
+          - "RespectIgnoreDifferences=true"
+      ignoreDifferences:
+        - kind: "Secret"
+          jsonPointers:
+            - "/data"
+            - "/stringData"
