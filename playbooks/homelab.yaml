@@ -315,9 +315,9 @@
 
     - name: "Download cilium cli tarball"
       ansible.builtin.get_url:
-        url: "https://github.com/cilium/cilium-cli/releases/download/v0.18.3/cilium-linux-amd64.tar.gz"
+        url: "https://github.com/cilium/cilium-cli/releases/download/v0.19.0/cilium-linux-amd64.tar.gz"
         dest: "/tmp/cilium.tar.gz"
-        checksum: "sha256:https://github.com/cilium/cilium-cli/releases/download/v0.18.3/cilium-linux-amd64.tar.gz.sha256sum"
+        checksum: "sha256:https://github.com/cilium/cilium-cli/releases/download/v0.19.0/cilium-linux-amd64.tar.gz.sha256sum"
         mode: "0644"
       when: which_cilium.rc == 1
 
@@ -341,22 +341,43 @@
         state: "absent"
       when: cilium_tarball.stat.exists
 
+    - name: "Create cilium namespace"
+      ansible.builtin.command:
+        cmd: "kubectl create namespace cilium"
+      environment:
+        KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+      become: true
+      changed_when: false
+      register: "cilium_namespace"
+      failed_when: cilium_namespace.rc >= 2
+
     - name: "Check cilium status"
       ansible.builtin.command:
         cmd: "cilium status"
       environment:
         KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+        CILIUM_NAMESPACE: "cilium"
       become: true
       changed_when: false
       register: "cilium_status"
       failed_when: cilium_status.rc >= 2
 
-    # TODO: use values.yaml file from manifests???
+    - name: "Copy cilium helm values file"
+      ansible.builtin.copy:
+        src: "cilium-values.yaml"
+        dest: "/tmp/values.yaml"
+        owner: "root"
+        group: "root"
+        mode: "0777"
+      become: true
+      when: cilium_status.rc == 1
+
     - name: "Install cilium"
       ansible.builtin.command:
-        cmd: "cilium install --set k8sServiceHost=192.168.1.21 --set k8sServicePort=6443 --set kubeProxyReplacement=true --helm-set=operator.replicas=1"
+        cmd: "cilium install --set k8sServiceHost=192.168.1.21 --set k8sServicePort=6443 --set kubeProxyReplacement=true --helm-set=operator.replicas=1 --values=/tmp/values.yaml"
       environment:
         KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+        CILIUM_NAMESPACE: "cilium"
       become: true
       changed_when: false
       when: cilium_status.rc == 1
@@ -366,11 +387,61 @@
         cmd: "cilium status --wait"
       environment:
         KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+        CILIUM_NAMESPACE: "cilium"
       become: true
       changed_when: false
       when: cilium_status.rc == 1
       register: "cilium_status_2"
       failed_when: cilium_status_2.rc >= 1
+
+    # operator-sdk
+    - name: "Check if operator-sdk is installed"
+      ansible.builtin.command:
+        cmd: "which operator-sdk"
+      register: "which_operator_sdk"
+      changed_when: false
+      failed_when: which_operator_sdk.rc >= 2
+
+    - name: "Copy operator-sdk installation script"
+      ansible.builtin.copy:
+        src: "operator-sdk-install.sh"
+        dest: "/tmp/operator-sdk-install.sh"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+      become: true
+      when: which_operator_sdk.rc == 1
+
+    - name: "Check if operator-sdk installation script exists"
+      ansible.builtin.stat:
+        path: "/tmp/operator-sdk-install.sh"
+      register: "operator_sdk_install_script"
+
+    - name: "Run operator-sdk installation script" # noqa: command-instead-of-shell
+      ansible.builtin.shell:
+        cmd: "bash /tmp/operator-sdk-install.sh"
+      become: true
+      changed_when: false
+      when:
+        - which_operator_sdk.rc == 1
+        - operator_sdk_install_script.stat.exists
+
+    - name: "Remove operator-sdk installation script"
+      ansible.builtin.file:
+        path: "/tmp/operator-sdk-install.sh"
+        state: "absent"
+      when: operator_sdk_install_script.stat.exists
+
+    # TODO: check if olm is already installed?
+    - name: "Install olm"
+      ansible.builtin.command:
+        cmd: "operator-sdk olm install"
+      environment:
+        KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+      become: true
+      changed_when: false
+      register: "olm_status"
+      failed_when: olm_status.rc >= 1
 
   handlers:
     - name: "Modprobe zfs"

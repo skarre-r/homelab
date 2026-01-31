@@ -1,0 +1,55 @@
+namespaceOverride: "cilium"
+debug:
+  enabled: false
+rbac:
+  create: true
+k8sServiceHost: "192.168.1.21"
+k8sServicePort: "6443"
+k8sClientRateLimit:
+  qps: 10
+  burst: 20
+cluster:
+  name: default
+  id: 0
+rollOutCiliumPods: true
+resources: {}
+l2announcements:
+  enabled: true
+l2podAnnouncements:
+  enabled: false
+bgpControlPlane:
+  enabled: false
+cni:
+  install: true
+  exclusive: true
+ingressController:
+  enabled: false
+gatewayAPI:
+  enabled: true
+  gatewayClass:
+    create: auto
+  secretsNamespace:
+    create: true
+    name: cilium-secrets
+    sync: true
+k8sNetworkPolicy:
+  enabled: true
+hubble:
+  enabled: false
+ipv4:
+  enabled: true
+ipv6:
+  enabled: false
+kubeProxyReplacement: "true"
+l2NeighDiscovery:
+  enabled: false
+l7Proxy: true
+egressGateway:
+  enabled: false
+nodePort:
+  enabled: false
+operator:
+  enabled: true
+  rollOutPods: true
+  replicas: 1
+enableLBIPAM: true
