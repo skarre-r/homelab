@@ -2,44 +2,18 @@ set dotenv-filename := ".env"
 set dotenv-load := true
 set dotenv-required := true
 
-# show available commands
+mod play
+
+# list available recipes
 default:
-    just --list
+    @just --list
+
+alias help := default
 
 # install dependencies
 install:
     uv sync
     pnpm install
-
-# run the "rpi1-bootstrap" playbook
-[group("ansible")]
-bootstrap-rpi1:
-    uv run ansible-playbook -vv --inventory inventory.yaml playbooks/rpi1-bootstrap.yaml \
-        --user pi --ask-pass --ask-become-pass
-
-# run the "rpi1" playbook
-[group("ansible")]
-rpi1:
-    uv run ansible-playbook -vv --inventory inventory.yaml playbooks/rpi1.yaml \
-    --user ansible --extra-vars "ansible_password=${RPI1_ANSIBLE_PASSWORD}"
-
-# run the "homelab-bootstrap" playbook
-[group("ansible")]
-bootstrap-homelab:
-    uv run ansible-playbook -vv --inventory inventory.yaml playbooks/homelab-bootstrap.yaml \
-    --user homelab --ask-pass --ask-become-pass
-
-# run the "homelab" playbook
-[group("ansible")]
-homelab:
-    uv run ansible-playbook -vv --inventory inventory.yaml playbooks/homelab.yaml \
-    --user ansible --extra-vars "ansible_password=${HOMELAB_ANSIBLE_PASSWORD}"
-
-# run the "homelab-teardown" playbook
-[group("ansible")]
-teardown-homelab:
-    uv run ansible-playbook -vv --inventory inventory.yaml playbooks/homelab-teardown.yaml \
-      --user ansible --extra-vars "ansible_password=${HOMELAB_ANSIBLE_PASSWORD}"
 
 # apply manifests
 [group("k8s")]
