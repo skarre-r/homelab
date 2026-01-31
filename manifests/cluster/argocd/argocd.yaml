@@ -1,0 +1,43 @@
+---
+apiVersion: "argoproj.io/v1beta1"
+kind: "ArgoCD"
+metadata:
+  name: "argocd"
+  namespace: "argocd"
+spec:
+  sourceNamespaces:
+    - "*"
+  resourceTrackingMethod: "annotation+label"
+  disableAdmin: false
+  applicationSet:
+    enabled: true
+    resources: {}
+    sourceNamespaces:
+      - "*"
+  ha:
+    enabled: false
+  server:
+    enabled: true
+    host: "192.168.1.50"
+    replicas: 1
+    autoscale:
+      enabled: false
+    insecure: true
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+    resources: {}
+  imageUpdater:
+    enabled: false
+  controller:
+    enabled: true
+    resources: {}
+  rbac:
+    defaultPolicy: "role:admin"
+    policy: |
+      g, system:cluster-admins, role:admin
+    scopes: '[groups]'
+  repo:
+    enabled: true
+    resources: {}

@@ -1,0 +1,16 @@
+---
+apiVersion: "operators.coreos.com/v1alpha1"
+kind: "Subscription"
+metadata:
+  name: "argocd-operator"
+  namespace: "operators"
+spec:
+  name: "argocd-operator"
+  source: "operatorhubio-catalog"
+  sourceNamespace: "olm"
+  channel: "alpha"
+  installPlanApproval: "Automatic"
+  config:
+    env:
+      - name: "ARGOCD_CLUSTER_CONFIG_NAMESPACES"
+        value: "*"
