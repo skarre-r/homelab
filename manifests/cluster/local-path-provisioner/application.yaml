@@ -1,0 +1,30 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "local-path-provisioner"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "local-path-storage"
+  project: "default"
+  source:
+    repoURL: "https://github.com/rancher/local-path-provisioner.git"
+    path: "deploy/chart/local-path-provisioner"
+    targetRevision: "HEAD"
+    helm:
+      valuesObject:
+        storageClass:
+          create: true
+          defaultClass: true
+          name: "local-path"
+        nodePathMap:
+          - node: "DEFAULT_PATH_FOR_NON_LISTED_NODES"
+            paths:
+              - "/pool/volumes"
+        configmap:
+          setup: |-
+            #!/bin/sh
+            set -eu
+            mkdir -p "$VOL_DIR"
