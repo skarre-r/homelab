@@ -36,3 +36,27 @@ spec:
     requests:
       storage: "1Gi"
   volumeMode: "Filesystem"
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "nextcloud-database"
+  namespace: "nextcloud"
+spec:
+  local:
+    path: "/pool/services/nextcloud-database"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: "local-path"
+  persistentVolumeReclaimPolicy: "Retain"
+  capacity:
+    storage: "15Ti"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: "kubernetes.io/os"
+              operator: "In"
+              values:
+                - "linux"
