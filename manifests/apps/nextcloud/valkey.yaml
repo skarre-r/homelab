@@ -1,0 +1,38 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "nextcloud-valkey"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "nextcloud"
+  project: "default"
+  source:
+    repoURL: "https://valkey.io/valkey-helm/"
+    chart: "valkey"
+    targetRevision: "0.9.3"
+    helm:
+      namespace: "nextcloud"
+      valuesObject:
+        auth:
+          enabled: false
+        dataStorage:
+          enabled: false
+        image:
+          pullPolicy: "IfNotPresent"
+        metrics:
+          enabled: false
+        replica:
+          enabled: false
+        resources: {}
+        service:
+          type: "ClusterIP"
+          port: 6379
+        serviceAccount:
+          create: true
+          name: "valkey"
+        tls:
+          enabled: false
+        valkeyConfig: ""

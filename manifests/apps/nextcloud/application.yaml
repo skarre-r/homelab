@@ -84,14 +84,12 @@ spec:
         postgresql:
           enabled: false
         externalRedis:
-          enabled: false
-          host: ""
+          enabled: true
+          host: "nextcloud-valkey"
           port: "6379"
           password: ""
           existingSecret:
             enabled: false
-            secretName: "nameofsecret"
-            passwordKey: "redis-password"
         redis:
           enabled: false
         collabora:
