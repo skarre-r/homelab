@@ -1,0 +1,21 @@
+---
+apiVersion: "gateway.networking.k8s.io/v1alpha3"
+kind: "TLSRoute"
+metadata:
+  name: "nextcloud-external"
+  namespace: "nextcloud"
+spec:
+  hostnames:
+    - "n7d.skar.io"
+  parentRefs:
+    - name: "nextcloud-external"
+      kind: "Gateway"
+      namespace: "nextcloud"
+      group: "gateway.networking.k8s.io"
+      sectionName: "https"
+  rules:
+    - backendRefs:
+        - name: "nextcloud"
+          kind: "Service"
+          port: 8080
+          weight: 1

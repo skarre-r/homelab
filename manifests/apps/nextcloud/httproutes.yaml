@@ -32,6 +32,7 @@ spec:
       kind: "Gateway"
       name: "nextcloud-external"
       namespace: "nextcloud"
+      sectionName: "http"
   rules:
     - backendRefs:
         - kind: "Service"

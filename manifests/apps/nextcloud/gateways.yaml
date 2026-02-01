@@ -51,3 +51,5 @@ spec:
       allowedRoutes:
         namespaces:
           from: "Same"
+      tls:
+        mode: "Passthrough"
