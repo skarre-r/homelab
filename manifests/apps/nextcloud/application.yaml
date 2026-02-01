@@ -50,7 +50,7 @@ spec:
             smtpPasswordKey: "smtp-password"
             smtpHostKey: "smtp-host"
           update: 0
-          containerPort: 80
+          containerPort: 8080
           datadir: "/var/www/html/data"
           mail:
             enabled: false
@@ -95,7 +95,14 @@ spec:
         collabora:
           enabled: false
         cronjob:
-          enabled: false
+          enabled: true
+          type: "cronjob"
+          cronjob:
+            schedule: "*/5 * * * *"
+            successfulJobsHistoryLimit: 3
+            failedJobsHistoryLimit: 1
+            backoffLimit: 1
+            resources: {}
         service:
           type: "ClusterIP"
           port: 8080
@@ -103,11 +110,26 @@ spec:
           enabled: true
           existingClaim: "nextcloud"
         livenessProbe:
-          enabled: false
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
         readinessProbe:
-          enabled: false
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
         startupProbe:
-          enabled: false
+          enabled: true
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
         hpa:
           enabled: false
         metrics:
