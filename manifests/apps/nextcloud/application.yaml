@@ -117,3 +117,5 @@ spec:
           serviceaccount:
             create: true
             name: "nextcloud"
+        phpClientHttpsFix:
+          enabled: true
