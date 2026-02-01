@@ -10,7 +10,7 @@ spec:
     namespace: "nextcloud"
   project: "default"
   source:
-    repoURL: "https://valkey.io/valkey-helm/"
+    repoURL: "https://valkey.io/valkey-helm"
     chart: "valkey"
     targetRevision: "0.9.3"
     helm:
