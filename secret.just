@@ -1,15 +1,17 @@
 set dotenv-load := true
 
 # list available secret recipes
+[group("help")]
 default:
     @just --list --justfile secret.just
 
 alias help := default
 
-
+# create/ update nextcloud secret
 nextcloud:
     #!/usr/bin/env bash
     set -euxo pipefail
+    just check kubectl
     cat << EOF | kubectl apply --namespace "nextcloud" -f -
     apiVersion: "v1"
     kind: "Secret"

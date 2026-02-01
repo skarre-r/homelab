@@ -1,5 +1,6 @@
 
 # list available play recipes
+[group("help")]
 default:
     @just --list --justfile play.just
 
