@@ -10,7 +10,7 @@ spec:
     namespace: "nextcloud"
   project: "default"
   source:
-    repoURL: "https://nextcloud.github.io/helm/"
+    repoURL: "https://nextcloud.github.io/helm"
     chart: "nextcloud"
     targetRevision: "8.9.0"
     helm:
