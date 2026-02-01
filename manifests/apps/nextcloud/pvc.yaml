@@ -1,0 +1,38 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "nextcloud"
+  namespace: "nextcloud"
+spec:
+  hostPath:
+    path: "/pool/services/nextcloud"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: "local-path"
+  persistentVolumeReclaimPolicy: "Retain"
+  claimRef:
+    apiVersion: "v1"
+    kind: "PersistentVolumeClaim"
+    name: "nextcloud"
+    namespace: "nextcloud"
+  capacity:
+    storage: "15Ti"
+---
+apiVersion: v1
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "nextcloud"
+  namespace: "nextcloud"
+  annotations:
+    volumeType: "hostPath"
+spec:
+  volumeName: "nextcloud"
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+  volumeMode: "Filesystem"

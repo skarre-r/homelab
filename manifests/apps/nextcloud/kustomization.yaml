@@ -2,7 +2,16 @@
 apiVersion: "kustomize.config.k8s.io/v1beta1"
 kind: "Kustomization"
 resources:
+  - "database"
   - "application.yaml"
   - "gateway.yaml"
   - "namespace.yaml"
-  - "secret.yaml"
+  - "pvc.yaml"
+secretGenerator:
+  - name: "nextcloud"
+    namespace: "nextcloud"
+    behavior: "create"
+    options:
+      disableNameSuffixHash: true
+    type: "Opaque"
+    literals: []

@@ -71,14 +71,13 @@ spec:
         nginx:
           enabled: false
         internalDatabase:
-          enabled: true
-          name: "nextcloud"
-        externalDatabase:
           enabled: false
+        externalDatabase:
+          enabled: true
           type: "postgresql"
-          host: ""
+          host: "postgres-rw"
           user: "nextcloud"
-          password: ""
+          password: "nextcloud"
           database: "nextcloud"
         mariadb:
           enabled: false
@@ -103,24 +102,8 @@ spec:
           type: "ClusterIP"
           port: 8080
         persistence:
-          enabled: false
-          annotations: { }
-          labels: { }
-          # storageClass: "-"
-          # existingClaim:
-          accessMode: "ReadWriteOnce"
-          size: "8Gi"
-          hostPath: ""
-          nextcloudData:
-            enabled: false
-            hostPath:
-            subPath:
-            labels: { }
-            annotations: { }
-            # storageClass: "-"
-            # existingClaim:
-            accessMode: "ReadWriteOnce"
-            size: 8Gi
+          enabled: true
+          existingClaim: "nextcloud"
         livenessProbe:
           enabled: false
         readinessProbe:
@@ -132,8 +115,7 @@ spec:
         metrics:
           enabled: false
         rbac:
-          enabled: false
+          enabled: true
           serviceaccount:
             create: true
             name: "nextcloud"
-            annotations: { }
