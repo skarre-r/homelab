@@ -11,6 +11,7 @@ resources:
   - "postgres.yaml"
   - "pvc.yaml"
   - "secrets.yaml"
+  - "tlsroutes.yaml"
   - "valkey.yaml"
 secretGenerator:
   - name: "nextcloud"
