@@ -50,7 +50,7 @@ spec:
             smtpPasswordKey: "smtp-password"
             smtpHostKey: "smtp-host"
           update: 0
-          containerPort: 8080
+          containerPort: 80
           datadir: "/var/www/html/data"
           mail:
             enabled: false
