@@ -15,7 +15,6 @@ spec:
     targetRevision: "3.13.0"
     helm:
       namespace: "metrics-server"
-      skipCrds: false
       valuesObject:
         serviceAccount:
           create: true
