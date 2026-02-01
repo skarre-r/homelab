@@ -1,3 +1,7 @@
+set dotenv-load := true
+
+mod secret
+
 # TODO: use fzf to select manifest dirs
 
 # list available apply recipes
