@@ -1,9 +1,11 @@
 ---
-apiVersion: v1
+apiVersion: "v1"
 kind: "PersistentVolumeClaim"
 metadata:
   name: "calibre-web-config"
   namespace: "calibre"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:
@@ -35,11 +37,13 @@ spec:
   hostPath:
     path: "/pool/services/calibre-web"
 ---
-apiVersion: v1
+apiVersion: "v1"
 kind: "PersistentVolumeClaim"
 metadata:
   name: "calibre-web-library"
   namespace: "calibre"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:

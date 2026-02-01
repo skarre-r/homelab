@@ -1,9 +1,11 @@
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
 metadata:
   name: "sonarr-config"
   namespace: "sonarr"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:
@@ -14,11 +16,13 @@ spec:
   volumeName: "sonarr-config"
   volumeMode: "Filesystem"
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
 metadata:
   name: "sonarr-media"
   namespace: "sonarr"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:
