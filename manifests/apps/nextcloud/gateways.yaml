@@ -47,6 +47,13 @@ spec:
     - name: "https"
       hostname: "n7d.skar.io"
       port: 443
+      protocol: "HTTPS"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
+    - name: "tls"
+      hostname: "n7d.skar.io"
+      port: 8443
       protocol: "TLS"
       allowedRoutes:
         namespaces:

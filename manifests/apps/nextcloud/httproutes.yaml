@@ -39,6 +39,11 @@ spec:
       name: "nextcloud-external"
       namespace: "nextcloud"
       sectionName: "http"
+    - group: "gateway.networking.k8s.io"
+      kind: "Gateway"
+      name: "nextcloud-external"
+      namespace: "nextcloud"
+      sectionName: "https"
   rules:
     - backendRefs:
         - kind: "Service"

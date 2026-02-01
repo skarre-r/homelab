@@ -12,7 +12,7 @@ spec:
       kind: "Gateway"
       namespace: "nextcloud"
       group: "gateway.networking.k8s.io"
-      sectionName: "https"
+      sectionName: "tls"
   rules:
     - backendRefs:
         - name: "nextcloud"
