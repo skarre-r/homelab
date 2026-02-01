@@ -1,0 +1,139 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "nextcloud"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "nextcloud"
+  project: "default"
+  source:
+    repoURL: "https://nextcloud.github.io/helm/"
+    chart: "nextcloud"
+    targetRevision: "8.9.0"
+    helm:
+      namespace: "nextcloud"
+      valuesObject:
+        image:
+          flavor: "apache"
+          pullPolicy: "IfNotPresent"
+        replicaCount: 1
+        httpRoute:
+          enabled: true
+          apiVersion: "gateway.networking.k8s.io/v1"
+          kind: "HTTPRoute"
+          parentRefs:
+            - name: "nextcloud"
+              namespace: "nextcloud"
+              kind: "Gateway"
+          rules:
+            - matches:
+                - path:
+                    type: "PathPrefix"
+                    value: "/"
+        ingress:
+          enabled: false
+        nextcloud:
+          host: "n7d.skar.io"
+          trustedDomains:
+            - "n7d.skar.io"
+            - "192.168.1.51"
+          existingSecret:
+            enabled: true
+            secretName: "nextcloud"
+            usernameKey: "username"
+            passwordKey: "password"
+            tokenKey: "token"
+            smtpUsernameKey: "smtp-username"
+            smtpPasswordKey: "smtp-password"
+            smtpHostKey: "smtp-host"
+          update: 0
+          containerPort: 80
+          datadir: "/var/www/html/data"
+          mail:
+            enabled: false
+            fromAddress: "user"
+            domain: "domain.com"
+            smtp:
+              host: "domain.com"
+              secure: "ssl"
+              port: 465
+              authtype: "LOGIN"
+              name: "user"
+              password: "pass"
+          objectStore:
+            s3:
+              enabled: false
+            swift:
+              enabled: false
+        nginx:
+          enabled: false
+        internalDatabase:
+          enabled: true
+          name: "nextcloud"
+        externalDatabase:
+          enabled: false
+          type: "postgresql"
+          host: ""
+          user: "nextcloud"
+          password: ""
+          database: "nextcloud"
+        mariadb:
+          enabled: false
+        postgresql:
+          enabled: false
+        externalRedis:
+          enabled: false
+          host: ""
+          port: "6379"
+          password: ""
+          existingSecret:
+            enabled: false
+            secretName: "nameofsecret"
+            passwordKey: "redis-password"
+        redis:
+          enabled: false
+        collabora:
+          enabled: false
+        cronjob:
+          enabled: false
+        service:
+          type: "ClusterIP"
+          port: 8080
+        persistence:
+          enabled: false
+          annotations: { }
+          labels: { }
+          # storageClass: "-"
+          # existingClaim:
+          accessMode: "ReadWriteOnce"
+          size: "8Gi"
+          hostPath: ""
+          nextcloudData:
+            enabled: false
+            hostPath:
+            subPath:
+            labels: { }
+            annotations: { }
+            # storageClass: "-"
+            # existingClaim:
+            accessMode: "ReadWriteOnce"
+            size: 8Gi
+        livenessProbe:
+          enabled: false
+        readinessProbe:
+          enabled: false
+        startupProbe:
+          enabled: false
+        hpa:
+          enabled: false
+        metrics:
+          enabled: false
+        rbac:
+          enabled: false
+          serviceaccount:
+            create: true
+            name: "nextcloud"
+            annotations: { }
