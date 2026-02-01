@@ -21,18 +21,7 @@ spec:
           pullPolicy: "IfNotPresent"
         replicaCount: 1
         httpRoute:
-          enabled: true
-          apiVersion: "gateway.networking.k8s.io/v1"
-          kind: "HTTPRoute"
-          parentRefs:
-            - name: "nextcloud"
-              namespace: "nextcloud"
-              kind: "Gateway"
-          rules:
-            - matches:
-                - path:
-                    type: "PathPrefix"
-                    value: "/"
+          enabled: false
         ingress:
           enabled: false
         nextcloud:
