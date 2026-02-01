@@ -40,11 +40,11 @@ spec:
 apiVersion: "v1"
 kind: "PersistentVolume"
 metadata:
-  name: "nextcloud-database"
+  name: "nextcloud-postgres"
   namespace: "nextcloud"
 spec:
   local:
-    path: "/pool/services/nextcloud-database"
+    path: "/pool/services/nextcloud-postgres"
   volumeMode: "Filesystem"
   accessModes:
     - "ReadWriteOnce"

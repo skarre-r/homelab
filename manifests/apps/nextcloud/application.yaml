@@ -75,7 +75,7 @@ spec:
         externalDatabase:
           enabled: true
           type: "postgresql"
-          host: "postgres-rw"
+          host: "nextcloud-postgres-rw"
           user: "nextcloud"
           password: "nextcloud"
           database: "nextcloud"
