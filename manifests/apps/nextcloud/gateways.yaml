@@ -51,3 +51,9 @@ spec:
       allowedRoutes:
         namespaces:
           from: "Same"
+      tls:
+        mode: "Terminate"
+        certificateRefs:
+          - name: "nextcloud-external-cert"
+            kind: "Secret"
+            namespace: "nextcloud"
