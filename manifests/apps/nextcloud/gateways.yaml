@@ -34,18 +34,28 @@ kind: "Gateway"
 metadata:
   name: "nextcloud-external"
   namespace: "nextcloud"
+  annotations:
+    cert-manager.io/issuer: "letsencrypt-staging-issuer"
 spec:
   gatewayClassName: "cilium"
   listeners:
     - name: "http"
+      hostname: "n7d.skar.io"
       port: 80
       protocol: "HTTP"
       allowedRoutes:
         namespaces:
           from: "Same"
     - name: "https"
+      hostname: "n7d.skar.io"
       port: 443
       protocol: "HTTPS"
       allowedRoutes:
         namespaces:
           from: "Same"
+      tls:
+        mode: "Terminate"
+        certificateRefs:
+          - name: "nextcloud-external-cert"
+            kind: "Secret"
+            namespace: "nextcloud"
