@@ -13,6 +13,12 @@ spec:
       allowedRoutes:
         namespaces:
           from: "Same"
+    - name: "https"
+      port: 443
+      protocol: "HTTPS"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
   addresses:
     - type: "IPAddress"
       value: "192.168.1.51"
