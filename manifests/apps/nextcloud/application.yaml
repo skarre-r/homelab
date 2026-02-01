@@ -96,12 +96,8 @@ spec:
           enabled: false
         cronjob:
           enabled: true
-          type: "cronjob"
-          cronjob:
-            schedule: "*/5 * * * *"
-            successfulJobsHistoryLimit: 3
-            failedJobsHistoryLimit: 1
-            backoffLimit: 1
+          type: "sidecar"
+          sidecar:
             resources: {}
         service:
           type: "ClusterIP"
