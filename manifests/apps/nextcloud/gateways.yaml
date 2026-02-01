@@ -34,8 +34,6 @@ kind: "Gateway"
 metadata:
   name: "nextcloud-external"
   namespace: "nextcloud"
-  annotations:
-    cert-manager.io/issuer: "letsencrypt-staging-issuer"
 spec:
   gatewayClassName: "cilium"
   listeners:
@@ -54,8 +52,4 @@ spec:
         namespaces:
           from: "Same"
       tls:
-        mode: "Terminate"
-        certificateRefs:
-          - name: "nextcloud-external-cert"
-            kind: "Secret"
-            namespace: "nextcloud"
+        mode: "Passthrough"

@@ -19,23 +19,3 @@ metadata:
 spec:
   ca:
     secretName: "selfsigned-ca-cert"
----
-apiVersion: cert-manager.io/v1
-kind: "Issuer"
-metadata:
-  name: "letsencrypt-staging-issuer"
-  namespace: "nextcloud"
-spec:
-  acme:
-    privateKeySecretRef:
-      name: "letsencrypt-staging-issuer-account-key"
-    server: "https://acme-staging-v02.api.letsencrypt.org/directory"
-    profile: "tlsserver"
-    email: "skarre-r@protonmail.com"
-    solvers:
-      - http01:
-          gatewayHTTPRoute:
-            parentRefs:
-              - name: "nextcloud-external"
-                namespace: "nextcloud"
-                kind: "Gateway"
