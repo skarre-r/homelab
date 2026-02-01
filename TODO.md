@@ -1,16 +1,3 @@
-- [x] k3s: disable helm controller?
-- [x] k3s: disable other addons?
-- [x] make local-path-provisioner use zfs pool
-- [x] gateway api (cilium)
-- [x] cert-manager
-- [x] ansible: bootstrap cilium (again)
-- [x] flux helm controller
-    - [x] **flux manifests**
-    - ~~flux gitops?~~
-    - ~~git server: gitea/ onedev/ soft-serve~~
-- [x] update linter config files
-- [x] cloudflared: credentials.json PV(C) !!!
-- [x] migrate to flux HelmRelease(s)
 - [ ] k3s: disable cloud controller?
 - [ ] replace k3s with k8s (kubeadm)
     - cri-o (vs containerd)
@@ -18,24 +5,13 @@
     - coredns
     - csi (local-path-provisioner)
 - [ ] prometheus + grafana
-- [ ] remove cert-manager trust-manager?
-- [ ] change cilium namespace?
 - [ ] (cilium) network policies
 - [ ] headlamp plugins (cert-manager, flux)?
 - [ ] k8s applyset
     - https://kubernetes.io/blog/2023/05/09/introducing-kubectl-applyset-pruning/
     - https://kubernetes.io/docs/reference/labels-annotations-taints/
 
----
+links:
 
 - https://www.cncf.io/projects/
 - https://landscape.cncf.io
-
----
-
-- ~~pod-gateway!~~
-    - ~~https://github.com/angelnu/k8s-gitops~~
-    - ~~https://github.com/angelnu/helm-charts/tree/main/charts/apps/pod-gateway~~
-    - ~~https://github.com/angelnu/gateway-admision-controller~~
-    - ~~https://github.com/angelnu/pod-gateway~~
-    - ~~gluetun: https://hub.docker.com/r/qmcgaw/gluetun~~
