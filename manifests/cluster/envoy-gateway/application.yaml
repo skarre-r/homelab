@@ -1,0 +1,47 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "envoy-gateway"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "envoy-gateway-system"
+  project: "default"
+  syncPolicy:
+    automated:
+      enabled: false
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences: []
+  sources:
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
+      path: "manifests/cluster/envoy-gateway"
+      targetRevision: "HEAD"
+
+    - name: "envoy-gateway"
+      repoURL: "docker.io/envoyproxy"
+      chart: "gateway-helm"
+      targetRevision: "v1.6.3"
+      helm:
+        namespace: "envoy-gateway-system"
+        valuesObject:
+          deployment:
+            replicas: 1
+          hpa:
+            enabled: false
+
+    - name: "envoy-gateway-crds"
+      repoURL: "docker.io/envoyproxy"
+      chart: "gateway-crds-helm"
+      targetRevision: "v1.6.3"
+      helm:
+        valuesObject:
+          crds:
+            envoyGateway:
+              enabled: true
+            gatewayAPI:
+              enabled: false
+              channel: "experimental"
