@@ -1,0 +1,45 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "freshrss"
+  namespace: "freshrss"
+spec:
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  claimRef:
+    kind: "PersistentVolumeClaim"
+    name: "freshrss"
+    namespace: "freshrss"
+  volumeMode: "Filesystem"
+  capacity:
+    storage: "15Ti"
+  persistentVolumeReclaimPolicy: "Retain"
+  local:
+    path: "/pool/services/freshrss"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: "kubernetes.io/os"
+              operator: "In"
+              values:
+                - "linux"
+---
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "freshrss"
+  namespace: "freshrss"
+  annotations:
+    volumeMode: "local"
+spec:
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+  volumeName: "freshrss"
+  volumeMode: "Filesystem"
