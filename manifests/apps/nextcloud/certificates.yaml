@@ -1,35 +1,13 @@
 ---
-apiVersion: "cert-manager.io/v1"
-kind: "Certificate"
-metadata:
-  name: "selfsigned-ca"
-  namespace: "nextcloud"
-  annotations:
-    kubernetes.io/description: "2. self-signed certificate authority certificate"
-spec:
-  issuerRef:
-    name: "selfsigned-issuer"
-    kind: "Issuer"
-    group: "cert-manager.io"
-  secretName: "selfsigned-ca-cert"
-  isCA: true
-  commonName: "selfsigned-ca"
-  subject: {}
-  privateKey:
-    algorithm: "ECDSA"
-    size: 256
----
 apiVersion: cert-manager.io/v1
 kind: "Certificate"
 metadata:
   name: "nextcloud-internal"
   namespace: "nextcloud"
-  annotations:
-    kubernetes.io/description: "4. self-signed nextcloud certificate"
 spec:
   issuerRef:
-    name: "selfsigned-ca-issuer"
-    kind: "Issuer"
+    name: "ca-issuer"
+    kind: "ClusterIssuer"
     group: "cert-manager.io"
   secretName: "nextcloud-internal-cert"
   dnsNames:
