@@ -9,120 +9,164 @@ spec:
     name: "in-cluster"
     namespace: "nextcloud"
   project: "default"
-  source:
-    repoURL: "https://nextcloud.github.io/helm"
-    chart: "nextcloud"
-    targetRevision: "8.9.0"
-    helm:
-      namespace: "nextcloud"
-      valuesObject:
-        image:
-          flavor: "apache"
-          pullPolicy: "IfNotPresent"
-        replicaCount: 1
-        httpRoute:
-          enabled: false
-        ingress:
-          enabled: false
-        nextcloud:
-          host: "n7d.skar.io"
-          trustedDomains:
-            - "n7d.skar.io"
-            - "192.168.1.51"
-          existingSecret:
-            enabled: true
-            secretName: "nextcloud"
-            usernameKey: "username"
-            passwordKey: "password"
-            tokenKey: "token"
-            smtpUsernameKey: "smtp-username"
-            smtpPasswordKey: "smtp-password"
-            smtpHostKey: "smtp-host"
-          update: 0
-          containerPort: 80
-          datadir: "/var/www/html/data"
-          mail:
+  syncPolicy:
+    automated:
+      enabled: false
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences:
+    - kind: "Secret"
+      jsonPointers:
+        - "/data"
+        - "/stringData"
+  sources:
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
+      path: "manifests/apps/nextcloud"
+      targetRevision: "HEAD"
+
+    - name: "valkey"
+      repoURL: "https://valkey.io/valkey-helm"
+      chart: "valkey"
+      targetRevision: "0.9.3"
+      helm:
+        namespace: "nextcloud"
+        valuesObject:
+          auth:
             enabled: false
-            fromAddress: "user"
-            domain: "domain.com"
-            smtp:
-              host: "domain.com"
-              secure: "ssl"
-              port: 465
-              authtype: "LOGIN"
-              name: "user"
-              password: "pass"
-          objectStore:
-            s3:
-              enabled: false
-            swift:
-              enabled: false
-        nginx:
-          enabled: false
-        internalDatabase:
-          enabled: false
-        externalDatabase:
-          enabled: true
-          type: "postgresql"
-          host: "nextcloud-postgres-rw"
-          user: "nextcloud"
-          password: "nextcloud"
-          database: "nextcloud"
-        mariadb:
-          enabled: false
-        postgresql:
-          enabled: false
-        externalRedis:
-          enabled: true
-          host: "nextcloud-valkey"
-          port: "6379"
-          password: ""
-          existingSecret:
+          dataStorage:
             enabled: false
-        redis:
-          enabled: false
-        collabora:
-          enabled: false
-        cronjob:
-          enabled: true
-          type: "sidecar"
-          sidecar:
-            resources: {}
-        service:
-          type: "ClusterIP"
-          port: 8080
-        persistence:
-          enabled: true
-          existingClaim: "nextcloud"
-        livenessProbe:
-          enabled: false
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-          successThreshold: 1
-        readinessProbe:
-          enabled: false
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 10
-          failureThreshold: 3
-          successThreshold: 1
-        startupProbe:
-          enabled: false
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 30
-          successThreshold: 1
-        hpa:
-          enabled: false
-        metrics:
-          enabled: false
-        rbac:
-          enabled: true
-          serviceaccount:
+          image:
+            pullPolicy: "IfNotPresent"
+          metrics:
+            enabled: false
+          replica:
+            enabled: false
+          resources: {}
+          service:
+            type: "ClusterIP"
+            port: 6379
+          serviceAccount:
             create: true
-            name: "nextcloud"
-        phpClientHttpsFix:
-          enabled: true
+            name: "valkey"
+          tls:
+            enabled: false
+          valkeyConfig: ""
+
+    - name: "nextcloud"
+      repoURL: "https://nextcloud.github.io/helm"
+      chart: "nextcloud"
+      targetRevision: "8.9.0"
+      helm:
+        namespace: "nextcloud"
+        valuesObject:
+          image:
+            flavor: "apache"
+            pullPolicy: "IfNotPresent"
+          replicaCount: 1
+          httpRoute:
+            enabled: false
+          ingress:
+            enabled: false
+          nextcloud:
+            host: "n7d.skar.io"
+            trustedDomains:
+              - "n7d.skar.io"
+              - "192.168.1.51"
+            existingSecret:
+              enabled: true
+              secretName: "nextcloud"
+              usernameKey: "username"
+              passwordKey: "password"
+              tokenKey: "token"
+              smtpUsernameKey: "smtp-username"
+              smtpPasswordKey: "smtp-password"
+              smtpHostKey: "smtp-host"
+            update: 0
+            containerPort: 80
+            datadir: "/var/www/html/data"
+            mail:
+              enabled: false
+              fromAddress: "user"
+              domain: "domain.com"
+              smtp:
+                host: "domain.com"
+                secure: "ssl"
+                port: 465
+                authtype: "LOGIN"
+                name: "user"
+                password: "pass"
+            objectStore:
+              s3:
+                enabled: false
+              swift:
+                enabled: false
+          nginx:
+            enabled: false
+          internalDatabase:
+            enabled: false
+          externalDatabase:
+            enabled: true
+            type: "postgresql"
+            host: "nextcloud-postgres-rw"
+            user: "nextcloud"
+            password: "nextcloud"
+            database: "nextcloud"
+          mariadb:
+            enabled: false
+          postgresql:
+            enabled: false
+          externalRedis:
+            enabled: true
+            host: "nextcloud-valkey"
+            port: "6379"
+            password: ""
+            existingSecret:
+              enabled: false
+          redis:
+            enabled: false
+          collabora:
+            enabled: false
+          cronjob:
+            enabled: true
+            type: "sidecar"
+            sidecar:
+              resources: {}
+          service:
+            type: "ClusterIP"
+            port: 8080
+          persistence:
+            enabled: true
+            existingClaim: "nextcloud"
+          livenessProbe:
+            enabled: false
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            enabled: false
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+          startupProbe:
+            enabled: false
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30
+            successThreshold: 1
+          hpa:
+            enabled: false
+          metrics:
+            enabled: false
+          rbac:
+            enabled: true
+            serviceaccount:
+              create: true
+              name: "nextcloud"
+          phpClientHttpsFix:
+            enabled: true

@@ -9,29 +9,42 @@ spec:
     name: "in-cluster"
     namespace: "metrics-server"
   project: "default"
-  source:
-    repoURL: "https://kubernetes-sigs.github.io/metrics-server"
-    chart: "metrics-server"
-    targetRevision: "3.13.0"
-    helm:
-      namespace: "metrics-server"
-      valuesObject:
-        serviceAccount:
-          create: true
-        rbac:
-          create: true
-        apiService:
-          create: true
-          insecureSkipTLSVerify: true
-        replicas: 1
-        service:
-          type: "ClusterIP"
-          port: 443
-        addonResizer:
-          enabled: false
-        metrics:
-          enabled: true
-        serviceMonitor:
-          enabled: false
-        tls:
-          type: "metrics-server"
+  syncPolicy:
+    automated:
+      enabled: false
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences:
+    - kind: "Secret"
+      jsonPointers:
+        - "/data"
+        - "/stringData"
+  sources:
+    - repoURL: "https://github.com/skarre-r/homelab.git"
+      path: "manifests/cluster/metrics-server"
+      targetRevision: "HEAD"
+    - repoURL: "https://kubernetes-sigs.github.io/metrics-server"
+      chart: "metrics-server"
+      targetRevision: "3.13.0"
+      helm:
+        namespace: "metrics-server"
+        valuesObject:
+          serviceAccount:
+            create: true
+          rbac:
+            create: true
+          apiService:
+            create: true
+            insecureSkipTLSVerify: true
+          replicas: 1
+          service:
+            type: "ClusterIP"
+            port: 443
+          addonResizer:
+            enabled: false
+          metrics:
+            enabled: true
+          serviceMonitor:
+            enabled: false
+          tls:
+            type: "metrics-server"

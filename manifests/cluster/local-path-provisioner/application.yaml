@@ -9,18 +9,31 @@ spec:
     name: "in-cluster"
     namespace: "local-path-storage"
   project: "default"
-  source:
-    repoURL: "https://github.com/rancher/local-path-provisioner.git"
-    path: "deploy/chart/local-path-provisioner"
-    targetRevision: "HEAD"
-    helm:
-      valuesObject:
-        storageClass:
-          create: true
-          defaultClass: true
-          defaultVolumeType: "local" # vs hostPath
-          name: "local-path"
-        nodePathMap:
-          - node: "DEFAULT_PATH_FOR_NON_LISTED_NODES"
-            paths:
-              - "/pool/volumes"
+  syncPolicy:
+    automated:
+      enabled: false
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences:
+    - kind: "Secret"
+      jsonPointers:
+        - "/data"
+        - "/stringData"
+  sources:
+    - repoURL: "https://github.com/skarre-r/homelab.git"
+      path: "manifests/cluster/local-path-provisioner"
+      targetRevision: "HEAD"
+    - repoURL: "https://github.com/rancher/local-path-provisioner.git"
+      path: "deploy/chart/local-path-provisioner"
+      targetRevision: "HEAD"
+      helm:
+        valuesObject:
+          storageClass:
+            create: true
+            defaultClass: true
+            defaultVolumeType: "local" # vs hostPath
+            name: "local-path"
+          nodePathMap:
+            - node: "DEFAULT_PATH_FOR_NON_LISTED_NODES"
+              paths:
+                - "/pool/volumes"

@@ -1,0 +1,25 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "sonarr"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "sonarr"
+  project: "default"
+  syncPolicy:
+    automated:
+      enabled: false
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences:
+    - kind: "Secret"
+      jsonPointers:
+        - "/data"
+        - "/stringData"
+  source:
+    repoURL: "https://github.com/skarre-r/homelab.git"
+    path: "manifests/apps/sonarr"
+    targetRevision: "HEAD"

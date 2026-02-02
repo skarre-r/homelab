@@ -7,29 +7,37 @@ metadata:
 spec:
   destination:
     name: "in-cluster"
-    namespace: "cert-manager"
   project: "default"
-  source:
-    repoURL: "https://charts.jetstack.io"
-    chart: "cert-manager"
-    targetRevision: "v1.19.2"
-    helm:
-      namespace: "cert-manager"
-      skipCrds: false
-      valuesObject:
-        global:
-          leaderElection:
-            namespace: "cert-manager"
-        crds:
-          enabled: true
-          keep: true
-        config:
-          apiVersion: "controller.config.cert-manager.io/v1alpha1"
-          kind: "ControllerConfiguration"
-          leaderElectionConfig:
-            namespace: "cert-manager"
-          enableGatewayAPI: true
-        clusterResourceNamespace: "cert-manager"
+  syncPolicy:
+    automated:
+      enabled: false
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences: []
+  sources:
+    - repoURL: "https://github.com/skarre-r/homelab.git"
+      path: "manifests/cluster/cert-manager"
+      targetRevision: "HEAD"
+    - repoURL: "https://charts.jetstack.io"
+      chart: "cert-manager"
+      targetRevision: "v1.19.2"
+      helm:
         namespace: "cert-manager"
-        prometheus:
-          enabled: false
+        skipCrds: false
+        valuesObject:
+          global:
+            leaderElection:
+              namespace: "cert-manager"
+          crds:
+            enabled: true
+            keep: true
+          config:
+            apiVersion: "controller.config.cert-manager.io/v1alpha1"
+            kind: "ControllerConfiguration"
+            leaderElectionConfig:
+              namespace: "cert-manager"
+            enableGatewayAPI: true
+          clusterResourceNamespace: "cert-manager"
+          namespace: "cert-manager"
+          prometheus:
+            enabled: false

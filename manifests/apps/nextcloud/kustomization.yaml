@@ -12,7 +12,6 @@ resources:
   - "pvc.yaml"
   - "secrets.yaml"
   - "tlsroutes.yaml"
-  - "valkey.yaml"
 secretGenerator:
   - name: "nextcloud"
     namespace: "nextcloud"
