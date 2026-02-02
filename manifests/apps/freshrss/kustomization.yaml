@@ -5,6 +5,7 @@ resources:
   - "application.yaml"
   - "deployment.yaml"
   - "namespace.yaml"
+  - "postgres.yaml"
   - "pvc.yaml"
   - "services.yaml"
 secretGenerator:

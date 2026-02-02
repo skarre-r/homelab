@@ -43,3 +43,26 @@ spec:
       storage: "1Gi"
   volumeName: "freshrss"
   volumeMode: "Filesystem"
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "postgres"
+  namespace: "freshrss"
+spec:
+  local:
+    path: "/pool/services/freshrss-postgres"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  persistentVolumeReclaimPolicy: "Retain"
+  capacity:
+    storage: "15Ti"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: "kubernetes.io/os"
+              operator: "In"
+              values:
+                - "linux"
