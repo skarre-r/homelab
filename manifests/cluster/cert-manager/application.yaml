@@ -15,17 +15,22 @@ spec:
       - "RespectIgnoreDifferences=true"
   ignoreDifferences: []
   sources:
-    - repoURL: "https://github.com/skarre-r/homelab.git"
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
       path: "manifests/cluster/cert-manager"
       targetRevision: "HEAD"
-    - repoURL: "https://charts.jetstack.io"
+
+    - name: "cert-manager"
+      repoURL: "https://charts.jetstack.io"
       chart: "cert-manager"
       targetRevision: "v1.19.2"
       helm:
         namespace: "cert-manager"
         skipCrds: false
         valuesObject:
+          namespace: "cert-manager"
           global:
+            priorityClassName: "system-cluster-critical"
             leaderElection:
               namespace: "cert-manager"
           crds:
@@ -38,6 +43,18 @@ spec:
               namespace: "cert-manager"
             enableGatewayAPI: true
           clusterResourceNamespace: "cert-manager"
-          namespace: "cert-manager"
           prometheus:
             enabled: false
+
+    - name: "trust-manager"
+      repoURL: "https://charts.jetstack.io"
+      chart: "trust-manager"
+      targetRevision: "v0.20.3"
+      helm:
+        namespace: "cert-manager"
+        skipCrds: false
+        valuesObject:
+          crds:
+            enabled: true
+          replicaCount: 1
+          namespace: "cert-manager"
