@@ -44,5 +44,5 @@ spec:
             envoyGateway:
               enabled: true
             gatewayAPI:
-              enabled: true
+              enabled: false
               channel: "experimental"
