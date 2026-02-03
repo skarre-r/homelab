@@ -72,7 +72,7 @@ spec:
             host: "n7d.skar.io"
             trustedDomains:
               - "n7d.skar.io"
-              - "192.168.1.51"
+              - "192.168.1.99"
             existingSecret:
               enabled: true
               secretName: "nextcloud"
@@ -104,9 +104,9 @@ spec:
           nginx:
             enabled: false
           internalDatabase:
-            enabled: false
-          externalDatabase:
             enabled: true
+          externalDatabase:
+            enabled: false
             type: "postgresql"
             host: "nextcloud-postgres-rw"
             user: "nextcloud"
