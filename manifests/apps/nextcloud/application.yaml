@@ -112,6 +112,8 @@ spec:
             user: "postgres"
             password: "postgres"
             database: "postgres"
+            existingSecret:
+              enabled: false
           mariadb:
             enabled: false
           postgresql:
