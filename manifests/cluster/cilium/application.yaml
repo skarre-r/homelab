@@ -52,7 +52,6 @@ spec:
             enabled: true # TODO?
             gatewayClass:
               create: "true"
-            xffNumTrustedHops: 2
           k8sNetworkPolicy:
             enabled: true
           externalIPs:
@@ -79,6 +78,4 @@ spec:
             enabled: false
           envoy:
             enabled: true # TODO?
-            xffNumTrustedHopsL7PolicyIngress: 2
-            xffNumTrustedHopsL7PolicyEgress: 2
           enableLBIPAM: true
