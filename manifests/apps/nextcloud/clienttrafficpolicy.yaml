@@ -1,0 +1,15 @@
+---
+apiVersion: "gateway.envoyproxy.io/v1alpha1"
+kind: "ClientTrafficPolicy"
+metadata:
+  name: "nextcloud"
+  namespace: "nextcloud"
+spec:
+  clientIPDetection:
+    customHeader:
+      name: "CF-Connecting-IP"
+  targetRefs:
+    - group: "gateway.networking.k8s.io"
+      kind: "Gateway"
+      name: "nextcloud-envoy"
+
