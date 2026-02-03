@@ -15,7 +15,7 @@ manifests directory="":
     just check kubectl
     directory="{{ directory }}"
     if [[ "$directory" == "" ]]; then
-        directory=$(just get manifests)
+        directory=$(just get manifest)
     fi
     if [[ "$directory" == "" ]]; then
         exit 1
