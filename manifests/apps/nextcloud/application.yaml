@@ -108,10 +108,10 @@ spec:
           externalDatabase:
             enabled: true
             type: "postgresql"
-            host: "nextcloud-postgres-rw"
-            user: "nextcloud"
-            password: "nextcloud"
-            database: "nextcloud"
+            host: "postgres"
+            user: "postgres"
+            password: "postgres"
+            database: "postgres"
           mariadb:
             enabled: false
           postgresql:
