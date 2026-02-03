@@ -13,7 +13,8 @@ spec:
       sectionName: "https"
   rules:
     - backendRefs:
-        - kind: "Service"
+        - group: ""
+          kind: "Service"
           name: "nextcloud"
           port: 8080
           weight: 1
