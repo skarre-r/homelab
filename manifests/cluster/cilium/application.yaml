@@ -52,6 +52,7 @@ spec:
             enabled: true # TODO?
             gatewayClass:
               create: "true"
+            xffNumTrustedHops: 1
           k8sNetworkPolicy:
             enabled: true
           externalIPs:
