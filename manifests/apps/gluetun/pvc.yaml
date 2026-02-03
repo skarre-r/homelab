@@ -1,9 +1,11 @@
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
 metadata:
   name: "gluetun"
   namespace: "gluetun"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:
@@ -14,11 +16,13 @@ spec:
   volumeName: "gluetun"
   volumeMode: "Filesystem"
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
 metadata:
   name: "prowlarr-config"
   namespace: "gluetun"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:
@@ -29,11 +33,13 @@ spec:
   volumeName: "prowlarr-config"
   volumeMode: "Filesystem"
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
 metadata:
   name: "qbittorrent-config"
   namespace: "gluetun"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:
@@ -44,11 +50,13 @@ spec:
   volumeName: "qbittorrent-config"
   volumeMode: "Filesystem"
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
 metadata:
   name: "qbittorrent-media"
   namespace: "gluetun"
+  annotations:
+    volumeType: "hostPath"
 spec:
   storageClassName: "local-path"
   accessModes:
