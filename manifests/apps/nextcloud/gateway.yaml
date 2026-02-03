@@ -1,0 +1,32 @@
+---
+apiVersion: "gateway.networking.k8s.io/v1"
+kind: "Gateway"
+metadata:
+  name: "nextcloud"
+  namespace: "nextcloud"
+  annotations:
+    cert-manager.io/cluster-issuer: "ca-issuer"
+spec:
+  gatewayClassName: "cilium"
+  addresses:
+    - type: "IPAddress"
+      value: "192.168.1.51"
+  listeners:
+    - name: "http"
+      port: 80
+      protocol: "HTTP"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
+    - name: "https"
+      port: 443
+      protocol: "HTTPS"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
+      tls:
+        mode: "Terminate"
+        certificateRefs:
+          - name: "nextcloud-cert"
+            kind: "Secret"
+            group: ""
