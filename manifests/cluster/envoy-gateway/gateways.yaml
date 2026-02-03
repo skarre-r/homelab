@@ -30,7 +30,9 @@ spec:
       tls:
         mode: "Terminate"
         certificateRefs:
-          - name: "private-gateway-cert"
+          - group: ""
+            kind: "Secret"
+            name: "private-gateway-cert"
   addresses:
     - type: "IPAddress"
       value: "192.168.1.99"
