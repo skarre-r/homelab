@@ -5,6 +5,6 @@ resources:
   - "application.yaml"
   - "deployment.yaml"
   - "namespace.yaml"
-  - "pv.yaml"
-  - "pvc.yaml"
+  - "persistentvolumeclaims.yaml"
+  - "persistentvolumes.yaml"
   - "service.yaml"

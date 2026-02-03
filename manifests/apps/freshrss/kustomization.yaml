@@ -6,7 +6,8 @@ resources:
   - "deployment.yaml"
   - "namespace.yaml"
   - "postgres.yaml"
-  - "pvc.yaml"
+  - "persistentvolumeclaim.yaml"
+  - "persistentvolumes.yaml"
   - "services.yaml"
 secretGenerator:
   - name: "freshrss"

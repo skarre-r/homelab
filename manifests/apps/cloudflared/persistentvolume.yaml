@@ -19,20 +19,3 @@ spec:
     namespace: "cloudflared"
   capacity:
     storage: "15Ti"
----
-apiVersion: "v1"
-kind: "PersistentVolumeClaim"
-metadata:
-  name: "cloudflared-creds"
-  namespace: "cloudflared"
-  annotations:
-    volumeType: "hostPath"
-spec:
-  volumeName: "cloudflared-creds"
-  storageClassName: "local-path"
-  accessModes:
-    - "ReadWriteOnce"
-  resources:
-    requests:
-      storage: "1Gi"
-  volumeMode: "Filesystem"

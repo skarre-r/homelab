@@ -6,8 +6,9 @@ resources:
   - "httproutes.yaml"
   - "namespace.yaml"
   - "postgres.yaml"
-  - "pvc.yaml"
-  - "secrets.yaml"
+  - "persistentvolumeclaim.yaml"
+  - "persistentvolumes.yaml"
+  - "secret.yaml"
 secretGenerator:
   - name: "nextcloud"
     namespace: "nextcloud"

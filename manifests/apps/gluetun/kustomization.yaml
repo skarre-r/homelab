@@ -7,6 +7,6 @@ resources:
   - "deployment.yaml"
   - "namespace.yaml"
   - "networkpolicies.yaml"
-  - "pv.yaml"
-  - "pvc.yaml"
+  - "persistentvolumeclaims.yaml"
+  - "persistentvolumes.yaml"
   - "services.yaml"
