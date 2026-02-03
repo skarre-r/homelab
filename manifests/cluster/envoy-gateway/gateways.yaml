@@ -4,6 +4,8 @@ kind: "Gateway"
 metadata:
   name: "private"
   namespace: "envoy-gateway-system"
+  annotations:
+    cert-manager.io/cluster-issuer: "ca-issuer"
 spec:
   gatewayClassName: "envoy-gateway"
   infrastructure:
@@ -18,6 +20,17 @@ spec:
       allowedRoutes:
         namespaces:
           from: "All"
+    - name: "https"
+      hostname: "192.168.1.99"
+      port: 443
+      protocol: "HTTPS"
+      allowedRoutes:
+        namespaces:
+          from: "All"
+      tls:
+        mode: "Terminate"
+        certificateRefs:
+          - name: "private-gateway-cert"
   addresses:
     - type: "IPAddress"
       value: "192.168.1.99"
