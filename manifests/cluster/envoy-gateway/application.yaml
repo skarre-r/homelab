@@ -15,6 +15,7 @@ spec:
     syncOptions:
       - "ServerSideApply=true"
       - "RespectIgnoreDifferences=true"
+      - "SkipDryRunOnMissingResource=true"
   ignoreDifferences: []
   sources:
     - name: "gitops"
