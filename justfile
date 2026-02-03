@@ -19,21 +19,20 @@ mod run 'modules/run.just'
 
 [private]
 default:
+    @just --choose --chooser "fzf --multi --height=~50% --style full --preview 'just --unstable --color always --show {}'"
+
+alias choose := default
+alias select := default
+
+[private]
+list:
     @just --list
 
 alias help := default
-alias list := default
 
-select:
-    @just --choose --chooser "fzf --multi --height=~50% --style full --preview 'just --unstable --color always --show {}'"
-
-alias choose := select
-
-[group("recipes")]
 format:
     just run prettier
 
-[group("recipes")]
 lint:
     just run yamllint
     just run ansible-lint
