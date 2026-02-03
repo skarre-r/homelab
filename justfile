@@ -2,42 +2,39 @@ set dotenv-filename := ".env"
 set dotenv-load := true
 set dotenv-required := true
 
-mod apply
-mod check
-mod delete
-mod install
-mod get
-mod play
+[group: "modules"]
+mod apply 'modules/apply.just'
+[group: "modules"]
+mod check 'modules/check.just'
+[group: "modules"]
+mod delete 'modules/delete.just'
+[group: "modules"]
+mod get 'modules/get.just'
+[group: "modules"]
+mod install 'modules/install.just'
+[group: "modules"]
+mod play 'modules/play.just'
+[group: "modules"]
+mod run 'modules/run.just'
 
-# list available recipes
-[group("help")]
+[private]
 default:
     @just --list
 
 alias help := default
+alias list := default
 
-# run prettier
-[group("lint")]
-prettier:
-    pnpm prettier --write .
+select:
+    @just --choose --chooser "fzf --multi --height=~50% --style full --preview 'just --unstable --color always --show {}'"
 
-alias format := prettier
+alias choose := select
 
-# run yamllint
-[group("lint")]
-yamllint:
-    uv run yamllint .
+[group("recipes")]
+format:
+    just run prettier
 
-# run ansible-lint
-[group("lint")]
-ansible-lint:
-    uv run ansible-lint
-
-# run kube-linter
-[group("lint")]
-kube-linter:
-    kube-linter lint --config .kube-linter.yaml manifests
-
-# run all linters
-[group("lint")]
-lint: prettier yamllint ansible-lint kube-linter
+[group("recipes")]
+lint:
+    just run yamllint
+    just run ansible-lint
+    just run kube-linter

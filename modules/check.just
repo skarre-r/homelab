@@ -1,12 +1,10 @@
-
-# list available check recipes
-[group("help")]
+[private]
 default:
     @just --list --justfile check.just
 
 alias help := default
+alias list := default
 
-# check cilium status
 cilium:
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -15,8 +13,7 @@ cilium:
     fi
     cilium status -n "cilium"
 
-# check if fzf is installed
-[group("deps")]
+[private]
 fzf:
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -24,8 +21,7 @@ fzf:
         exit 1
     fi
 
-# check if kubectl is installed
-[group("deps")]
+[private]
 kubectl:
     #!/usr/bin/env bash
     set -euxo pipefail

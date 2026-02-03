@@ -1,20 +1,16 @@
+[group: "modules"]
+mod secret 'get.secret.just'
 
-# list available get recipes
-[group("help")]
+[private]
 default:
     @just --list --justfile get.just
 
 alias help := default
+alias list := default
 
-# get argocd admin password secret
-[group("secrets")]
-argo-password:
-    kubectl -n argocd get secret argocd-cluster -o jsonpath='{.data.admin\.password}' | base64 -d
-
-# get manifest directory
-[group("utils")]
-[macos]
-manifest:
+[no-cd]
+[private]
+manifests:
     #!/usr/bin/env bash
     set -euxo pipefail
     just check fzf

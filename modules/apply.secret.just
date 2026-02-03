@@ -1,17 +1,22 @@
-set dotenv-load := true
-
-# list available secret recipes
-[group("help")]
+[private]
 default:
-    @just --list --justfile secret.just
+    @just --list --justfile apply.secret.just
 
 alias help := default
+alias list := default
 
-# create/ update nextcloud secret
+[no-cd]
 nextcloud:
     #!/usr/bin/env bash
     set -euxo pipefail
+
     just check kubectl
+
+    namespace_exists=$(kubectl get namespace "nextcloud" >/dev/null 2>&1 && echo 1 || echo 0)
+    if [[ $namespace_exists == 0 ]]; then
+        kubectl create namespace "nextcloud"
+    fi
+
     cat << EOF | kubectl apply --namespace "nextcloud" -f -
     apiVersion: "v1"
     kind: "Secret"
