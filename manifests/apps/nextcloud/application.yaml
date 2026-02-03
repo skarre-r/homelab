@@ -104,9 +104,9 @@ spec:
           nginx:
             enabled: false
           internalDatabase:
-            enabled: true
-          externalDatabase:
             enabled: false
+          externalDatabase:
+            enabled: true
             type: "postgresql"
             host: "nextcloud-postgres-rw"
             user: "nextcloud"
