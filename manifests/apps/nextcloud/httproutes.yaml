@@ -10,6 +10,7 @@ spec:
       kind: "Gateway"
       name: "private"
       namespace: "envoy-gateway-system"
+      sectionName: "https"
   rules:
     - backendRefs:
         - kind: "Service"
