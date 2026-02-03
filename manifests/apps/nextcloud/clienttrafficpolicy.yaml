@@ -6,6 +6,8 @@ metadata:
   namespace: "nextcloud"
 spec:
   clientIPDetection:
+    xForwardedFor:
+      numTrustedHops: 3
     customHeader:
       name: "CF-Connecting-IP"
   targetRefs:
