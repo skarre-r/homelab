@@ -1,0 +1,43 @@
+---
+apiVersion: "gateway.envoyproxy.io/v1alpha1"
+kind: "EnvoyProxy"
+metadata:
+  name: "private"
+  namespace: "envoy-gateway-system"
+spec:
+  provider:
+    type: "Kubernetes"
+    kubernetes:
+      envoyDeployment:
+        replicas: 1
+      envoyService:
+        type: "LoadBalancer" # TODO: NodePort?
+        loadBalancerClass: "io.cilium/l2-announcer"
+        annotations:
+          lbipam.cilium.io/ip-pool: "default"
+
+  ipFamily: "IPv4"
+  logging:
+    level:
+      default: "info"
+---
+apiVersion: "gateway.envoyproxy.io/v1alpha1"
+kind: "EnvoyProxy"
+metadata:
+  name: "public"
+  namespace: "envoy-gateway-system"
+spec:
+  provider:
+    type: "Kubernetes"
+    kubernetes:
+      envoyDeployment:
+        replicas: 1
+      envoyService:
+        type: "LoadBalancer" # TODO: NodePort?
+        loadBalancerClass: "io.cilium/l2-announcer"
+        annotations:
+          lbipam.cilium.io/ip-pool: "default"
+  ipFamily: "IPv4"
+  logging:
+    level:
+      default: "info"
