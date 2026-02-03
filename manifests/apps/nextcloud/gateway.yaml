@@ -19,6 +19,7 @@ spec:
         namespaces:
           from: "Same"
     - name: "https"
+      hostname: "192.168.1.51"
       port: 443
       protocol: "HTTPS"
       allowedRoutes:
