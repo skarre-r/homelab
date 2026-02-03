@@ -33,6 +33,9 @@ spec:
           k8sClientRateLimit:
             qps: 10
             burst: 20
+            operator:
+              qps: 100
+              burst: 200
           rollOutCiliumPods: true
           l2announcements:
             enabled: true
@@ -40,12 +43,13 @@ spec:
             enabled: false
           cni:
             enabled: true
+            install: true
             uninstall: false
             exclusive: true
           ingressController:
             enabled: false
           gatewayAPI:
-            enabled: true
+            enabled: true # TODO?
             gatewayClass:
               create: "true"
           k8sNetworkPolicy:
@@ -63,3 +67,15 @@ spec:
             enabled: true
             rollOutPods: true
             replicas: 1
+          rbac:
+            create: true
+          agent: true
+          bgpControlPlane:
+            create: false
+          ciliumEndpointSlice:
+            enabled: false
+          envoyConfig:
+            enabled: false
+          envoy:
+            enabled: true # TODO?
+          enableLBIPAM: true
