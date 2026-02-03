@@ -11,11 +11,7 @@ spec:
       envoyDeployment:
         replicas: 1
       envoyService:
-        type: "LoadBalancer" # TODO: NodePort?
-        loadBalancerClass: "io.cilium/l2-announcer"
-        annotations:
-          lbipam.cilium.io/ip-pool: "default"
-
+        type: "ClusterIP"
   ipFamily: "IPv4"
   logging:
     level:
@@ -33,10 +29,7 @@ spec:
       envoyDeployment:
         replicas: 1
       envoyService:
-        type: "LoadBalancer" # TODO: NodePort?
-        loadBalancerClass: "io.cilium/l2-announcer"
-        annotations:
-          lbipam.cilium.io/ip-pool: "default"
+        type: "ClusterIP"
   ipFamily: "IPv4"
   logging:
     level:
