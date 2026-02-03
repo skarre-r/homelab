@@ -7,7 +7,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "ca-issuer"
 spec:
-  gatewayClassName: "envoy-gateway"
+  gatewayClassName: "private-envoy-gateway"
   infrastructure:
     parametersRef:
       group: "gateway.envoyproxy.io"
@@ -41,7 +41,7 @@ metadata:
   name: "public"
   namespace: "envoy-gateway-system"
 spec:
-  gatewayClassName: "envoy-gateway"
+  gatewayClassName: "public-envoy-gateway"
   infrastructure:
     parametersRef:
       group: "gateway.envoyproxy.io"
@@ -54,6 +54,14 @@ spec:
       allowedRoutes:
         namespaces:
           from: "All"
+    - name: "tls"
+      port: 6443
+      protocol: "TLS"
+      allowedRoutes:
+        namespaces:
+          from: "All"
+      tls:
+        mode: "Passthrough"
   addresses:
     - type: "IPAddress"
       value: "192.168.1.98"
