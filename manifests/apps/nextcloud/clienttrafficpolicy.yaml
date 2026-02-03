@@ -5,9 +5,6 @@ metadata:
   name: "nextcloud"
   namespace: "nextcloud"
 spec:
-  clientIPDetection:
-    xForwardedFor:
-      numTrustedHops: 3
   targetRefs:
     - group: "gateway.networking.k8s.io"
       kind: "Gateway"
