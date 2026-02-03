@@ -171,4 +171,4 @@ spec:
               create: true
               name: "nextcloud"
           phpClientHttpsFix:
-            enabled: true
+            enabled: false
