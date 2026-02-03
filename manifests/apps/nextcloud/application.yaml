@@ -72,7 +72,7 @@ spec:
             host: "n7d.skar.io"
             trustedDomains:
               - "n7d.skar.io"
-              - "192.168.1.99"
+              - "192.168.1.51"
             existingSecret:
               enabled: true
               secretName: "nextcloud"
