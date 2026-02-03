@@ -1,0 +1,55 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "rclone"
+  namespace: "rclone"
+  labels:
+    app.kubernetes.io/name: "rclone"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "rclone"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "rclone"
+    spec:
+      serviceAccountName: "rclone"
+      volumes:
+        - name: "config"
+          persistentVolumeClaim:
+            claimName: "rclone-config"
+        - name: "data"
+          persistentVolumeClaim:
+            claimName: "rclone-data"
+        - name: "passwd"
+          hostPath:
+            path: "/etc/passwd"
+        - name: "group"
+          hostPath:
+            path: "/etc/group"
+      containers:
+        - name: "rclone"
+          image: "docker.io/rclone/rclone:latest"
+          imagePullPolicy: "IfNotPresent"
+          command:
+            - "rclone"
+          args:
+            - "--rc-addr"
+            - ":5572"
+          ports:
+            - containerPort: 5572
+              protocol: "TCP"
+          securityContext:
+            privileged: true # TODO?
+          volumeMounts:
+            - mountPath: "/config/rclone"
+              name: "config"
+            - mountPath: "/data"
+              name: "data"
+            - mountPath: "/etc/passwd"
+              name: "passwd"
+            - mountPath: "/etc/group"
+              name: "group"
