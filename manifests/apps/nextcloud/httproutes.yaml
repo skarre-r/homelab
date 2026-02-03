@@ -41,6 +41,7 @@ spec:
       kind: "Gateway"
       name: "public"
       namespace: "envoy-gateway-system"
+      sectionName: "http"
   rules:
     - backendRefs:
         - kind: "Service"
