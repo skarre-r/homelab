@@ -13,7 +13,6 @@ spec:
     automated:
       enabled: false
     syncOptions:
-      - "ServerSideApply=true"
       - "RespectIgnoreDifferences=true"
       - "SkipDryRunOnMissingResource=true"
   ignoreDifferences: []
