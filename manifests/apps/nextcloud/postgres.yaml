@@ -15,10 +15,7 @@ spec:
         - "ReadWriteOnce"
       volumeMode: "Filesystem"
   resources: {}
-  bootstrap:
-    initdb:
-      database: "nextcloud"
-      owner: "nextcloud"
+  bootstrap: {}
   managed:
     roles:
       - name: "app"
