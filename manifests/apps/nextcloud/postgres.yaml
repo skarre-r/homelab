@@ -18,8 +18,6 @@ spec:
   bootstrap: {}
   managed:
     roles:
-      - name: "app"
-        ensure: "absent"
       - name: "nextcloud"
         ensure: "present"
         login: true
