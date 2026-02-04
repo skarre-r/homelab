@@ -30,4 +30,3 @@ spec:
         type: "LoadBalancer"
         loadBalancerClass: "io.cilium/l2-announcer"
         externalTrafficPolicy: "Local" # default
-
