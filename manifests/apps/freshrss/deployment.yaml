@@ -16,7 +16,6 @@ spec:
       labels:
         app.kubernetes.io/name: "freshrss"
     spec:
-      serviceAccountName: "freshrss"
       volumes:
         - name: "freshrss"
           persistentVolumeClaim:

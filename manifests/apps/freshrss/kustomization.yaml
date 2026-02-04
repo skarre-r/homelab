@@ -7,7 +7,6 @@ resources:
   - "deployment.yaml"
   - "namespace.yaml"
   - "persistentvolumeclaim.yaml"
-  - "serviceaccount.yaml"
   - "services.yaml"
 secretGenerator:
   - name: "freshrss"
