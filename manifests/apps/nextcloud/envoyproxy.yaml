@@ -12,12 +12,12 @@ spec:
     type: "Kubernetes"
     kubernetes:
       envoyDeployment:
-        name: "envoy-proxy"
+        name: "nextcloud-envoy-proxy"
         replicas: 1
       envoyServiceAccount:
-        name: "envoy-proxy"
+        name: "nextcloud-envoy-proxy"
       envoyService:
-        name: "envoy-proxy"
+        name: "nextcloud-envoy-proxy"
         labels:
           ip-pool: "static"
         annotations:
