@@ -5,4 +5,4 @@ resources:
   - "application.yaml"
   - "l2announcementpolicy.yaml"
   - "namespaces.yaml"
-  - "loadbalancerippool.yaml"
+  - "loadbalancerippools.yaml"

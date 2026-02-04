@@ -1,0 +1,24 @@
+---
+apiVersion: "cilium.io/v2alpha1"
+kind: "CiliumLoadBalancerIPPool"
+metadata:
+  name: "default"
+  namespace: "cilium"
+spec:
+  blocks:
+    - start: "192.168.1.70"
+      stop: "192.168.1.89"
+  allowFirstLastIPs: "Yes"
+---
+apiVersion: "cilium.io/v2alpha1"
+kind: "CiliumLoadBalancerIPPool"
+metadata:
+  name: "reserved"
+  namespace: "cilium"
+spec:
+  blocks:
+    - start: "192.168.1.50"
+      stop: "192.168.1.69"
+    - start: "192.168.1.90"
+      stop: "192.168.1.99"
+  allowFirstLastIPs: "Yes"
