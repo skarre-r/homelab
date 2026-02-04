@@ -11,4 +11,5 @@ spec:
   volumeMode: "Filesystem"
   persistentVolumeReclaimPolicy: "Retain"
   storageClassName: "local-path"
-  capacity: {}
+  capacity:
+    storage: "15Ti"
