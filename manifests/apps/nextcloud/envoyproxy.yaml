@@ -21,6 +21,6 @@ spec:
         labels:
           ip-pool: "static"
         annotations:
-          lbipam.cilium.io/ips: "102.168.1.52"
+          lbipam.cilium.io/ips: "192.168.1.52"
         type: "LoadBalancer"
         loadBalancerClass: "io.cilium/l2-announcer"
