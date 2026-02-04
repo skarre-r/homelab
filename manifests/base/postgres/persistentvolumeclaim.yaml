@@ -9,5 +9,7 @@ spec:
     - "ReadWriteOnce"
   storageClassName: "local-path"
   volumeName: "postgres"
-  resources: {}
+  resources:
+    requests:
+      storage: "1Gi"
 
