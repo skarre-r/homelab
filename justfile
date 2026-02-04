@@ -13,6 +13,8 @@ mod get 'modules/get.just'
 [group: "modules"]
 mod install 'modules/install.just'
 [group: "modules"]
+mod login 'modules/login.just'
+[group: "modules"]
 mod play 'modules/play.just'
 [group: "modules"]
 mod run 'modules/run.just'

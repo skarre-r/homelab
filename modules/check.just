@@ -28,3 +28,11 @@ kubectl:
     if [[ ! `command -v kubectl` ]]; then
         exit 1
     fi
+
+[private]
+argocd:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [[ ! `command -v argocd` ]]; then
+        exit 1
+    fi
