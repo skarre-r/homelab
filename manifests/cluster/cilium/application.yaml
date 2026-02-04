@@ -15,10 +15,13 @@ spec:
       - "RespectIgnoreDifferences=true"
   ignoreDifferences: []
   sources:
-    - repoURL: "https://github.com/skarre-r/homelab.git"
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
       path: "manifests/cluster/cilium"
       targetRevision: "HEAD"
-    - repoURL: "https://helm.cilium.io"
+
+    - name: "cilium"
+      repoURL: "https://helm.cilium.io"
       chart: "cilium"
       targetRevision: "1.18.6"
       helm:

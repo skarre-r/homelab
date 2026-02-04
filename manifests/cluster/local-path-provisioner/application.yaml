@@ -14,16 +14,15 @@ spec:
       enabled: false
     syncOptions:
       - "RespectIgnoreDifferences=true"
-  ignoreDifferences:
-    - kind: "Secret"
-      jsonPointers:
-        - "/data"
-        - "/stringData"
+  ignoreDifferences: []
   sources:
-    - repoURL: "https://github.com/skarre-r/homelab.git"
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
       path: "manifests/cluster/local-path-provisioner"
       targetRevision: "HEAD"
-    - repoURL: "https://github.com/rancher/local-path-provisioner.git"
+
+    - name: "local-path-provisioner"
+      repoURL: "https://github.com/rancher/local-path-provisioner.git"
       path: "deploy/chart/local-path-provisioner"
       targetRevision: "HEAD"
       helm:

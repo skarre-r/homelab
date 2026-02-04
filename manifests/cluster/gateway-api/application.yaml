@@ -16,10 +16,13 @@ spec:
       - "RespectIgnoreDifferences=true"
   ignoreDifferences: []
   sources:
-    - repoURL: "https://github.com/skarre-r/homelab.git"
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
       path: "manifests/cluster/gateway-api"
       targetRevision: "HEAD"
-    - repoURL: "https://github.com/kubernetes-sigs/gateway-api"
+
+    - name: "crds"
+      repoURL: "https://github.com/kubernetes-sigs/gateway-api"
       path: "config/crd/experimental"
       kustomize:
         ignoreMissingComponents: true

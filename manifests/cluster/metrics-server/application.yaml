@@ -20,10 +20,13 @@ spec:
         - "/data"
         - "/stringData"
   sources:
-    - repoURL: "https://github.com/skarre-r/homelab.git"
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
       path: "manifests/cluster/metrics-server"
       targetRevision: "HEAD"
-    - repoURL: "https://kubernetes-sigs.github.io/metrics-server"
+
+    - name: "metrics-server"
+      repoURL: "https://kubernetes-sigs.github.io/metrics-server"
       chart: "metrics-server"
       targetRevision: "3.13.0"
       helm:
