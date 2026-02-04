@@ -1,0 +1,15 @@
+---
+apiVersion: "cert-manager.io/v1"
+kind: "Certificate"
+metadata:
+  name: "envoy-gateway-selfsigned-cert"
+  namespace: "envoy-gateway-system"
+spec:
+  issuerRef:
+    name: "ca-isser"
+    kind: "ClusterIssuer"
+  secretName: "envoy-gateway-selfsigned-cert"
+  ipAddresses:
+    - "192.168.1.99"
+  dnsNames:
+    - "192.168.1.99"

@@ -18,3 +18,24 @@ spec:
       allowedRoutes:
         namespaces:
           from: "All"
+
+    - name: "selfsigned"
+      port: 443
+      protocol: "HTTPS"
+      hostname: "192.168.1.99"
+      allowedRoutes:
+        namespaces:
+          from: "All"
+      tls:
+        mode: "Terminate"
+        certificateRefs:
+          - group: ""
+            kind: "Secret"
+            name: "envoy-gateway-selfsigned-cert"
+
+    - name: "postgres"
+      port: 5432
+      protocol: "TCP"
+      allowedRoutes:
+        namespaces:
+          from: "All"
