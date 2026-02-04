@@ -46,5 +46,3 @@ spec:
           volumeMounts:
             - mountPath: "/config"
               name: "config"
-
-

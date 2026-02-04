@@ -14,7 +14,7 @@ spec:
         - 0.0.0.0/0
       toPorts:
         - ports:
-            - port: "3125"  # wireguard endpoint port
+            - port: "3125" # wireguard endpoint port
               protocol: "UDP"
     # Allow traffic to other cluster services
     - toEntities:
@@ -23,9 +23,9 @@ spec:
         - ports:
             - port: "53" # dns
               protocol: "UDP"
-            - port: "7878"  # radarr
+            - port: "7878" # radarr
               protocol: "TCP"
-            - port: "8191"  # flaresolverr
+            - port: "8191" # flaresolverr
               protocol: "TCP"
             - port: "8989" # sonarr
               protocol: "TCP"

@@ -29,7 +29,7 @@ spec:
       project: "default"
       source:
         repoURL: "https://github.com/skarre-r/homelab.git"
-        path: '{{path}}'
+        path: "{{path}}"
         targetRevision: "HEAD"
       syncPolicy:
         automated:

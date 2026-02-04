@@ -37,7 +37,7 @@ spec:
     defaultPolicy: "role:admin"
     policy: |
       g, system:cluster-admins, role:admin
-    scopes: '[groups]'
+    scopes: "[groups]"
   repo:
     enabled: true
     resources: {}

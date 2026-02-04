@@ -6,7 +6,7 @@ pre-reqs:
 - uv
 - just
 - kubectl
-- pnpm*
+- pnpm\*
 
 ```shell
 # configure environment variables
@@ -40,15 +40,15 @@ just lint
 
 #### loadbalancer ip addresses
 
-| service         | ip address   |
-|-----------------|--------------|
-| argo            | 192.168.1.50 |
-| plex            | 192.168.1.53 |
-| calibre-web     | 192.168.1.54 |
-| jellyfin        | 192.168.1.56 |
-| sonarr          | 192.168.1.58 |
-| radarr          | 192.168.1.59 |
-| prowlarr        | 192.168.1.60 |
-| gluetun         | 192.168.1.61 |
-| qbittorrent     | 192.168.1.62 |
-| overseerr       | 192.168.1.63 |
+| service     | ip address   |
+| ----------- | ------------ |
+| argo        | 192.168.1.50 |
+| plex        | 192.168.1.53 |
+| calibre-web | 192.168.1.54 |
+| jellyfin    | 192.168.1.56 |
+| sonarr      | 192.168.1.58 |
+| radarr      | 192.168.1.59 |
+| prowlarr    | 192.168.1.60 |
+| gluetun     | 192.168.1.61 |
+| qbittorrent | 192.168.1.62 |
+| overseerr   | 192.168.1.63 |
