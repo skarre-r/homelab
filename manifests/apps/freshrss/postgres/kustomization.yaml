@@ -9,6 +9,9 @@ patches:
       kind: "PersistentVolume"
       name: "postgres"
     patch: |-
+      - op: "add"
+        path: "/metadata/namespace"
+        value: "freshrss"
       - op: "replace"
         path: "/spec/hostPath/path"
         value: "/pool/volumes/freshrss-postgres"
