@@ -13,7 +13,7 @@ spec:
 apiVersion: "cilium.io/v2alpha1"
 kind: "CiliumLoadBalancerIPPool"
 metadata:
-  name: "reserved"
+  name: "static"
   namespace: "cilium"
 spec:
   blocks:
@@ -22,3 +22,6 @@ spec:
     - start: "192.168.1.90"
       stop: "192.168.1.99"
   allowFirstLastIPs: "Yes"
+  serviceSelector:
+    matchLabels:
+      ip-pool: "static"
