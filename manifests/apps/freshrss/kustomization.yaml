@@ -6,6 +6,7 @@ resources:
   - "application.yaml"
   - "deployment.yaml"
   - "namespace.yaml"
+  - "persistentvolume.yaml"
   - "persistentvolumeclaim.yaml"
   - "services.yaml"
 secretGenerator:

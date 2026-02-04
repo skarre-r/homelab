@@ -7,6 +7,7 @@ metadata:
   annotations:
     volumeMode: "hostPath"
 spec:
+  volumeName: "freshrss"
   storageClassName: "local-path"
   accessModes:
     - "ReadWriteOnce"
