@@ -108,7 +108,7 @@ spec:
                   'overwriteprotocol' => 'https',
                   'overwritewebroot' => '',
                   'overwriteconaddr' => '',
-                  'overwrite.cli.url' => '',
+                  'overwrite.cli.url' => 'https://localhost',
                   'trusted_domains' => ['localhost', 'n7d.skar.io', '192.168.1.52', '192.168.1.99'],
                   'default_phone_region' => 'NO',
                   'default_timezone' => 'Europe/Oslo',
