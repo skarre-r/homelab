@@ -16,6 +16,7 @@ spec:
       labels:
         app.kubernetes.io/name: "freshrss"
     spec:
+      serviceAccountName: "freshrss"
       volumes:
         - name: "freshrss"
           persistentVolumeClaim:
@@ -33,12 +34,41 @@ spec:
               value: "0.0.0.0:8080"
             - name: "CRON_MIN"
               value: "1, 31"
-            - name: "POSTGRES_DB" # TODO
-              value: "freshrss"
+            - name: "DB_HOST"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "host"
+            - name: "DB_BASE"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "database"
+            - name: "DB_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "username"
+            - name: "DB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "password"
+            - name: "POSTGRES_DB"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "database"
             - name: "POSTGRES_USER"
-              value: "freshrss"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "username"
             - name: "POSTGRES_PASSWORD"
-              value: "freshrss"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "password"
             - name: "BASE_URL" # TODO
               value: ""
             - name: "ADMIN_EMAIL"
