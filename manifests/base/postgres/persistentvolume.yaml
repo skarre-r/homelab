@@ -2,7 +2,9 @@
 apiVersion: "v1"
 kind: "PersistentVolume"
 metadata:
-  name: "postgres"
+  name: "postgres" # PATCH
+  labels:
+    type: "postgres"
 spec:
   hostPath:
     path: "" # PATCH

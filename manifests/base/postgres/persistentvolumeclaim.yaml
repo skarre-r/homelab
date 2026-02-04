@@ -4,11 +4,11 @@ kind: "PersistentVolumeClaim"
 metadata:
   name: "postgres"
 spec:
+  volumeName: "postgres" # PATCH
   volumeMode: "Filesystem"
   accessModes:
     - "ReadWriteOnce"
   storageClassName: "local-path"
-  volumeName: "postgres"
   resources:
     requests:
       storage: "1Gi"
