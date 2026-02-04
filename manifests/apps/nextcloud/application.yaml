@@ -63,16 +63,14 @@ spec:
           image:
             flavor: "apache" # "fpm" needs a dedicated web server in front of it
             pullPolicy: "IfNotPresent"
-          replicaCount: 0
+          replicaCount: 1
           httpRoute:
             enabled: false
           ingress:
             enabled: false
           nextcloud:
             host: "n7d.skar.io"
-            trustedDomains:
-              - "n7d.skar.io"
-              - "192.168.1.51"
+            trustedDomains: []
             existingSecret:
               enabled: true
               secretName: "nextcloud"
