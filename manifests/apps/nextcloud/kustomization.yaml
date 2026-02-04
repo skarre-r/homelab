@@ -4,6 +4,7 @@ kind: "Kustomization"
 resources:
   - "postgres"
   - "application.yaml"
+  - "envoyproxy.yaml"
   - "gateway.yaml"
   - "httproute.yaml"
   - "namespace.yaml"

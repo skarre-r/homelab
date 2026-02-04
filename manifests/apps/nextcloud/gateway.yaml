@@ -10,10 +10,35 @@ spec:
     parametersRef:
       group: "gateway.envoyproxy.io"
       kind: "EnvoyProxy"
-      name: "envoy-proxy"
+      name: "nextcloud"
+  addresses:
+    - type: "IPAddress"
+      value: "192.168.1.52"
   listeners:
-    - name: "http"
+    - name: "internal-http"
+      hostname: "192.168.1.52"
       port: 80
+      protocol: "HTTP"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
+
+    - name: "internal-https"
+      hostname: "192.168.1.52"
+      port: 443
+      protocol: "HTTP"
+      allowedRoutes:
+        namespaces:
+          from: "Same"
+      tls:
+        mode: "Terminate"
+        certificateRefs:
+          - group: ""
+            kind: "Secret"
+            name: "nextcloud-tls"
+
+    - name: "external-http"
+      port: 8080
       protocol: "HTTP"
       allowedRoutes:
         namespaces:

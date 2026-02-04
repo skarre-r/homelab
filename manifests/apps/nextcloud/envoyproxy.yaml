@@ -1,0 +1,26 @@
+---
+apiVersion: "gateway.envoyproxy.io/v1alpha1"
+kind: "EnvoyProxy"
+metadata:
+  name: "nextcloud"
+  namespace: "nextcloud"
+spec:
+  logging:
+    level:
+      default: "info"
+  provider:
+    type: "Kubernetes"
+    kubernetes:
+      envoyDeployment:
+        name: "envoy-proxy"
+        replicas: 1
+      envoyServiceAccount:
+        name: "envoy-proxy"
+      envoyService:
+        name: "envoy-proxy"
+        labels:
+          ip-pool: "static"
+        annotations:
+          lbipam.cilium.io/ips: "102.168.1.52"
+        type: "LoadBalancer"
+        loadBalancerClass: "io.cilium/l2-announcer"
