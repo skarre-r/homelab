@@ -32,3 +32,51 @@ nextcloud:
       smtp-password: ${NEXTCLOUD_SMTP_PASSWORD}
       smtp-host: ${NEXTCLOUD_SMTP_HOST}
     EOF
+
+[no-cd]
+postgres:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    read -p "namespace: " namespace
+    if [[ -z "${namespace}" ]]; then
+        echo "error: namespace is undefined"
+        exit 1
+    fi
+
+    read -p "database: " database
+    if [[ -z "${database}" ]]; then
+        echo "error: database is undefined"
+        exit 1
+    fi
+
+    read -p "username: " username
+    if [[ -z "${username}" ]]; then
+        echo "error: username is undefined"
+        exit 1
+    fi
+
+    read -p "password: " password
+    if [[ -z "${password}" ]]; then
+        echo "error: password is undefined"
+        exit 1
+    fi
+
+    namespace_exists=$(kubectl get namespace "${namespace}" >/dev/null 2>&1 && echo 1 || echo 0)
+    if [[ $namespace_exists == 0 ]]; then
+        kubectl create namespace "${namespace}"
+    fi
+
+    cat << EOF | kubectl apply --namespace "${namespace}" -f -
+    apiVersion: "v1"
+    kind: "Secret"
+    metadata:
+      name: "postgres"
+      namespace: "${namespace}"
+    type: "Opaque"
+    stringData:
+      host: "postgres.${namespace}.svc.cluster.local:5432"
+      database: "${database}"
+      username: "${username}"
+      password: "${password}"
+    EOF
