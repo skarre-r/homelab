@@ -61,7 +61,7 @@ spec:
         namespace: "nextcloud"
         valuesObject:
           image:
-            flavor: "apache"
+            flavor: "apache" # "fpm" needs a dedicated web server in front of it
             pullPolicy: "IfNotPresent"
           replicaCount: 1
           httpRoute:
@@ -87,20 +87,27 @@ spec:
             datadir: "/var/www/html/data"
             mail:
               enabled: false
-              fromAddress: "user"
-              domain: "domain.com"
-              smtp:
-                host: "domain.com"
-                secure: "ssl"
-                port: 465
-                authtype: "LOGIN"
-                name: "user"
-                password: "pass"
             objectStore:
               s3:
                 enabled: false
               swift:
                 enabled: false
+            configs:
+              logging.config.php: |-
+                <?php
+                $CONFIG = array (
+                  'log_type' => 'file',
+                  'logfile' => 'nextcloud.log',
+                  'loglevel' => 0,
+                  'logdateformat' => 'F d, Y H:i:s'
+                );
+              extra.config.php: |-
+                <?php
+                $CONFIG = array (
+                );
+            phpConfigs: {}
+            extraEnv: {}
+            securityContext: {}
           nginx:
             enabled: false
           internalDatabase:
@@ -172,4 +179,5 @@ spec:
               create: true
               name: "nextcloud"
           phpClientHttpsFix:
-            enabled: false
+            enabled: true
+            protocol: "https"
