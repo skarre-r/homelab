@@ -10,9 +10,8 @@ spec:
   parentRefs:
     - group: "gateway.networking.k8s.io"
       kind: "Gateway"
-      name: "envoy-gateway"
-      namespace: "envyoy-gateway-system"
-      sectionName: "skar.io"
+      name: "nextcloud"
+      namespace: "nextcloud"
   rules:
     - backendRefs:
         - group: ""

@@ -22,14 +22,6 @@ spec:
         namespaces:
           from: "All"
 
-    - name: "skar.io"
-      port: 80
-      protocol: "HTTP"
-      hostname: "*.skar.io"
-      allowedRoutes:
-        namespaces:
-          from: "All"
-
     - name: "selfsigned"
       port: 443
       protocol: "HTTPS"
