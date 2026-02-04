@@ -15,7 +15,10 @@ spec:
     syncOptions:
       - "RespectIgnoreDifferences=true"
       - "SkipDryRunOnMissingResource=true"
-  ignoreDifferences: []
+  ignoreDifferences:
+    - kind: "CustomResourceDefinition"
+      jsonPointers:
+        - "/spec/versions"
   sources:
     - name: "gitops"
       repoURL: "https://github.com/skarre-r/homelab.git"
