@@ -30,7 +30,7 @@ spec:
           storageClass:
             create: true
             defaultClass: true
-            defaultVolumeType: "local" # vs hostPath
+            defaultVolumeType: "hostPath" # vs local
             name: "local-path"
           nodePathMap:
             - node: "DEFAULT_PATH_FOR_NON_LISTED_NODES"
