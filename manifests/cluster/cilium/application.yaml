@@ -49,9 +49,9 @@ spec:
           ingressController:
             enabled: false
           gatewayAPI:
-            enabled: true # TODO?
+            enabled: false
             gatewayClass:
-              create: "true"
+              create: "false"
           k8sNetworkPolicy:
             enabled: true
           externalIPs:
@@ -77,5 +77,6 @@ spec:
           envoyConfig:
             enabled: false
           envoy:
-            enabled: true # TODO?
+            enabled: false
           enableLBIPAM: true
+          l7proxy: true
