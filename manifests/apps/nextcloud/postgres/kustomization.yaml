@@ -8,7 +8,6 @@ patches:
   - target:
       kind: "PersistentVolume"
       name: "postgres"
-      namespace: "nextcloud"
     patch: |-
       - op: "replace"
         path: "/spec/hostPath/path"
