@@ -6,7 +6,7 @@ resources:
   - "application.yaml"
   - "clienttrafficpolicy.yaml"
   - "envoyproxy.yaml"
-  - "gateways.yaml"
+  - "gateway.yaml"
   - "httproute.yaml"
   - "namespace.yaml"
   - "persistentvolume.yaml"
