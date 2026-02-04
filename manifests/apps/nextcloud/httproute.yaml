@@ -41,7 +41,6 @@ spec:
       kind: "Gateway"
       name: "nextcloud"
       namespace: "nextcloud"
-      sectionName: "external-http"
   rules:
     - backendRefs:
         - group: ""

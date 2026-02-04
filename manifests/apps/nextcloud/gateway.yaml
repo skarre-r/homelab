@@ -11,19 +11,16 @@ spec:
       group: "gateway.envoyproxy.io"
       kind: "EnvoyProxy"
       name: "nextcloud"
-  addresses:
-    - type: "IPAddress"
-      value: "192.168.1.52"
   listeners:
-    - name: "internal-http"
-      hostname: "192.168.1.52"
+    - name: "external"
+      hostname: "n7d.skar.io"
       port: 80
       protocol: "HTTP"
       allowedRoutes:
         namespaces:
           from: "Same"
 
-    - name: "internal-https"
+    - name: "internal"
       hostname: "192.168.1.52"
       port: 443
       protocol: "HTTPS"
@@ -37,10 +34,3 @@ spec:
             kind: "Secret"
             name: "nextcloud-tls"
 
-    - name: "external-http"
-      port: 8080
-      protocol: "HTTP"
-      allowedRoutes:
-        namespaces:
-          from: "Same"
-      hostname: "n7d.skar.io"
