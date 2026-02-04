@@ -1,0 +1,14 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "postgres"
+spec:
+  hostPath:
+    path: "" # PATCH
+  accessModes:
+    - "ReadWriteOnce"
+  volumeMode: "Filesystem"
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "local-path"
+  capacity: {}

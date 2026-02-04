@@ -26,6 +26,9 @@ spec:
         - name: "dshm"
           emptyDir:
             medium: "Memory"
+        - name: "postgres"
+          persistentVolumeClaim:
+            claimName: "postgres"
         - name: "config"
           configMap:
             defaultMode: 420
@@ -104,21 +107,3 @@ spec:
   persistentVolumeClaimRetentionPolicy:
     whenScaled: "Retain"
     whenDeleted: "Retain"
-  volumeClaimTemplates:
-    - apiVersion: "v1"
-      kind: "PersistentVolumeClaim"
-      metadata:
-        name: "postgres"
-        labels:
-          app.kubernetes.io/name: "postgres"
-          app.kubernetes.io/component: "database"
-        annotations:
-          volumeType: "hostPath" # /pool/volumes/...
-      spec:
-        storageClassName: "local-path"
-        volumeMode: "Filesystem"
-        accessModes:
-          - "ReadWriteOnce"
-        resources:
-          requests:
-            storage: "1Gi"
