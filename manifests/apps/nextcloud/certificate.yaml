@@ -1,0 +1,15 @@
+---
+apiVersion: "cert-manager.io/v1"
+kind: "Certificate"
+metadata:
+  name: "nextcloud"
+  namespace: "nextcloud"
+spec:
+  issuerRef:
+    name: "ca-issuer"
+    kind: "ClusterIssuer"
+  secretName: "nextcloud-tls"
+  ipAddresses:
+    - "192.168.1.52"
+  dnsNames:
+    - "192.168.1.52"
