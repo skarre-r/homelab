@@ -20,8 +20,5 @@ patches:
       name: "postgres"
     patch: |-
       - op: "replace"
-        path: "/metadata/name"
-        value: "freshrss-postgres"
-      - op: "replace"
         path: "/spec/volumeName"
         value: "freshrss-postgres"
