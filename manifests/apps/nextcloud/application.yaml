@@ -25,7 +25,7 @@ spec:
       path: "manifests/apps/nextcloud"
       targetRevision: "HEAD"
 
-    - name: "valkey"
+    - name: "valkey"  # TODO: rename "nextcloud-valkey" > "valkey"
       repoURL: "https://valkey.io/valkey-helm"
       chart: "valkey"
       targetRevision: "0.9.3"
@@ -108,12 +108,13 @@ spec:
           externalDatabase:
             enabled: true
             type: "postgresql"
-            host: "postgres"
-            user: "postgres"
-            password: "postgres"
-            database: "postgres"
             existingSecret:
-              enabled: false
+              enabled: true
+              secretName: "postgres"
+              usernameKey: "username"
+              passwordKey: "password"
+              hostKey: "host"
+              databaseKey: "database"
           mariadb:
             enabled: false
           postgresql:
