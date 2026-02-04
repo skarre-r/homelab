@@ -25,7 +25,7 @@ spec:
       path: "manifests/apps/nextcloud"
       targetRevision: "HEAD"
 
-    - name: "valkey" # TODO: rename "nextcloud-valkey" > "valkey"
+    - name: "valkey" # TODO: cluter-wide valkey instance
       repoURL: "https://valkey.io/valkey-helm"
       chart: "valkey"
       targetRevision: "0.9.3"
@@ -63,7 +63,7 @@ spec:
           image:
             flavor: "apache" # "fpm" needs a dedicated web server in front of it
             pullPolicy: "IfNotPresent"
-          replicaCount: 1
+          replicaCount: 0
           httpRoute:
             enabled: false
           ingress:
