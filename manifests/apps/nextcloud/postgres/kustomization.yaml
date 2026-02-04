@@ -4,3 +4,12 @@ kind: "Kustomization"
 resources:
   - "../../../base/postgres"
 namespace: "nextcloud"
+patches:
+  - target:
+      kind: "PersistentVolume"
+      name: "postgres"
+      namespace: "nextcloud"
+    patch: |-
+      - op: "replace"
+        path: "/spec/hostPath/path"
+        value: "/pool/services/nextcloud-postgres"
