@@ -7,8 +7,18 @@ namespace: "nextcloud"
 patches:
   - target:
       kind: "PersistentVolume"
-      name: "postgres"
+      labelSelector: "type=postgres"
     patch: |-
+      - op: "replace"
+        path: "/metadata/name"
+        value: "nextcloud-postgres"
       - op: "replace"
         path: "/spec/hostPath/path"
         value: "/pool/services/nextcloud-postgres"
+  - target:
+      kind: "PersistentVolumeClaim"
+      name: "postgres"
+    patch: |-
+      - op: "replace"
+        path: "/spec/volumeName"
+        value: "nextcloud-postgres"
