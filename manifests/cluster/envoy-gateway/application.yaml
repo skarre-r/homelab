@@ -33,16 +33,3 @@ spec:
             replicas: 1
           hpa:
             enabled: false
-
-#    - name: "envoy-gateway-crds"
-#      repoURL: "docker.io/envoyproxy"
-#      chart: "gateway-crds-helm"
-#      targetRevision: "v1.6.3"
-#      helm:
-#        valuesObject:
-#          crds:
-#            envoyGateway:
-#              enabled: true
-#            gatewayAPI:
-#              enabled: false
-#              channel: "experimental"
