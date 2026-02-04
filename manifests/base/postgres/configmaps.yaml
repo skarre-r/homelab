@@ -1,0 +1,46 @@
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres-conf"
+  labels:
+    app.kubernetes.io/name: "postgres"
+    app.kubernetes.io/component: "database"
+data:
+  postgresql.conf: |-
+    # docs: https://hub.docker.com/_/postgres
+    listen_addresses = '*'
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres-scripts"
+  labels:
+    app.kubernetes.io/name: "postgres"
+    app.kubernetes.io/component: "database"
+data:
+  health.sh: |-
+    #!/bin/bash
+
+    if [ -z "${POSTGRES_DB}" ]; then
+        echo "POSTGRES_DB is not set"
+        exit 1
+    fi
+    if [ -z "${POSTGRES_USER}" ]; then
+        echo "POSTGRES_USER is not set"
+        exit 1
+    fi
+    if [ -z "${POSTGRES_PASSWORD}" ]; then
+        echo "POSTGRES_PASSWORD is not set"
+        exit 1
+    fi
+    exec pg_isready -U "${POSTGRES_USER}" -d "dbname=${POSTGRES_DB}" -h 127.0.0.1 -p 5432
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres-initdb-scripts"
+  labels:
+    app.kubernetes.io/name: "postgres"
+    app.kubernetes.io/component: "database"
+data: {}
