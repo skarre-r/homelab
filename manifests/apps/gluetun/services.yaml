@@ -34,6 +34,8 @@ kind: Service
 metadata:
   name: "gluetun-lb"
   namespace: "gluetun"
+  labels:
+    ip-pool: "static"
   annotations:
     lbipam.cilium.io/ips: "192.168.1.61"
 spec:
@@ -51,6 +53,8 @@ kind: Service
 metadata:
   name: "prowlarr-lb"
   namespace: "gluetun"
+  labels:
+    ip-pool: "static"
   annotations:
     lbipam.cilium.io/ips: "192.168.1.60"
 spec:
@@ -68,6 +72,8 @@ kind: Service
 metadata:
   name: "qbittorrent-lb"
   namespace: "gluetun"
+  labels:
+    ip-pool: "static"
   annotations:
     lbipam.cilium.io/ips: "192.168.1.62"
 spec:

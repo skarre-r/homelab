@@ -4,6 +4,8 @@ kind: "Service"
 metadata:
   name: "calibre-web-lb"
   namespace: "calibre"
+  labels:
+    ip-pool: "static"
   annotations:
     lbipam.cilium.io/ips: "192.168.1.54"
 spec:

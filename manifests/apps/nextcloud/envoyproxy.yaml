@@ -17,5 +17,7 @@ spec:
         name: "nextcloud-envoy-proxy"
         type: "LoadBalancer"
         loadBalancerClass: "io.cilium/l2-announcer"
+        labels:
+          ip-pool: "static"
         annotations:
           lbipam.cilium.io/ips: "192.168.1.52"
