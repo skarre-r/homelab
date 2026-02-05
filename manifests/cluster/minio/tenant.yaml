@@ -1,0 +1,7 @@
+# https://github.com/minio/operator/blob/master/examples/kustomization/base/tenant.yaml
+---
+apiVersion: "minio.min.io/v2"
+kind: "Tenant"
+metadata:
+  name: "minio"
+  namespace: "minio-system"
