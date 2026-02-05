@@ -3,7 +3,6 @@ apiVersion: "v1"
 kind: "PersistentVolume"
 metadata:
   name: "jellyfin-cache"
-  namespace: "jellyfin"
 spec:
   hostPath:
     path: "/tmp"
@@ -24,7 +23,6 @@ apiVersion: "v1"
 kind: "PersistentVolume"
 metadata:
   name: "jellyfin-config"
-  namespace: "jellyfin"
 spec:
   hostPath:
     path: "/pool/services/jellyfin"
@@ -45,7 +43,6 @@ apiVersion: "v1"
 kind: "PersistentVolume"
 metadata:
   name: "jellyfin-media"
-  namespace: "jellyfin"
 spec:
   hostPath:
     path: "/pool/media"
