@@ -117,7 +117,7 @@ spec:
             enabled: false
           externalRedis:
             enabled: true
-            host: "valkey.valkey-systems.svc.cluster.local"
+            host: "valkey.valkey-system.svc.cluster.local"
             port: "6379"
             password: ""
             existingSecret:
