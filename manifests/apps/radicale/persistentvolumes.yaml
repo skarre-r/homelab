@@ -1,0 +1,43 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "radicale-config"
+  labels:
+    app.kubernetes.io/name: "radicale"
+spec:
+  hostPath:
+    path: "/pool/services/radicale/config"
+  volumeMode: "Filesystem"
+  claimRef:
+    name: "radicale-config"
+    namespace: "radicale"
+    kind: "PersistentVolumeClaim"
+  accessModes:
+    - "ReadWriteOnce"
+  capacity:
+    storage: "15Ti"
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "local-path"
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "radicale-data"
+  labels:
+    app.kubernetes.io/name: "radicale"
+spec:
+  hostPath:
+    path: "/pool/services/radicale/data"
+  volumeMode: "Filesystem"
+  claimRef:
+    name: "radicale-data"
+    namespace: "radicale"
+    kind: "PersistentVolumeClaim"
+  accessModes:
+    - "ReadWriteOnce"
+  capacity:
+    storage: "15Ti"
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "local-path"
+

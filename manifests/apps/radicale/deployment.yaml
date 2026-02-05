@@ -1,0 +1,49 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "radicale"
+  namespace: "radicale"
+  labels:
+    app.kubernetes.io/name: "radicale"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "radicale"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "radicale"
+    spec:
+      volumes:
+        - name: "config"
+          persistentVolumeClaim:
+            claimName: "radicale-config"
+        - name: "data"
+          persistentVolumeClaim:
+            claimName: "radicale-data"
+      containers:
+        - name: "radicale"
+          image: "ghcr.io/kozea/radicale:stable"
+          imagePullPolicy: "IfNotPresent"
+          env: []
+          ports:
+            - containerPort: 5232
+              protocol: "TCP"
+          startupProbe:
+            tcpSocket:
+              port: 5232
+          readinessProbe:
+            tcpSocket:
+              port: 5232
+          livenessProbe:
+            tcpSocket:
+              port: 5232
+          volumeMounts:
+            - mountPath: "/etc/radicale"
+              name: "config"
+            - mountPath: "/var/lib/radicale"
+              name: "data"
+          resources: {}
+          securityContext: {}

@@ -1,0 +1,19 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "radicale"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "radicale"
+  project: "default"
+  syncPolicy:
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences: []
+  source:
+    repoURL: "https://github.com/skarre-r/homelab.git"
+    path: "manifests/apps/radicale"
+    targetRevision: "HEAD"
