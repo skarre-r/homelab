@@ -1,0 +1,48 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "valkey"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "valkey-system"
+  project: "default"
+  syncPolicy:
+    syncOptions:
+      - "RespectIgnoreDifferences=true"
+  ignoreDifferences: []
+  sources:
+    - name: "gitops"
+      repoURL: "https://github.com/skarre-r/homelab.git"
+      path: "manifests/cluster/valkey"
+      targetRevision: "HEAD"
+
+    - name: "valkey"
+      repoURL: "https://valkey.io/valkey-helm"
+      chart: "valkey"
+      targetRevision: "0.9.3"
+      helm:
+        namespace: "valkey-system"
+        valuesObject:
+          auth:
+            enabled: false
+          dataStorage:
+            enabled: false
+          image:
+            pullPolicy: "IfNotPresent"
+          metrics:
+            enabled: false
+          replica:
+            enabled: false
+          resources: {}
+          service:
+            type: "ClusterIP"
+            port: 6379
+          serviceAccount:
+            create: true
+            name: "valkey"
+          tls:
+            enabled: false
+          valkeyConfig: ""
