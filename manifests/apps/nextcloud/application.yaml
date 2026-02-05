@@ -25,34 +25,6 @@ spec:
       path: "manifests/apps/nextcloud"
       targetRevision: "HEAD"
 
-    - name: "valkey" # TODO: cluter-wide valkey instance
-      repoURL: "https://valkey.io/valkey-helm"
-      chart: "valkey"
-      targetRevision: "0.9.3"
-      helm:
-        namespace: "nextcloud"
-        valuesObject:
-          auth:
-            enabled: false
-          dataStorage:
-            enabled: false
-          image:
-            pullPolicy: "IfNotPresent"
-          metrics:
-            enabled: false
-          replica:
-            enabled: false
-          resources: {}
-          service:
-            type: "ClusterIP"
-            port: 6379
-          serviceAccount:
-            create: true
-            name: "valkey"
-          tls:
-            enabled: false
-          valkeyConfig: ""
-
     - name: "nextcloud"
       repoURL: "https://nextcloud.github.io/helm"
       chart: "nextcloud"
@@ -145,7 +117,7 @@ spec:
             enabled: false
           externalRedis:
             enabled: true
-            host: "nextcloud-valkey"
+            host: "valkey.valkey-systems.svc.cluster.local"
             port: "6379"
             password: ""
             existingSecret:
