@@ -2,8 +2,7 @@
 apiVersion: "v1"
 kind: "PersistentVolume"
 metadata:
-  name: "freshrss"
-  namespace: "freshrss"
+  name: "freshrss-config"
 spec:
   hostPath:
     path: "/pool/services/freshrss"
@@ -15,7 +14,7 @@ spec:
   claimRef:
     apiVersion: "v1"
     kind: "PersistentVolumeClaim"
-    name: "freshrss"
+    name: "freshrss-config"
     namespace: "freshrss"
   capacity:
     storage: "15Ti"

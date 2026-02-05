@@ -17,74 +17,22 @@ spec:
         app.kubernetes.io/name: "freshrss"
     spec:
       volumes:
-        - name: "freshrss"
+        - name: "config"
           persistentVolumeClaim:
-            claimName: "freshrss"
+            claimName: "freshrss-config"
       containers:
         - name: "freshrss"
-          image: "docker.io/freshrss/freshrss:latest"
+          image: "lscr.io/linuxserver/freshrss:latest"
           imagePullPolicy: "IfNotPresent"
           env:
             - name: "TZ"
               value: "Europe/Oslo"
-            - name: "FRESHRSS_ENV"
-              value: "production"
-            - name: "LISTEN"
-              value: "0.0.0.0:8080"
-            - name: "CRON_MIN"
-              value: "1, 31"
-            - name: "DB_HOST"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres"
-                  key: "host"
-            - name: "DB_BASE"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres"
-                  key: "database"
-            - name: "DB_USER"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres"
-                  key: "username"
-            - name: "DB_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres"
-                  key: "password"
-            - name: "POSTGRES_DB"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres"
-                  key: "database"
-            - name: "POSTGRES_USER"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres"
-                  key: "username"
-            - name: "POSTGRES_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres"
-                  key: "password"
-            - name: "BASE_URL" # TODO
-              value: ""
-            - name: "ADMIN_EMAIL"
-              value: ""
-            - name: "ADMIN_PASSWORD"
-              value: ""
-            - name: "ADMIN_API_PASSWORD"
-              value: ""
-            - name: "TRUSTED_PROXY"
-              value: ""
-            - name: "SERVER_DNS"
-              value: ""
-          envFrom:
-            - secretRef:
-                name: "freshrss"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
           ports:
-            - containerPort: 8080
+            - containerPort: 80 # TODO?
               protocol: "TCP"
           startupProbe:
             tcpSocket:
@@ -95,6 +43,8 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 80
+          resources: {}
+          securityContext: {}
           volumeMounts:
-            - mountPath: "/var/www/FreshRSS"
-              name: "freshrss"
+            - mountPath: "/config"
+              name: "config"
