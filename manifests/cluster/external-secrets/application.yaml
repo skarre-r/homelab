@@ -1,0 +1,53 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "external-secrets-helm"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "external-secrets"
+  project: "default"
+  syncPolicy:
+    syncOptions:
+      - "ServerSideApply=true"
+  source:
+    repoURL: "https://charts.external-secrets.io"
+    chart: "external-secrets"
+    targetRevision: "v2.0.0"
+    helm:
+      namespace: "external-secrets"
+      skipCrds: false
+      valuesObject:
+        namespace: "external-secrets"
+        replicaCount: 1
+        installCRDs: true
+        crds: {}
+        createOperator: true
+        serviceAccount:
+          create: true
+          name: "external-secrets"
+        rbac:
+          create: true
+        securityContext: {}
+        resources: {}
+        serviceMonitor:
+          enabled: false
+        metrics:
+          service:
+            enabled: false
+        grafanaDashboard:
+          enabled: false
+        livenessProbe:
+          enabled: false
+        webhook:
+          create: true
+          certManager:
+            enabled: true
+          metrics:
+            enabled: false
+          resources: {}
+        certController:
+          create: false # TODO?
+
