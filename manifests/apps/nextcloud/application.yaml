@@ -2,7 +2,7 @@
 apiVersion: "argoproj.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: "nextcloud"
+  name: "nextcloud-helm"
   namespace: "argocd"
 spec:
   destination:
@@ -19,154 +19,148 @@ spec:
       jsonPointers:
         - "/data"
         - "/stringData"
-  sources:
-    - name: "gitops"
-      repoURL: "https://github.com/skarre-r/homelab.git"
-      path: "manifests/apps/nextcloud"
-      targetRevision: "HEAD"
-
-    - name: "nextcloud"
-      repoURL: "https://nextcloud.github.io/helm"
-      chart: "nextcloud"
-      targetRevision: "8.9.0"
-      helm:
-        namespace: "nextcloud"
-        valuesObject:
-          image:
-            flavor: "apache" # "fpm" needs a dedicated web server in front of it
-            pullPolicy: "IfNotPresent"
-          replicaCount: 1
-          httpRoute:
+  source:
+    repoURL: "https://nextcloud.github.io/helm"
+    chart: "nextcloud"
+    targetRevision: "8.9.0"
+    helm:
+      namespace: "nextcloud"
+      valuesObject:
+        image:
+          flavor: "apache" # "fpm" needs a dedicated web server in front of it
+          pullPolicy: "IfNotPresent"
+        replicaCount: 1
+        httpRoute:
+          enabled: false
+        ingress:
+          enabled: false
+        nextcloud:
+          host: "n7d.skar.io"
+          trustedDomains: []
+          existingSecret:
+            enabled: true
+            secretName: "nextcloud"
+            usernameKey: "username"
+            passwordKey: "password"
+            tokenKey: "token"
+            smtpUsernameKey: "smtp-username"
+            smtpPasswordKey: "smtp-password"
+            smtpHostKey: "smtp-host"
+          update: 0
+          containerPort: 80
+          datadir: "/var/www/html/data"
+          mail:
             enabled: false
-          ingress:
-            enabled: false
-          nextcloud:
-            host: "n7d.skar.io"
-            trustedDomains: []
-            existingSecret:
-              enabled: true
-              secretName: "nextcloud"
-              usernameKey: "username"
-              passwordKey: "password"
-              tokenKey: "token"
-              smtpUsernameKey: "smtp-username"
-              smtpPasswordKey: "smtp-password"
-              smtpHostKey: "smtp-host"
-            update: 0
-            containerPort: 80
-            datadir: "/var/www/html/data"
-            mail:
+          objectStore:
+            s3:
               enabled: false
-            objectStore:
-              s3:
-                enabled: false
-              swift:
-                enabled: false
-            configs:
-              logging.config.php: |-
-                <?php
-                $CONFIG = array (
-                  'log_type' => 'file',
-                  'logfile' => 'nextcloud.log',
-                  'loglevel' => 0,
-                  'logdateformat' => 'F d, Y H:i:s'
-                );
-              custom.config.php: |-
-                <?php
-                $CONFIG = array (
-                  'overwritehost' => '',
-                  'overwriteprotocol' => 'https',
-                  'overwritewebroot' => '',
-                  'overwriteconaddr' => '',
-                  'overwrite.cli.url' => 'https://localhost',
-                  'trusted_domains' => ['localhost', 'n7d.skar.io', '192.168.1.52'],
-                  'default_phone_region' => 'NO',
-                  'default_timezone' => 'Europe/Oslo',
-                  'auth.bruteforce.protection.enabled' => true,
-                  'ratelimit.protection.enabled' => true,
-                  'hide_login_form' => false,
-                  'allow_local_remote_servers' => false,
-                  'maintenance' => false,
-                  'trusted_proxies' => ['10.0.0.0/8'],
-                  'forwarded_for_headers' => ['HTTP_X_FORWARDED_FOR'],
-                  'allowed_admin_ranges' => [],
-                  'debug' => false,
-                  'simpleSignUpLink.shown' => false,
-                  'enable_non-accessible_features' => true,
-                );
-            phpConfigs: {}
-            extraEnv: {}
-            securityContext: {}
-          nginx:
-            enabled: false
-          internalDatabase:
-            enabled: false
-          externalDatabase:
-            enabled: true
-            type: "postgresql"
-            existingSecret:
-              enabled: true
-              secretName: "postgres"
-              usernameKey: "username"
-              passwordKey: "password"
-              hostKey: "host"
-              databaseKey: "database"
-          mariadb:
-            enabled: false
-          postgresql:
-            enabled: false
-          externalRedis:
-            enabled: true
-            host: "valkey.valkey-system.svc.cluster.local"
-            port: "6379"
-            password: ""
-            existingSecret:
+            swift:
               enabled: false
-          redis:
-            enabled: false
-          collabora:
-            enabled: false
-          cronjob:
+          configs:
+            logging.config.php: |-
+              <?php
+              $CONFIG = array (
+                'log_type' => 'file',
+                'logfile' => 'nextcloud.log',
+                'loglevel' => 0,
+                'logdateformat' => 'F d, Y H:i:s'
+              );
+            custom.config.php: |-
+              <?php
+              $CONFIG = array (
+                'overwritehost' => '',
+                'overwriteprotocol' => 'https',
+                'overwritewebroot' => '',
+                'overwriteconaddr' => '',
+                'overwrite.cli.url' => 'https://localhost',
+                'trusted_domains' => ['localhost', 'n7d.skar.io', '192.168.1.52'],
+                'default_phone_region' => 'NO',
+                'default_timezone' => 'Europe/Oslo',
+                'auth.bruteforce.protection.enabled' => true,
+                'ratelimit.protection.enabled' => true,
+                'hide_login_form' => false,
+                'allow_local_remote_servers' => false,
+                'maintenance' => false,
+                'trusted_proxies' => ['10.0.0.0/8'],
+                'forwarded_for_headers' => ['HTTP_X_FORWARDED_FOR'],
+                'allowed_admin_ranges' => [],
+                'debug' => false,
+                'simpleSignUpLink.shown' => false,
+                'enable_non-accessible_features' => true,
+              );
+          phpConfigs: {}
+          extraEnv: {}
+          securityContext: {}
+        nginx:
+          enabled: false
+        internalDatabase:
+          enabled: false
+        externalDatabase:
+          enabled: true
+          type: "postgresql"
+          existingSecret:
             enabled: true
-            type: "sidecar"
-            sidecar:
-              resources: {}
-          service:
-            type: "ClusterIP"
-            port: 8080
-          persistence:
-            enabled: true
-            existingClaim: "nextcloud"
-          livenessProbe:
+            secretName: "postgres"
+            usernameKey: "username"
+            passwordKey: "password"
+            hostKey: "host"
+            databaseKey: "database"
+        mariadb:
+          enabled: false
+        postgresql:
+          enabled: false
+        externalRedis:
+          enabled: true
+          host: "valkey.valkey-system.svc.cluster.local"
+          port: "6379"
+          password: ""
+          existingSecret:
             enabled: false
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-            successThreshold: 1
-          readinessProbe:
-            enabled: false
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-          startupProbe:
-            enabled: false
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 30
-            successThreshold: 1
-          hpa:
-            enabled: false
-          metrics:
-            enabled: false
-          rbac:
-            enabled: true
-            serviceaccount:
-              create: true
-              name: "nextcloud"
-          phpClientHttpsFix:
-            enabled: true
-            protocol: "https"
+        redis:
+          enabled: false
+        collabora:
+          enabled: false
+        cronjob:
+          enabled: true
+          type: "sidecar"
+          sidecar:
+            resources: {}
+        service:
+          type: "ClusterIP"
+          port: 8080
+        persistence:
+          enabled: true
+          existingClaim: "nextcloud"
+        livenessProbe:
+          enabled: false
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          enabled: false
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        startupProbe:
+          enabled: false
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+        hpa:
+          enabled: false
+        metrics:
+          enabled: false
+        rbac:
+          enabled: true
+          serviceaccount:
+            create: true
+            name: "nextcloud"
+        phpClientHttpsFix:
+          enabled: true
+          protocol: "https"

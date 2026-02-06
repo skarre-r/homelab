@@ -2,37 +2,25 @@
 apiVersion: "argoproj.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: "local-path-provisioner"
+  name: "local-path-provisioner-helm"
   namespace: "argocd"
 spec:
   destination:
     name: "in-cluster"
     namespace: "local-path-storage"
   project: "default"
-  syncPolicy:
-    automated:
-      enabled: false
-    syncOptions:
-      - "RespectIgnoreDifferences=true"
-  ignoreDifferences: []
-  sources:
-    - name: "gitops"
-      repoURL: "https://github.com/skarre-r/homelab.git"
-      path: "manifests/cluster/local-path-provisioner"
-      targetRevision: "HEAD"
-
-    - name: "local-path-provisioner"
-      repoURL: "https://github.com/rancher/local-path-provisioner.git"
-      path: "deploy/chart/local-path-provisioner"
-      targetRevision: "HEAD"
-      helm:
-        valuesObject:
-          storageClass:
-            create: true
-            defaultClass: true
-            defaultVolumeType: "hostPath" # vs local
-            name: "local-path"
-          nodePathMap:
-            - node: "DEFAULT_PATH_FOR_NON_LISTED_NODES"
-              paths:
-                - "/pool/volumes"
+  source:
+    repoURL: "https://github.com/rancher/local-path-provisioner.git"
+    path: "deploy/chart/local-path-provisioner"
+    targetRevision: "HEAD"
+    helm:
+      valuesObject:
+        storageClass:
+          create: true
+          defaultClass: true
+          defaultVolumeType: "hostPath" # vs local
+          name: "local-path"
+        nodePathMap:
+          - node: "DEFAULT_PATH_FOR_NON_LISTED_NODES"
+            paths:
+              - "/pool/volumes"

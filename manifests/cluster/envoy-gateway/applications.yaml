@@ -1,0 +1,55 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "envoy-gateway-helm"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "envoy-gateway-system"
+  project: "default"
+  syncPolicy:
+    syncOptions:
+      - "SkipDryRunOnMissingResource=true"
+  source:
+    repoURL: "docker.io/envoyproxy"
+    chart: "gateway-helm"
+    targetRevision: "v1.6.3"
+    helm:
+      namespace: "envoy-gateway-system"
+      skipCrds: true
+      valuesObject:
+        deployment:
+          replicas: 1
+        hpa:
+          enabled: false
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "envoy-gateway-crds-helm"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "envoy-gateway-system"
+  project: "default"
+  syncPolicy:
+    syncOptions:
+      - "ServerSideApply=true"
+      - "SkipDryRunOnMissingResource=true"
+  source:
+    repoURL: "docker.io/envoyproxy"
+    chart: "gateway-crds-helm"
+    targetRevision: "v1.6.3"
+    helm:
+      namespace: "envoy-gateway-system"
+      skipCrds: false
+      valuesObject:
+        crds:
+          envoyGateway:
+            enabled: true
+          gatewayAPI:
+            enabled: true
+            channel: "experimental"

@@ -2,84 +2,73 @@
 apiVersion: "argoproj.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: "cilium"
+  name: "cilium-helm"
   namespace: "argocd"
 spec:
   destination:
     name: "in-cluster"
+    namespace: "cilium"
   project: "default"
-  syncPolicy:
-    automated:
-      enabled: false
-    syncOptions:
-      - "RespectIgnoreDifferences=true"
-  ignoreDifferences: []
-  sources:
-    - name: "gitops"
-      repoURL: "https://github.com/skarre-r/homelab.git"
-      path: "manifests/cluster/cilium"
-      targetRevision: "HEAD"
-
-    - name: "cilium"
-      repoURL: "https://helm.cilium.io"
-      chart: "cilium"
-      targetRevision: "1.18.6"
-      helm:
-        namespace: "cilium"
-        releaseName: "cilium"
-        valuesObject:
-          namespaceOverride: "cilium"
-          debug:
-            enabled: false
-          k8sServiceHost: "192.168.1.21"
-          k8sServicePort: "6443"
-          k8sClientRateLimit:
-            qps: 10
-            burst: 20
-            operator:
-              qps: 100
-              burst: 200
-          rollOutCiliumPods: true
-          l2announcements:
-            enabled: true
-          l2podAnnouncements:
-            enabled: false
-          cni:
-            enabled: true
-            install: true
-            uninstall: false
-            exclusive: true
-          ingressController:
-            enabled: false
-          gatewayAPI:
-            enabled: false
-            gatewayClass:
-              create: "false"
-          k8sNetworkPolicy:
-            enabled: true
-          externalIPs:
-            enabled: true
-          hubble:
-            enabled: false
-          kubeProxyReplacement: true
-          egressGateway:
-            enabled: false
-          nodePort:
-            enabled: false
+  source:
+    repoURL: "https://helm.cilium.io"
+    chart: "cilium"
+    targetRevision: "1.18.6"
+    helm:
+      namespace: "cilium"
+      releaseName: "cilium"
+      valuesObject:
+        namespaceOverride: "cilium"
+        debug:
+          enabled: false
+        k8sServiceHost: "192.168.1.21"
+        k8sServicePort: "6443"
+        k8sClientRateLimit:
+          qps: 10
+          burst: 20
           operator:
-            enabled: true
-            rollOutPods: true
-            replicas: 1
-          rbac:
-            create: true
-          agent: true
-          bgpControlPlane:
-            create: false
-          ciliumEndpointSlice:
-            enabled: false
-          envoyConfig:
-            enabled: false
-          envoy:
-            enabled: false
-          enableLBIPAM: true
-          l7proxy: true
+            qps: 100
+            burst: 200
+        rollOutCiliumPods: true
+        l2announcements:
+          enabled: true
+        l2podAnnouncements:
+          enabled: false
+        cni:
+          enabled: true
+          install: true
+          uninstall: false
+          exclusive: true
+        ingressController:
+          enabled: false
+        gatewayAPI:
+          enabled: false
+          gatewayClass:
+            create: "false"
+        k8sNetworkPolicy:
+          enabled: true
+        externalIPs:
+          enabled: true
+        hubble:
+          enabled: false
+        kubeProxyReplacement: true
+        egressGateway:
+          enabled: false
+        nodePort:
+          enabled: false
+        operator:
+          enabled: true
+          rollOutPods: true
+          replicas: 1
+        rbac:
+          create: true
+        agent: true
+        bgpControlPlane:
+          create: false
+        ciliumEndpointSlice:
+          enabled: false
+        envoyConfig:
+          enabled: false
+        envoy:
+          enabled: false
+        enableLBIPAM: true
+        l7proxy: true

@@ -1,0 +1,59 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "cert-manager-helm"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "cert-manager"
+  project: "default"
+  source:
+    repoURL: "https://charts.jetstack.io"
+    chart: "cert-manager"
+    targetRevision: "v1.19.2"
+    helm:
+      namespace: "cert-manager"
+      skipCrds: false
+      valuesObject:
+        namespace: "cert-manager"
+        global:
+          priorityClassName: "system-cluster-critical"
+          leaderElection:
+            namespace: "cert-manager"
+        crds:
+          enabled: true
+          keep: true
+        config:
+          apiVersion: "controller.config.cert-manager.io/v1alpha1"
+          kind: "ControllerConfiguration"
+          leaderElectionConfig:
+            namespace: "cert-manager"
+          enableGatewayAPI: true
+        clusterResourceNamespace: "cert-manager"
+        prometheus:
+          enabled: false
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "trust-manager-helm"
+  namespace: "argocd"
+spec:
+  destination:
+    name: "in-cluster"
+    namespace: "cert-manager"
+  project: "default"
+  source:
+    repoURL: "https://charts.jetstack.io"
+    chart: "trust-manager"
+    targetRevision: "v0.20.3"
+    helm:
+      namespace: "cert-manager"
+      skipCrds: false
+      valuesObject:
+        crds:
+          enabled: true
+        replicaCount: 1
+        namespace: "cert-manager"
