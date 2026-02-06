@@ -1,13 +1,19 @@
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Controlling-Resource-Modification/
 ---
 apiVersion: "argoproj.io/v1alpha1"
 kind: "ApplicationSet"
 metadata:
   name: "cluster-gitops"
   namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
-    applicationsSync: "create-only"
+    applicationsSync: "create-update"
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - "/spec/syncPolicy"
   generators:
     - git:
         repoURL: "https://github.com/skarre-r/homelab.git"
@@ -32,10 +38,12 @@ spec:
         path: "{{path}}"
         targetRevision: "HEAD"
       syncPolicy:
-        automated:
-          enabled: false
         syncOptions:
+          - "PruneLast=true"
+          - "CreateNamespace=true"
+          - "ApplyOutOfSyncOnly=true"
           - "RespectIgnoreDifferences=true"
+          - "SkipDryRunOnMissingResource=true"
       ignoreDifferences:
         - kind: "Secret"
           jsonPointers:
