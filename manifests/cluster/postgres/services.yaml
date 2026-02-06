@@ -1,0 +1,19 @@
+# TODO: LB service?
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "postgres"
+  namespace: "postgres-system"
+  labels:
+    app.kubernetes.io/name: "postgres"
+    app.kubernetes.io/component: "database"
+spec:
+  type: "ClusterIP"
+  selector:
+    app.kubernetes.io/name: "postgres"
+    app.kubernetes.io/component: "database"
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: "TCP"
