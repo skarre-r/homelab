@@ -14,6 +14,8 @@ spec:
     path: "deploy/chart/local-path-provisioner"
     targetRevision: "HEAD"
     helm:
+      namespace: "local-path-storage"
+      releaseName: "local-path-provisioner"
       valuesObject:
         storageClass:
           create: true

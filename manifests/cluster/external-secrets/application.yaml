@@ -18,6 +18,7 @@ spec:
     targetRevision: "v2.0.0"
     helm:
       namespace: "external-secrets"
+      releaseName: "external-secrets"
       skipCrds: false
       valuesObject:
         namespace: "external-secrets"

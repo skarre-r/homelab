@@ -18,6 +18,7 @@ spec:
     targetRevision: "v1.6.3"
     helm:
       namespace: "envoy-gateway-system"
+      releaseName: "envoy-gateway"
       skipCrds: true
       valuesObject:
         deployment:

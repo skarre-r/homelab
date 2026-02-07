@@ -15,6 +15,7 @@ spec:
     targetRevision: "3.13.0"
     helm:
       namespace: "metrics-server"
+      releaseName: "metrics-server"
       valuesObject:
         serviceAccount:
           create: true
