@@ -25,6 +25,7 @@ spec:
     targetRevision: "8.9.0"
     helm:
       namespace: "nextcloud"
+      releaseName: "nextcloud"
       valuesObject:
         image:
           flavor: "apache" # "fpm" needs a dedicated web server in front of it
