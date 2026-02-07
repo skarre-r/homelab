@@ -38,12 +38,6 @@ postgres:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    read -p "namespace: " namespace
-    if [[ -z "${namespace}" ]]; then
-        echo "error: namespace is undefined"
-        exit 1
-    fi
-
     read -p "database: " database
     if [[ -z "${database}" ]]; then
         echo "error: database is undefined"
@@ -62,20 +56,20 @@ postgres:
         exit 1
     fi
 
-    namespace_exists=$(kubectl get namespace "${namespace}" >/dev/null 2>&1 && echo 1 || echo 0)
+    namespace_exists=$(kubectl get namespace "postgres-system" >/dev/null 2>&1 && echo 1 || echo 0)
     if [[ $namespace_exists == 0 ]]; then
-        kubectl create namespace "${namespace}"
+        kubectl create namespace "postgres-system"
     fi
 
-    cat << EOF | kubectl apply --namespace "${namespace}" -f -
+    cat << EOF | kubectl apply --namespace "postgres-system" -f -
     apiVersion: "v1"
     kind: "Secret"
     metadata:
       name: "postgres"
-      namespace: "${namespace}"
+      namespace: "postgres-system"
     type: "Opaque"
     stringData:
-      host: "postgres.${namespace}.svc.cluster.local:5432"
+      host: "postgres.postgres-system.svc.cluster.local:5432"
       database: "${database}"
       username: "${username}"
       password: "${password}"
