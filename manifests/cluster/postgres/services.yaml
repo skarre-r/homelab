@@ -1,4 +1,3 @@
-# TODO: LB service?
 ---
 apiVersion: "v1"
 kind: "Service"
@@ -17,3 +16,24 @@ spec:
     - port: 5432
       targetPort: 5432
       protocol: "TCP"
+---
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "postgres-lb"
+  namespace: "postgres-system"
+  labels:
+    app.kubernetes.io/name: "postgres"
+    app.kubernetes.io/component: "database"
+spec:
+  type: "LoadBalancer"
+  loadBalancerClass: "io.cilium/l2-announcer"
+  selector:
+    app.kubernetes.io/name: "postgres"
+    app.kubernetes.io/component: "database"
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: "TCP"
+
