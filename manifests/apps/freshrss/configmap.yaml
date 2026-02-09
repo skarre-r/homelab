@@ -1,0 +1,43 @@
+# TODO: include in deployment
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "freshrss-config"
+  namespace: "freshrss"
+  labels:
+    app.kubernetes.io/name: "freshrss"
+data:
+  config.custom.php: |-
+    <?php
+    return [
+        'environment' => 'production',
+        'base_url' => '',
+        'language' => 'en',
+        'title' => 'F6S',
+        'default_user' => '_',
+        'allow_anonymous' => false,
+        'allow_anonymous_refresh' => false,
+        'auth_type' => 'form',
+        'http_auth_auto_register' => false,
+        'api_enabled' => true,
+        'allow_robots' => false,
+        'db' => [
+            'type' => 'pgsql',
+            'host' => 'postgres.postgres-system.svc.cluster.local',
+            'user' => 'freshrss',
+            'password' => '',
+            'base' => 'freshrss',
+        ],
+        'trusted_sources' => [
+            '127.0.0.0/8',
+            '10.0.0.0/8',
+        ],
+    ];
+
+  config-user.custom.php: |-
+    <?php
+    return [
+        'enabled' => true,
+        'is_admin' => false,
+    ];
