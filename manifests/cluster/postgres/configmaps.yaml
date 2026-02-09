@@ -82,3 +82,21 @@ data:
         CREATE DATABASE immich;
         GRANT ALL PRIVILEGES ON DATABASE immich TO immich;
     EOSQL
+
+  freshrss.sh: |-
+    #!/usr/bin/env bash
+
+    if [ -z "${POSTGRES_DB}" ]; then
+        echo "error: POSTGRES_DB is undefined"
+        exit 1
+    fi
+    if [ -z "${POSTGRES_USER}" ]; then
+        echo "error: POSTGRES_USER is undefined"
+        exit 1
+    fi
+
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+        CREATE USER freshrss;
+        CREATE DATABASE freshrss;
+        GRANT ALL PRIVILEGES ON DATABASE freshrss TO freshrss;
+    EOSQL
