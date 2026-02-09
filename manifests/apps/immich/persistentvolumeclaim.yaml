@@ -1,0 +1,17 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "immich"
+  namespace: "immich"
+  labels:
+    app.kubernetes.io/name: "immich"
+spec:
+  storageClassName: "local-path"
+  accessModes:
+    - "ReadWriteOnce"
+  volumeMode: "Filesystem"
+  resources:
+    requests:
+      storage: "1Gi"
+  volumeName: "immich"
