@@ -22,18 +22,18 @@ metadata:
     app.kubernetes.io/component: "database"
 data:
   health.sh: |-
-    #!/bin/bash
+    #!/usr/bin/env bash
 
     if [ -z "${POSTGRES_DB}" ]; then
-        echo "POSTGRES_DB is not set"
+        echo "error: POSTGRES_DB is undefined"
         exit 1
     fi
     if [ -z "${POSTGRES_USER}" ]; then
-        echo "POSTGRES_USER is not set"
+        echo "error: POSTGRES_USER is undefined"
         exit 1
     fi
     if [ -z "${POSTGRES_PASSWORD}" ]; then
-        echo "POSTGRES_PASSWORD is not set"
+        echo "error: POSTGRES_PASSWORD is undefined"
         exit 1
     fi
     exec pg_isready -U "${POSTGRES_USER}" -d "dbname=${POSTGRES_DB}" -h 127.0.0.1 -p 5432
@@ -46,4 +46,39 @@ metadata:
   labels:
     app.kubernetes.io/name: "postgres"
     app.kubernetes.io/component: "database"
-data: {}
+data:
+  nextcloud.sh: |-
+    #!/usr/bin/env bash
+
+    if [ -z "${POSTGRES_DB}" ]; then
+        echo "error: POSTGRES_DB is undefined"
+        exit 1
+    fi
+    if [ -z "${POSTGRES_USER}" ]; then
+        echo "error: POSTGRES_USER is undefined"
+        exit 1
+    fi
+
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+        CREATE USER nextcloud;
+        CREATE DATABASE nextcloud;
+        GRANT ALL PRIVILEGES ON DATABASE nextcloud TO nextcloud;
+    EOSQL
+
+  immich.sh: |-
+    #!/usr/bin/env bash
+
+    if [ -z "${POSTGRES_DB}" ]; then
+        echo "error: POSTGRES_DB is undefined"
+        exit 1
+    fi
+    if [ -z "${POSTGRES_USER}" ]; then
+        echo "error: POSTGRES_USER is undefined"
+        exit 1
+    fi
+
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+        CREATE USER immich;
+        CREATE DATABASE immich;
+        GRANT ALL PRIVILEGES ON DATABASE immich TO immich;
+    EOSQL
