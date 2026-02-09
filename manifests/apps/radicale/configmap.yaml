@@ -1,0 +1,40 @@
+# TODO: mount in deployment
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "radicale-config"
+  namespace: "radicale"
+  labels:
+    app.kubernetes.io/name: "radicale"
+data:
+  config: |-
+    [server]
+    hosts = 0.0.0.0:5232, [::]:5232
+    max_connections = 0
+    ssl = False
+
+    [encoding]
+    request = utf-8
+    stock = utf-8
+
+    [auth]
+    type = htpasswd
+    cache_logins = False
+    htpasswd_encryption = autodetect
+
+    [rights]
+    type = owner_only
+
+    [storage]
+    type = multifilesystem
+
+    [web]
+    type = internal
+
+    [logging]
+    level = info
+    mask_passwords = True
+
+    [hook]
+    type = none
