@@ -104,6 +104,6 @@ spec:
           securityContext: {}
           volumeMounts:
             - mountPath: "/data"
-              name: "immich"
+              name: "data"
             - mountPath: "/etc"
               name: "config-file"
