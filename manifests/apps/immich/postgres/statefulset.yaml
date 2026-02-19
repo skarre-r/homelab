@@ -66,6 +66,12 @@ spec:
                 secretKeyRef:
                   name: "postgres"
                   key: "password"
+            - name: "POSTGRES_INITDB_ARGS"
+              value: ""
+            - name: "POSTGRES_INITDB_WALDIR"
+              value: ""
+            - name: "PGDATA"
+              value: "/var/lib/postgresql/18/docker"
           ports:
             - containerPort: 5432
               protocol: "TCP"
