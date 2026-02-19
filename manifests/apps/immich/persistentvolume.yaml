@@ -5,6 +5,7 @@ metadata:
   name: "immich"
   labels:
     app.kubernetes.io/name: "immich"
+    app.kubernetes.io/component: "server"
 spec:
   hostPath:
     path: "/pool/services/immich"

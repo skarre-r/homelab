@@ -6,15 +6,18 @@ metadata:
   namespace: "immich"
   labels:
     app.kubernetes.io/name: "immich"
+    app.kubernetes.io/component: "server"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: "immich"
+      app.kubernetes.io/component: "server"
   template:
     metadata:
       labels:
         app.kubernetes.io/name: "immich"
+        app.kubernetes.io/component: "server"
     spec:
       volumes:
         - name: "data"
@@ -26,6 +29,10 @@ spec:
             items:
               - key: "immich.json"
                 path: "immich.json"
+        - name: "hosts"
+          hostPath:
+            path: "/etc/hosts"
+            type: "File"
       containers:
         - name: "immich"
           image: "ghcr.io/immich-app/immich-server:v2"
@@ -101,11 +108,11 @@ spec:
             tcpSocket:
               port: 2283
           resources: {}
-          securityContext:
-            readOnlyRootFilesystem: false
-            runAsNonRoot: false
           volumeMounts:
             - mountPath: "/data"
               name: "data"
             - mountPath: "/etc"
               name: "config-file"
+            - mountPath: "/etc/hosts"
+              name: "hosts"
+              readOnly: true
