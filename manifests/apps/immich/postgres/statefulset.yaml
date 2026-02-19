@@ -93,6 +93,8 @@ spec:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
             privileged: false
+            runAsGroup: 1000
+            runAsUser: 1000
           volumeMounts:
             - mountPath: "/tmp"
               name: "empty-dir"
