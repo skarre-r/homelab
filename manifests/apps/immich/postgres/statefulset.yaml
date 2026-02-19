@@ -88,7 +88,11 @@ spec:
                 - "-c"
                 - "/scripts/health.sh"
           resources: { }
-          securityContext: { }
+          securityContext:
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            privileged: false
           volumeMounts:
             - mountPath: "/tmp"
               name: "empty-dir"
