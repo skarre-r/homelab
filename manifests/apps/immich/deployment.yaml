@@ -19,6 +19,7 @@ spec:
         app.kubernetes.io/name: "immich"
         app.kubernetes.io/component: "server"
     spec:
+      hostAliases: []
       volumes:
         - name: "data"
           persistentVolumeClaim:
@@ -29,10 +30,6 @@ spec:
             items:
               - key: "immich.json"
                 path: "immich.json"
-        - name: "hosts"
-          hostPath:
-            path: "/etc/hosts"
-            type: "File"
       containers:
         - name: "immich"
           image: "ghcr.io/immich-app/immich-server:v2"
@@ -108,11 +105,9 @@ spec:
             tcpSocket:
               port: 2283
           resources: {}
+          securityContext: {}
           volumeMounts:
             - mountPath: "/data"
               name: "data"
             - mountPath: "/etc"
               name: "config-file"
-            - mountPath: "/etc/hosts"
-              name: "hosts"
-              readOnly: true
