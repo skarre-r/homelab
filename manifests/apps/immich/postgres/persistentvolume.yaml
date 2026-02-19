@@ -19,4 +19,4 @@ spec:
   claimRef:
     kind: "PersistentVolumeClaim"
     name: "postgres"
-    namespace: "postgres-system"
+    namespace: "immich"
