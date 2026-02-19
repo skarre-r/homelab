@@ -101,7 +101,9 @@ spec:
             tcpSocket:
               port: 2283
           resources: {}
-          securityContext: {}
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
           volumeMounts:
             - mountPath: "/data"
               name: "data"
