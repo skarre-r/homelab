@@ -1,0 +1,22 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "immich-postgres"
+  labels:
+    app.kubernetes.io/name: "immich"
+    app.kubernetes.io/component: "database"
+spec:
+  hostPath:
+    path: "/pool/services/immich-postgres"
+  accessModes:
+    - "ReadWriteOnce"
+  volumeMode: "Filesystem"
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "local-path"
+  capacity:
+    storage: "15Ti"
+  claimRef:
+    kind: "PersistentVolumeClaim"
+    name: "postgres"
+    namespace: "postgres-system"

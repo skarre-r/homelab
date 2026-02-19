@@ -1,0 +1,15 @@
+---
+apiVersion: "policy/v1"
+kind: "PodDisruptionBudget"
+metadata:
+  name: "postgres"
+  namespace: "immich"
+  labels:
+    app.kubernetes.io/name: "immich"
+    app.kubernetes.io/component: "database"
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "immich"
+      app.kubernetes.io/component: "database"

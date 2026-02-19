@@ -52,15 +52,24 @@ spec:
             - name: "IMMICH_PORT"
               value: "2283"
             - name: "DB_HOSTNAME"
-              value: "postgres.postgres-system.svc.cluster.local"
+              value: "postgres.immich.svc.cluster.local"
             - name: "DB_PORT"
               value: "5432"
             - name: "DB_USERNAME"
-              value: "immich"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "username"
             - name: "DB_PASSWORD"
-              value: ""
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "password"
             - name: "DB_DATABASE_NAME"
-              value: "immich"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "database"
             - name: "DB_SKIP_MIGRATIONS"
               value: "false"
             - name: "DB_STORAGE_TYPE"

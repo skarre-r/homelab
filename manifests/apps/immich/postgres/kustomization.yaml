@@ -1,5 +1,12 @@
-# TODO: immich needs postgres w/ "vectorchord" extension: https://docs.immich.app/administration/postgres-standalone/#prerequisites
 ---
 apiVersion: "kustomize.config.k8s.io/v1beta1"
 kind: "Kustomization"
-resources: []
+resources:
+  - "configmaps.yaml"
+  - "persistentvolume.yaml"
+  - "persistentvolumeclaim.yaml"
+  - "poddisruptionbudget.yaml"
+  - "secret.yaml"
+  - "serviceaccount.yaml"
+  - "services.yaml"
+  - "statefulset.yaml"

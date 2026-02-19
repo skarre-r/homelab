@@ -1,0 +1,102 @@
+---
+apiVersion: "apps/v1"
+kind: "StatefulSet"
+metadata:
+  name: "postgres"
+  namespace: "immich"
+  labels:
+    app.kubernetes.io/name: "immich"
+    app.kubernetes.io/component: "database"
+spec:
+  replicas: 1
+  serviceName: "postgres"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "immich"
+      app.kubernetes.io/component: "database"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "immich"
+        app.kubernetes.io/component: "database"
+    spec:
+      serviceAccountName: "postgres"
+      volumes:
+        - name: "empty-dir"
+          emptyDir: {}
+        - name: "dshm"
+          emptyDir:
+            medium: "Memory"
+            sizeLimit: "2Gi"
+        - name: "postgres"
+          persistentVolumeClaim:
+            claimName: "postgres"
+        - name: "config"
+          configMap:
+            defaultMode: 420
+            name: "postgres-conf"
+        - name: "scripts"
+          configMap:
+            defaultMode: 493
+            name: "postgres-scripts"
+      containers:
+        - name: "postgres"
+          image: "docker.io/tensorchord/vchord-postgres:pg18-v1.1.0"
+          imagePullPolicy: "IfNotPresent"
+          command:
+            - "postgres"
+          args:
+            - "-c"
+            - "shared_preload_libraries=vchord,vector"
+            - "-c"
+            - "config_file=/etc/postgresql/postgresql.conf"
+          env:
+            - name: "POSTGRES_DB"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "database"
+            - name: "POSTGRES_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "username"
+            - name: "POSTGRES_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "password"
+          ports:
+            - containerPort: 5432
+              protocol: "TCP"
+          startupProbe:
+            exec:
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "/scripts/health.sh"
+          readinessProbe:
+            exec:
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "/scripts/health.sh"
+          livenessProbe:
+            exec:
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "/scripts/health.sh"
+          resources: { }
+          securityContext: { }
+          volumeMounts:
+            - mountPath: "/tmp"
+              name: "empty-dir"
+            - mountPath: "/dev/shm"
+              name: "dshm"
+            - mountPath: "/var/lib/postgresql"
+              name: "postgres"
+            - mountPath: "/etc/postgresql"
+              name: "config"
+            - mountPath: "/scripts"
+              name: "scripts"
