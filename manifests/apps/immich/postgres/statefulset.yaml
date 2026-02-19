@@ -43,8 +43,6 @@ spec:
         - name: "postgres"
           image: "docker.io/tensorchord/vchord-postgres:pg18-v1.1.0"
           imagePullPolicy: "IfNotPresent"
-          command:
-            - "postgres"
           args:
             - "-c"
             - "shared_preload_libraries=vchord,vector"
@@ -94,13 +92,7 @@ spec:
                 - "-c"
                 - "/scripts/health.sh"
           resources: { }
-          securityContext:
-            runAsNonRoot: true
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
-            privileged: false
-            runAsGroup: 1000
-            runAsUser: 1000
+          securityContext: {}
           volumeMounts:
             - mountPath: "/tmp"
               name: "empty-dir"
