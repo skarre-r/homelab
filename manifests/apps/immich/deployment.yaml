@@ -19,7 +19,10 @@ spec:
         app.kubernetes.io/name: "immich"
         app.kubernetes.io/component: "server"
     spec:
-      hostAliases: []
+      serviceAccountName: "immich"
+      dnsPolicy: "ClusterFirst"
+      securityContext:
+        fsGroup: 0
       volumes:
         - name: "data"
           persistentVolumeClaim:
@@ -105,7 +108,8 @@ spec:
             tcpSocket:
               port: 2283
           resources: {}
-          securityContext: {}
+          securityContext:
+            runAsUser: 0
           volumeMounts:
             - mountPath: "/data"
               name: "data"

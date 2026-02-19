@@ -8,4 +8,5 @@ resources:
   - "namespace.yaml"
   - "persistentvolume.yaml"
   - "persistentvolumeclaim.yaml"
+  - "serviceaccount.yaml"
   - "services.yaml"
